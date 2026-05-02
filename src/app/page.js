@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { services } from '@/data/services';
 import BrutalistForm from '@/components/BrutalistForm';
 import CTABanner from '@/components/CTABanner';
-import OrbitRing from '@/components/OrbitRing';
+import CreattieEmbed from '@/components/CreattieEmbed';
 
 export default function HomePage() {
   return (
@@ -23,7 +23,9 @@ export default function HomePage() {
             <BrutalistForm variant="hero" />
             <p className="tech-label">// 50+ BRANDS SHIPPED &bull; 3X AVG ROAS &bull; 24/7 SUPPORT</p>
           </div>
-          <OrbitRing />
+          <div className="hero-anim">
+            <CreattieEmbed src="https://ik.imagekit.io/creattie/main/saved_colors/145118/wCSJQov3DLRpg8sp.json" />
+          </div>
         </div>
       </section>
 
