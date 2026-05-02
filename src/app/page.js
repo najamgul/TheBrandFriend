@@ -2,24 +2,28 @@ import Link from 'next/link';
 import { services } from '@/data/services';
 import BrutalistForm from '@/components/BrutalistForm';
 import CTABanner from '@/components/CTABanner';
+import OrbitRing from '@/components/OrbitRing';
 
 export default function HomePage() {
   return (
     <>
       {/* HERO */}
       <section className="hero" id="hero">
-        <div className="hero-inner">
-          <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
-            <span className="mono">⚡ NOW ACCEPTING CLIENTS — Q2 2026</span>
+        <div className="hero-layout">
+          <div className="hero-inner">
+            <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
+              <span className="mono">⚡ NOW ACCEPTING CLIENTS — Q2 2026</span>
+            </div>
+            <h1 className="hero-headline">
+              WE SHIP<br />BRANDS THAT<br /><span className="volt">DOMINATE</span>
+            </h1>
+            <p className="hero-sub">
+              <em>Strategy. Design. Development. Marketing.<br />Everything your brand needs to break the internet.</em>
+            </p>
+            <BrutalistForm variant="hero" />
+            <p className="tech-label">// 50+ BRANDS SHIPPED &bull; 3X AVG ROAS &bull; 24/7 SUPPORT</p>
           </div>
-          <h1 className="hero-headline">
-            WE SHIP<br />BRANDS THAT<br /><span className="volt">DOMINATE</span>
-          </h1>
-          <p className="hero-sub">
-            <em>Strategy. Design. Development. Marketing.<br />Everything your brand needs to break the internet.</em>
-          </p>
-          <BrutalistForm variant="hero" />
-          <p className="tech-label">// 50+ BRANDS SHIPPED &bull; 3X AVG ROAS &bull; 24/7 SUPPORT</p>
+          <OrbitRing />
         </div>
       </section>
 

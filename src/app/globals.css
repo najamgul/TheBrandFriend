@@ -105,6 +105,25 @@ a { color: inherit; }
 .brutal-submit:hover { background: var(--volt); color: var(--black); }
 .tech-label { font-size: 9px; color: var(--grey); letter-spacing: 0.12em; font-family: var(--font-mono); text-transform: uppercase; }
 
+/* ===== HERO LAYOUT ===== */
+.hero-layout { display: flex; flex-direction: column; width: 100%; }
+
+/* ===== ORBIT RING ANIMATION ===== */
+.orbit-ring { display: none; }
+
+@keyframes orbitSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes orbitSpinReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+@keyframes orbitPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
 /* ===== STICKER BAR ===== */
 .sticker-bar { background: var(--white); border-top: var(--border); border-bottom: var(--border); padding: 32px 16px; overflow-x: auto; }
 .sticker-bar-inner { display: flex; gap: 16px; min-width: max-content; }
@@ -245,6 +264,56 @@ a { color: inherit; }
   .deliverables-section { padding: 80px 40px; }
   .related-services { padding: 80px 40px; }
   .footer { padding: 48px 40px; }
+
+  /* Orbit ring visible on tablet+ */
+  .hero-layout { flex-direction: row; align-items: center; }
+  .hero-inner { flex: 1; }
+  .orbit-ring {
+    display: flex; align-items: center; justify-content: center;
+    width: 420px; height: 420px; flex-shrink: 0;
+    position: relative;
+  }
+  .orbit-text-ring {
+    position: absolute; inset: 0;
+    animation: orbitSpin 20s linear infinite;
+  }
+  .orbit-char {
+    position: absolute; left: 50%; top: 50%;
+    font-family: var(--font-mono); font-weight: 700;
+    color: var(--volt); text-transform: uppercase;
+    letter-spacing: 0.15em;
+    transform-origin: 0 0;
+  }
+  .orbit-center {
+    width: 100px; height: 100px;
+    border: var(--border-heavy); border-color: var(--volt);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 2;
+    animation: orbitSpinReverse 12s linear infinite;
+  }
+  .orbit-center-text {
+    font-size: 32px; color: var(--volt); text-transform: uppercase;
+  }
+  .orbit-square {
+    position: absolute; border: 3px solid rgba(204,255,0,0.15);
+  }
+  .orbit-sq-1 {
+    width: 340px; height: 340px;
+    transform: rotate(45deg);
+    animation: orbitSpin 30s linear infinite;
+  }
+  .orbit-sq-2 {
+    width: 280px; height: 280px;
+    transform: rotate(22deg);
+    animation: orbitSpinReverse 25s linear infinite;
+  }
+  .orbit-dot {
+    position: absolute; width: 8px; height: 8px;
+    background: var(--volt); border-radius: 0;
+  }
+  .orbit-dot-1 { top: 10%; right: 20%; animation: orbitPulse 3s ease-in-out infinite; }
+  .orbit-dot-2 { bottom: 15%; left: 10%; animation: orbitPulse 3s ease-in-out 1s infinite; }
+  .orbit-dot-3 { top: 50%; right: 5%; animation: orbitPulse 3s ease-in-out 2s infinite; }
 }
 
 /* ========== DESKTOP (min-width: 1024px) ========== */
