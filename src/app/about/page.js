@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import CTABanner from '@/components/CTABanner';
+import CreattieEmbed from '@/components/CreattieEmbed';
 
 export const metadata = {
   title: 'About Us — A Brutally Effective Digital Agency',
@@ -18,14 +19,19 @@ export default function AboutPage() {
   return (
     <>
       <section className="hero" style={{ minHeight: 'auto' }}>
-        <div className="hero-inner">
-          <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
-            <span className="mono">WHO WE ARE</span>
+        <div className="hero-layout">
+          <div className="hero-inner">
+            <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
+              <span className="mono">WHO WE ARE</span>
+            </div>
+            <h1 className="hero-headline">THE<br /><span className="volt">BRAND</span><br />FRIEND</h1>
+            <p className="hero-sub">
+              <em>We&apos;re not just another agency. We&apos;re a team of designers, developers, strategists, and marketers who are obsessed with one thing: making your brand win.</em>
+            </p>
           </div>
-          <h1 className="hero-headline">THE<br /><span className="volt">BRAND</span><br />FRIEND</h1>
-          <p className="hero-sub">
-            <em>We&apos;re not just another agency. We&apos;re a team of designers, developers, strategists, and marketers who are obsessed with one thing: making your brand win.</em>
-          </p>
+          <div className="hero-anim">
+            <CreattieEmbed src="https://ik.imagekit.io/creattie/main/saved_colors/145118/wCSJQov3DLRpg8sp.json" />
+          </div>
         </div>
       </section>
 

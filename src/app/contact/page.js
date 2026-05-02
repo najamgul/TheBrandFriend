@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import BrutalistForm from '@/components/BrutalistForm';
+import CreattieEmbed from '@/components/CreattieEmbed';
 
 export const metadata = {
   title: 'Contact Us — Get A Free Brand Consultation',
@@ -11,14 +12,19 @@ export default function ContactPage() {
   return (
     <>
       <section className="hero" style={{ minHeight: 'auto' }}>
-        <div className="hero-inner">
-          <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
-            <span className="mono">GET IN TOUCH</span>
+        <div className="hero-layout">
+          <div className="hero-inner">
+            <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
+              <span className="mono">GET IN TOUCH</span>
+            </div>
+            <h1 className="hero-headline">LET&apos;S<br /><span className="volt">TALK</span></h1>
+            <p className="hero-sub">
+              <em>Drop your details below. We&apos;ll get back within 24 hours with a game plan for your brand. No strings attached.</em>
+            </p>
           </div>
-          <h1 className="hero-headline">LET&apos;S<br /><span className="volt">TALK</span></h1>
-          <p className="hero-sub">
-            <em>Drop your details below. We&apos;ll get back within 24 hours with a game plan for your brand. No strings attached.</em>
-          </p>
+          <div className="hero-anim">
+            <CreattieEmbed src="https://ik.imagekit.io/creattie/main/saved_colors/145118/j9x5pS5KblJLvXEF.json" speed="101" />
+          </div>
         </div>
       </section>
 

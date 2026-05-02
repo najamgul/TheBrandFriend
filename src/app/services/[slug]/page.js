@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { services, getServiceBySlug, getRelatedServices } from '@/data/services';
 import CTABanner from '@/components/CTABanner';
+import CreattieEmbed from '@/components/CreattieEmbed';
 
 export function generateStaticParams() {
   return services.map(s => ({ slug: s.slug }));
@@ -32,12 +33,17 @@ export default async function ServiceDetailPage({ params }) {
     <>
       {/* Service Hero */}
       <section className="service-hero">
-        <div className="service-hero-inner">
-          <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
-            <span className="mono">SERVICE {service.num}</span>
+        <div className="hero-layout">
+          <div className="service-hero-inner">
+            <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
+              <span className="mono">SERVICE {service.num}</span>
+            </div>
+            <h1 className="service-hero-title">{service.name.toUpperCase()}</h1>
+            <p className="service-hero-desc">{service.longDesc}</p>
           </div>
-          <h1 className="service-hero-title">{service.name.toUpperCase()}</h1>
-          <p className="service-hero-desc">{service.longDesc}</p>
+          <div className="hero-anim">
+            <CreattieEmbed src="https://ik.imagekit.io/creattie/main/saved_colors/145118/fOmq6VjhbpevoY1i.json" />
+          </div>
         </div>
       </section>
 

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import CTABanner from '@/components/CTABanner';
+import CreattieEmbed from '@/components/CreattieEmbed';
 
 export const metadata = {
   title: 'Our Process — How We Ship Winning Brands',
@@ -29,14 +30,19 @@ export default function ProcessPage() {
   return (
     <>
       <section className="hero" style={{ minHeight: 'auto' }}>
-        <div className="hero-inner">
-          <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
-            <span className="mono">HOW WE WORK</span>
+        <div className="hero-layout">
+          <div className="hero-inner">
+            <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
+              <span className="mono">HOW WE WORK</span>
+            </div>
+            <h1 className="hero-headline">THE<br /><span className="volt">BLUEPRINT</span></h1>
+            <p className="hero-sub">
+              <em>Three phases. Zero guesswork. Every project follows our battle-tested framework to go from concept to domination.</em>
+            </p>
           </div>
-          <h1 className="hero-headline">THE<br /><span className="volt">BLUEPRINT</span></h1>
-          <p className="hero-sub">
-            <em>Three phases. Zero guesswork. Every project follows our battle-tested framework to go from concept to domination.</em>
-          </p>
+          <div className="hero-anim">
+            <CreattieEmbed src="https://ik.imagekit.io/creattie/main/saved_colors/145118/fOmq6VjhbpevoY1i.json" />
+          </div>
         </div>
       </section>
 
