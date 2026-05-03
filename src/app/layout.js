@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Ranchers&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" href="/logo-icon.png" />
+        <link rel="icon" href="/favicon.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
