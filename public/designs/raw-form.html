@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raw Form — Design Preview</title>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@700&f[]=satoshi@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--base:#E4E2DD;--primary:#1E1E1E;--red:#DB4A2B;--orange:#F8A348;--pink:#FF89A9}
+body{background:var(--base);color:var(--primary);font-family:'Satoshi',sans-serif;overflow-x:hidden}
+::selection{background:var(--red);color:#fff}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--base)}
+::-webkit-scrollbar-thumb{background:var(--red)}
+
+.nav{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;z-index:100}
+.nav-logo{font-family:'Clash Display',sans-serif;font-size:24px;font-weight:700;text-transform:uppercase;text-decoration:none;color:var(--primary)}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-size:14px;font-weight:500;letter-spacing:0.1em;text-decoration:none;color:var(--primary);text-transform:uppercase}
+
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:120px 48px 80px}
+.hero-blobs{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(140px);mix-blend-mode:multiply;animation:blobPulse 10s ease-in-out infinite alternate}
+.blob-1{width:60vw;height:60vw;background:var(--red);top:-20%;left:-10%;opacity:0.6}
+.blob-2{width:50vw;height:50vw;background:var(--orange);bottom:-30%;right:-10%;opacity:0.5;animation-delay:3s}
+.blob-3{width:40vw;height:40vw;background:var(--pink);top:30%;left:40%;opacity:0.4;animation-delay:6s}
+@keyframes blobPulse{0%{opacity:0.5;transform:translate(0,0)}100%{opacity:0.8;transform:translate(20px,-15px)}}
+.hero-content{position:relative;z-index:2;max-width:900px}
+.hero-sub{font-size:14px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--red);margin-bottom:24px}
+.hero h1{font-family:'Clash Display',sans-serif;font-size:clamp(48px,18vw,200px);font-weight:700;line-height:0.75;text-transform:uppercase;letter-spacing:-0.05em;margin-bottom:32px}
+.hero h1 .indent{display:block;padding-left:15vw}
+.hero p{font-size:20px;max-width:400px;line-height:1.6;margin-bottom:40px}
+.btn-primary{display:inline-block;background:var(--primary);color:var(--base);padding:18px 40px;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;text-decoration:none;position:relative;overflow:hidden;transition:color 0.3s}
+.btn-primary::before{content:'';position:absolute;inset:0;background:#fff;transform:translateX(-101%);transition:transform 0.3s ease-out}
+.btn-primary:hover::before{transform:translateX(0)}
+.btn-primary:hover{color:var(--red)}
+.btn-primary span{position:relative;z-index:1}
+.btn-text{display:inline-block;margin-left:20px;color:var(--red);font-size:15px;font-weight:700;text-decoration:none;letter-spacing:0.05em}
+
+.products{padding:120px 48px}
+.products h2{font-family:'Clash Display',sans-serif;font-size:clamp(40px,12vw,160px);text-transform:uppercase;letter-spacing:-0.04em;line-height:0.85;opacity:0.9;margin-bottom:60px;text-align:right}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px 16px}
+.product-item{position:relative;overflow:hidden}
+.product-item img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform 0.5s cubic-bezier(0.16,1,0.3,1)}
+.product-item:hover img{transform:scale(1.05)}
+.product-meta{padding:16px 0}
+.product-name{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;transition:color 0.3s}
+.product-item:hover .product-name{color:var(--pink)}
+.product-price{font-size:14px;color:#444}
+
+.campaign{background:#D9D6D0;padding:100px 48px}
+.campaign-grid{display:grid;grid-template-columns:2fr 1fr;gap:48px;max-width:1100px;align-items:start}
+.campaign h2{font-family:'Clash Display',sans-serif;font-size:clamp(32px,6vw,80px);font-weight:700;line-height:0.9;text-transform:uppercase}
+.campaign-links{display:flex;flex-direction:column;gap:20px;border-left:1px solid rgba(30,30,30,0.2);padding-left:32px}
+.campaign-links a{font-size:14px;font-weight:600;text-decoration:none;color:var(--primary);display:flex;align-items:center;gap:8px;letter-spacing:0.05em}
+
+.footer{background:var(--primary);color:var(--base);padding:80px 48px 40px;position:relative;overflow:hidden}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;max-width:1200px;margin:0 auto;position:relative;z-index:2}
+.footer-logo{font-family:'Clash Display',sans-serif;font-size:32px;font-weight:700;margin-bottom:16px}
+.footer a{color:var(--base);opacity:0.6;text-decoration:none;font-size:14px;display:block;margin-bottom:10px;transition:opacity 0.2s}
+.footer a:hover{opacity:1}
+.footer h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:16px;opacity:0.8}
+.footer-year{position:absolute;bottom:-20px;right:48px;font-family:'Clash Display',sans-serif;font-size:clamp(60px,10vw,140px);font-weight:700;color:rgba(255,255,255,0.05);z-index:1}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);margin-top:60px;padding-top:24px;font-size:13px;opacity:0.5;text-align:right;position:relative;z-index:2}
+
+@media(max-width:768px){
+  .nav{padding:16px 20px}.nav-links{display:none}
+  .hero{padding:100px 20px 60px}
+  .products{padding:60px 20px}.product-grid{grid-template-columns:1fr}
+  .campaign{padding:60px 20px}.campaign-grid{grid-template-columns:1fr}
+  .footer{padding:40px 20px}.footer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="nav-logo">RAW FORM</a>
+  <div class="nav-links">
+    <a href="#">Shop</a><a href="#">Editorial</a><a href="#">About</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
+  <div class="hero-content">
+    <p class="hero-sub">— NEW COLLECTION</p>
+    <h1>DEFINE<span class="indent">YOUR</span><span class="indent">FORM</span></h1>
+    <p>Brutally honest design. Nothing more, nothing less.</p>
+    <a href="#" class="btn-primary"><span>SHOP COLLECTION</span></a>
+    <a href="#" class="btn-text">EXPLORE JOURNAL →</a>
+  </div>
+</section>
+
+<section class="products">
+  <h2>ESSENTIALS</h2>
+  <div class="product-grid">
+    <div class="product-item"><img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=600&q=80" alt=""><div class="product-meta"><div class="product-name">STRUCTURED BLAZER</div><div class="product-price">$245</div></div></div>
+    <div class="product-item"><img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&q=80" alt=""><div class="product-meta"><div class="product-name">ESSENTIAL TEE</div><div class="product-price">$85</div></div></div>
+    <div class="product-item"><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80" alt=""><div class="product-meta"><div class="product-name">RELAXED TROUSER</div><div class="product-price">$195</div></div></div>
+  </div>
+</section>
+
+<section class="campaign">
+  <div class="campaign-grid">
+    <h2>BUILT FOR<br>THOSE WHO<br>DARE TO BE<br>RAW.</h2>
+    <div class="campaign-links">
+      <a href="#">Read the Manifesto ↗</a>
+      <a href="#">Behind the Collection ↗</a>
+      <a href="#">View Lookbook ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div><div class="footer-logo">RAW FORM</div><p style="opacity:0.5;font-size:14px">Design stripped to its essence.</p></div>
+    <div><h4>Shop</h4><a href="#">New Arrivals</a><a href="#">Collections</a><a href="#">Sale</a></div>
+    <div><h4>Company</h4><a href="#">About</a><a href="#">Journal</a><a href="#">Contact</a></div>
+  </div>
+  <div class="footer-year">2026</div>
+  <div class="footer-bottom">© 2026 Raw Form. All rights reserved.</div>
+</footer>
+
+</body>
+</html>

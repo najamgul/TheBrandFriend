@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { services } from '@/data/services';
 import BrutalistForm from '@/components/BrutalistForm';
 import CTABanner from '@/components/CTABanner';
@@ -24,7 +25,7 @@ export default function HomePage() {
             <p className="hero-sub">
               <em>Strategy. Design. Development. Marketing.<br />Everything your brand needs to break the internet.</em>
             </p>
-            <BrutalistForm variant="hero" />
+            <Suspense fallback={null}><BrutalistForm variant="hero" /></Suspense>
             <p className="tech-label">// 50+ BRANDS SHIPPED &bull; 3-DAY DELIVERY &bull; 24/7 SUPPORT</p>
           </div>
           <div className="hero-anim">

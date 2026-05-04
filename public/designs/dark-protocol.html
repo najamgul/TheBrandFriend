@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dark Protocol — Design Preview</title>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@700&f[]=general-sans@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#181818;--text:#EBDCC4;--coral:#DC9F85;--earth:#66473B;--umber:#35211A;--sage:#B6A596}
+body{background:var(--bg);color:var(--text);font-family:'General Sans',sans-serif;font-weight:300;overflow-x:hidden;position:relative}
+::selection{background:var(--coral);color:var(--bg)}
+.noise{position:fixed;inset:0;pointer-events:none;z-index:50;opacity:0.03;mix-blend-mode:multiply}
+.noise svg{width:100%;height:100%}
+
+.nav{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:32px 48px;z-index:60}
+.nav-brand{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.2em;color:var(--sage)}
+.nav-line{flex:1;height:1px;background:var(--umber);margin:0 40px}
+.nav-status{font-size:10px;text-transform:uppercase;letter-spacing:0.15em;color:var(--umber)}
+
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;padding:120px 48px}
+.hero-label{display:flex;align-items:center;gap:12px;margin-bottom:32px}
+.hero-label-line{width:24px;height:2px;background:var(--coral)}
+.hero-label span{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.15em;color:var(--sage)}
+.hero-headline{position:relative;margin-bottom:40px}
+.hero-outline{position:absolute;top:4px;left:4px;font-family:'Clash Grotesk',sans-serif;font-size:clamp(40px,11.5vw,160px);font-weight:700;text-transform:uppercase;letter-spacing:-0.04em;line-height:0.85;-webkit-text-stroke:1px var(--earth);color:transparent;pointer-events:none}
+.hero-solid{position:relative;font-family:'Clash Grotesk',sans-serif;font-size:clamp(40px,11.5vw,160px);font-weight:700;text-transform:uppercase;letter-spacing:-0.04em;line-height:0.85;color:var(--text);z-index:2}
+.hero p{font-size:18px;max-width:420px;line-height:1.7;color:var(--sage);font-weight:300;margin-bottom:40px}
+
+.hero-bottom{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:80px;border-top:1px solid var(--umber);padding-top:32px}
+.hero-statement{grid-column:1/6;font-size:20px;font-weight:300;line-height:1.7}
+.hero-status{grid-column:1/6;display:flex;align-items:center;gap:10px;margin-top:16px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--coral);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.status-label{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--sage)}
+.hero-form{grid-column:7/13;display:flex}
+.hero-form input{flex:1;background:transparent;border:1px solid var(--earth);color:var(--text);padding:16px 20px;font-size:14px;border-radius:4px 0 0 4px;outline:none;font-family:inherit}
+.hero-form input::placeholder{color:var(--earth)}
+.hero-form button{background:var(--coral);color:var(--bg);border:none;padding:16px 28px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border-radius:0 4px 4px 0;cursor:pointer}
+.form-caption{grid-column:7/13;font-size:11px;color:var(--umber);margin-top:8px}
+
+.badge{position:fixed;bottom:32px;right:32px;width:64px;height:64px;border:1px solid var(--umber);border-radius:50%;z-index:40;overflow:hidden}
+.badge-text{animation:spin 12s linear infinite;font-size:11px;font-weight:700;text-transform:uppercase;color:var(--umber)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.badge svg{width:100%;height:100%}
+
+@media(max-width:768px){
+  .nav{padding:20px}
+  .nav-line{margin:0 16px}
+  .hero{padding:100px 20px 60px;flex-direction:column;align-items:flex-start}
+  .hero-bottom{grid-template-columns:1fr}
+  .hero-statement,.hero-form,.form-caption,.hero-status{grid-column:1/-1}
+  .badge{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="noise"><svg><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg></div>
+
+<nav class="nav">
+  <span class="nav-brand">SD—PROTOCOL 01</span>
+  <div class="nav-line"></div>
+  <span class="nav-status">INVITE ONLY</span>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="hero-label"><div class="hero-label-line"></div><span>EARLY ACCESS</span></div>
+    <div class="hero-headline">
+      <div class="hero-outline">SUPER<br>DESIGN</div>
+      <div class="hero-solid">SUPER<br>DESIGN</div>
+    </div>
+    <p>A curated design protocol for those who understand that exceptional branding is not optional.</p>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-statement">We don't design for everyone. We design for the obsessed — those who know the difference between good and unforgettable.</div>
+    <div class="hero-status"><span class="status-dot"></span><span class="status-label">Batch 003 Filling</span></div>
+    <div class="hero-form"><input placeholder="YOUR@EMAIL.COM"><button>REQUEST ACCESS</button></div>
+    <div class="form-caption">Zero spam. Pure utility.</div>
+  </div>
+</section>
+
+<div class="badge">
+  <svg viewBox="0 0 64 64">
+    <path id="circle" d="M32,4 a28,28 0 1,1 0,56 a28,28 0 1,1 0,-56" fill="none"/>
+    <text class="badge-text"><textPath href="#circle">WAITING LIST • WAITING LIST • </textPath></text>
+  </svg>
+</div>
+
+</body>
+</html>

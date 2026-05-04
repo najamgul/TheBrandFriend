@@ -1,6 +1,11 @@
 'use client';
+import { useSearchParams } from 'next/navigation';
+import { designs } from '@/data/designs';
 
 export default function BrutalistForm({ variant = 'hero' }) {
+  const searchParams = useSearchParams();
+  const designParam = searchParams.get('design') || '';
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button[type="submit"]');
@@ -56,6 +61,19 @@ export default function BrutalistForm({ variant = 'hero' }) {
           <option>FULL DIGITAL PACKAGE</option>
         </select>
       </div>
+      {designParam && (
+        <div className="form-group">
+          <label className="mono" htmlFor="contact-design">PREFERRED DESIGN</label>
+          <select id="contact-design" defaultValue={designParam}>
+            <option value="">SELECT A DESIGN</option>
+            {designs.map(d => (
+              <option key={d.slug} value={d.slug}>
+                {d.name.toUpperCase()} — {d.style}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
       <div className="form-group">
         <label className="mono" htmlFor="contact-brief">PROJECT BRIEF</label>
         <textarea id="contact-brief" placeholder="TELL US ABOUT YOUR PROJECT, GOALS, AND TIMELINE..." required></textarea>

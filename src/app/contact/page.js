@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import BrutalistForm from '@/components/BrutalistForm';
 import CreattieEmbed from '@/components/CreattieEmbed';
 
@@ -33,7 +34,9 @@ export default function ContactPage() {
           <div>
             <span className="mono tag tag-volt">SEND US A MESSAGE</span>
             <h2 className="ranchers" style={{ fontSize: 'clamp(32px, 5vw, 56px)', margin: '12px 0 28px' }}>PROJECT BRIEF</h2>
-            <BrutalistForm variant="full" />
+            <Suspense fallback={<div>Loading form...</div>}>
+              <BrutalistForm variant="full" />
+            </Suspense>
           </div>
           <div>
             <span className="mono tag tag-white">QUICK CONNECT</span>

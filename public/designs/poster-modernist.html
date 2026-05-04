@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poster Modernist — Design Preview</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#E3E2DE;--text:#141414;--blue:#1351AA;--gray:#7A7A7A;--dgray:#444343;--border:#C7C7C7}
+body{background:var(--bg);color:var(--text);font-family:'General Sans',sans-serif;overflow-x:hidden}
+::selection{background:var(--blue);color:#fff}
+
+.nav{position:sticky;top:0;height:80px;display:grid;grid-template-columns:3fr 6fr 3fr;align-items:center;padding:0 48px;border-bottom:1px solid var(--border);background:rgba(227,226,222,0.95);backdrop-filter:blur(12px);z-index:100}
+.nav-logo{font-size:18px;font-weight:900;letter-spacing:-0.03em;text-decoration:none;color:var(--text);text-transform:uppercase}
+.nav-right{display:flex;gap:24px;justify-content:flex-end}
+.nav-right a{font-size:13px;font-weight:600;text-decoration:none;color:var(--text)}
+
+.hero{min-height:85vh;display:grid;grid-template-columns:3fr 9fr;border-bottom:1px solid var(--border)}
+.hero-sidebar{border-right:1px solid var(--border);padding:60px 32px;display:flex;flex-direction:column;gap:20px}
+.hero-sidebar-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--gray)}
+.hero-icon{width:16px;height:16px;background:var(--text)}
+.hero-main{padding:60px 48px;display:flex;flex-direction:column;justify-content:center}
+.hero h1{font-size:clamp(48px,9vw,140px);font-weight:900;line-height:0.85;letter-spacing:-0.04em;margin-bottom:40px}
+.hero h1 .accent{color:var(--blue)}
+.hero-bottom{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:700px}
+.hero-bottom p{font-size:18px;line-height:1.6;color:var(--dgray);max-width:400px}
+.hero-btns{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.btn-poster{display:inline-block;background:var(--blue);color:var(--bg);padding:16px 32px;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;border-radius:0;transition:background 0.3s}
+.btn-poster:hover{background:var(--text)}
+.btn-link{font-size:14px;font-weight:600;color:var(--text);text-decoration:underline;text-underline-offset:4px}
+
+.system{display:grid;grid-template-columns:3fr 9fr;border-bottom:1px solid var(--border)}
+.system-sidebar{border-right:1px solid var(--border);padding:40px 32px;position:sticky;top:80px;align-self:start}
+.system-sidebar span{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--gray)}
+.system-main{padding:80px 48px}
+.system-headline{font-size:clamp(40px,7vw,100px);font-weight:900;line-height:0.9;letter-spacing:-0.03em;margin-bottom:60px}
+.system-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.system-cell{border:1px solid var(--border);padding:32px;transition:background 0.3s}
+.system-cell:hover{background:rgba(255,255,255,0.2)}
+.system-idx{font-family:monospace;font-size:13px;color:var(--gray);margin-bottom:16px}
+.system-cell h3{font-size:20px;font-weight:700;margin-bottom:12px}
+.system-cell p{font-size:14px;line-height:1.6;color:var(--dgray)}
+
+.list-section{display:grid;grid-template-columns:3fr 9fr;border-bottom:1px solid var(--border)}
+.list-sidebar{border-right:1px solid var(--border);padding:40px 32px;position:sticky;top:80px;align-self:start}
+.list-sidebar span{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--gray)}
+.list-main{padding:0 48px}
+.list-item{border-top:1px solid var(--border);padding:32px 0;display:flex;align-items:flex-start;gap:24px;cursor:pointer;transition:color 0.3s}
+.list-item:hover{color:var(--blue)}
+.list-idx{font-family:monospace;font-size:13px;color:var(--gray);padding-top:12px}
+.list-title{font-size:clamp(28px,5vw,64px);font-weight:700;letter-spacing:-0.02em;line-height:1}
+
+.access{display:grid;grid-template-columns:3fr 9fr;min-height:50vh;border-bottom:1px solid var(--border)}
+.access-sidebar{border-right:1px solid var(--border);padding:40px 32px}
+.access-sidebar span{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--gray)}
+.access-main{padding:80px 48px;display:flex;flex-direction:column;justify-content:center}
+.access h2{font-size:clamp(48px,8vw,120px);font-weight:900;line-height:0.85;letter-spacing:-0.04em;margin-bottom:24px}
+.access p{font-size:18px;color:var(--dgray);max-width:500px;margin-bottom:40px;line-height:1.5}
+.btn-dark{display:inline-block;background:var(--text);color:var(--bg);padding:20px 40px;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none}
+
+@media(max-width:768px){
+  .nav{grid-template-columns:1fr;height:auto;padding:16px 20px}.nav-right{display:none}
+  .hero,.system,.list-section,.access{grid-template-columns:1fr}
+  .hero-sidebar,.system-sidebar,.list-sidebar,.access-sidebar{display:none}
+  .hero-main,.system-main,.list-main,.access-main{padding:40px 20px}
+  .hero-bottom{grid-template-columns:1fr}
+  .system-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="nav-logo">POSTER</a>
+  <div></div>
+  <div class="nav-right"><a href="#">System</a><a href="#">Access</a></div>
+</nav>
+
+<section class="hero">
+  <div class="hero-sidebar"><span class="hero-sidebar-label">Manifesto</span><div class="hero-icon"></div></div>
+  <div class="hero-main">
+    <h1>REALITY<br>FIRST<br><span class="accent">DESIGN</span></h1>
+    <div class="hero-bottom">
+      <p>We reject decorative noise. Every element exists because it must — clarity is the ultimate sophistication.</p>
+      <div class="hero-btns"><a href="#" class="btn-poster">EXPLORE SYSTEM</a><a href="#" class="btn-link">Read Manifesto</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="system">
+  <div class="system-sidebar"><span>SYSTEM</span></div>
+  <div class="system-main">
+    <h2 class="system-headline">DESIGN<br>BUILD<br>SHIP</h2>
+    <div class="system-grid">
+      <div class="system-cell"><div class="system-idx">01</div><h3>STRATEGY</h3><p>Data-driven research and positioning that separates your brand from commodity competition.</p></div>
+      <div class="system-cell"><div class="system-idx">02</div><h3>DESIGN</h3><p>Systematic visual languages built on grids, type scales, and rational color theory.</p></div>
+      <div class="system-cell"><div class="system-idx">03</div><h3>ENGINEERING</h3><p>Production-grade code that performs under load and scales with your ambition.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="list-section">
+  <div class="list-sidebar"><span>WHY DIFFERENT</span></div>
+  <div class="list-main">
+    <div class="list-item"><span class="list-idx">001</span><span class="list-title">ZERO DECORATION</span></div>
+    <div class="list-item"><span class="list-idx">002</span><span class="list-title">GRID PRECISION</span></div>
+    <div class="list-item"><span class="list-idx">003</span><span class="list-title">TYPE AS INTERFACE</span></div>
+    <div class="list-item"><span class="list-idx">004</span><span class="list-title">DATA OVER OPINION</span></div>
+  </div>
+</section>
+
+<section class="access">
+  <div class="access-sidebar"><span>ACCESS</span></div>
+  <div class="access-main">
+    <h2>Start<br>Exploring</h2>
+    <p>Join the system. Build with intention. Ship with confidence.</p>
+    <a href="#" class="btn-dark">GET STARTED →</a>
+  </div>
+</section>
+
+</body>
+</html>

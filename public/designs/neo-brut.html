@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neo Brut — Design Preview</title>
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400;700;800&f[]=satoshi@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--yellow:#ffe17c;--charcoal:#171e19;--sage:#b7c6c2;--white:#fff;--black:#000}
+body{background:var(--yellow);color:var(--black);font-family:'Satoshi',sans-serif;overflow-x:hidden}
+::selection{background:var(--charcoal);color:var(--yellow)}
+
+.nav{position:fixed;top:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:var(--yellow);border-bottom:2px solid var(--black);z-index:100}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--black);font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:20px}
+.nav-icon{width:32px;height:32px;background:var(--black);display:flex;align-items:center;justify-content:center;border-radius:6px}
+.nav-icon span{color:var(--yellow);font-size:16px;font-weight:800}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{font-size:14px;font-weight:700;text-decoration:none;color:var(--black)}
+.nav-cta{background:var(--black);color:var(--white);padding:12px 24px;border:2px solid var(--black);border-radius:12px;font-weight:700;font-size:13px;box-shadow:4px 4px 0 var(--black);transition:transform 0.2s,box-shadow 0.2s;text-decoration:none}
+.nav-cta:hover{transform:translate(4px,4px);box-shadow:none}
+
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:120px 48px 80px;align-items:center;position:relative;background-image:radial-gradient(circle,rgba(0,0,0,0.06) 1px,transparent 1px);background-size:32px 32px}
+.hero-badge{display:inline-block;background:var(--white);border:2px solid var(--black);border-radius:999px;padding:8px 20px;font-size:12px;font-weight:700;margin-bottom:24px}
+.hero h1{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(40px,8vw,100px);font-weight:800;line-height:0.95;letter-spacing:-0.04em;margin-bottom:24px}
+.hero h1 .outline{-webkit-text-stroke:2px var(--black);color:transparent}
+.hero p{font-size:16px;color:rgba(0,0,0,0.6);max-width:420px;line-height:1.6;margin-bottom:32px}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap}
+.btn-neo{display:inline-block;padding:16px 32px;font-weight:700;font-size:14px;text-decoration:none;border:2px solid var(--black);border-radius:12px;transition:transform 0.2s cubic-bezier(0.175,0.885,0.32,1.275),box-shadow 0.2s}
+.btn-neo.primary{background:var(--black);color:var(--white);box-shadow:8px 8px 0 var(--black)}
+.btn-neo.primary:hover{transform:translate(4px,4px);box-shadow:4px 4px 0 var(--black)}
+.btn-neo.secondary{background:var(--white);color:var(--black);box-shadow:4px 4px 0 var(--black)}
+.btn-neo.secondary:hover{transform:translate(4px,4px);box-shadow:none}
+.hero-mockup{background:var(--white);border:2px solid var(--black);border-radius:16px;box-shadow:12px 12px 0 var(--black);overflow:hidden}
+.mockup-bar{background:var(--black);padding:12px 16px;display:flex;gap:6px}
+.mockup-dot{width:10px;height:10px;border-radius:50%}
+.mockup-dot.r{background:#ff5f57}.mockup-dot.y{background:#febc2e}.mockup-dot.g{background:#28c840}
+.mockup-body{padding:24px;display:grid;grid-template-columns:1fr 2fr 1fr;gap:16px}
+.mock-sidebar{background:var(--sage);border-radius:8px;padding:16px;min-height:200px}
+.mock-main{background:var(--yellow);border-radius:8px;padding:16px;min-height:200px;display:flex;align-items:center;justify-content:center}
+.mock-main-card{background:var(--white);border:2px solid var(--black);border-radius:8px;padding:20px;width:80%}
+.mock-panel{background:var(--charcoal);border-radius:8px;padding:16px;min-height:200px}
+
+.marquee{background:var(--charcoal);border-bottom:2px solid var(--black);padding:20px 0;overflow:hidden}
+.marquee-track{display:flex;gap:60px;animation:marquee 20s linear infinite;white-space:nowrap}
+.marquee-track span{font-family:'Cabinet Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--sage);opacity:0.5;text-transform:uppercase}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+.features{background:var(--yellow);padding:100px 48px;border-top:2px solid var(--black);border-bottom:2px solid var(--black)}
+.features h2{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:800;text-align:center;margin-bottom:48px}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:1000px;margin:0 auto}
+.feature-card{background:var(--white);border:2px solid var(--black);padding:32px;box-shadow:4px 4px 0 var(--black);transition:transform 0.2s,box-shadow 0.2s}
+.feature-card:hover{transform:translate(4px,4px);box-shadow:none}
+.feature-icon-box{width:48px;height:48px;background:var(--sage);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:20px;transition:background 0.3s}
+.feature-card:hover .feature-icon-box{background:var(--yellow)}
+.feature-card h3{font-family:'Cabinet Grotesk',sans-serif;font-size:22px;font-weight:800;margin-bottom:10px}
+.feature-card p{font-size:14px;line-height:1.6;color:rgba(0,0,0,0.6)}
+
+.how{background:var(--charcoal);padding:100px 48px;color:var(--white)}
+.how h2{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:800;text-align:center;margin-bottom:60px}
+.how-steps{display:flex;gap:40px;max-width:900px;margin:0 auto;align-items:flex-start;justify-content:center;position:relative}
+.how-step{text-align:center;flex:1}
+.step-circle{width:64px;height:64px;border-radius:50%;border:4px solid;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:24px}
+.step-circle.s1{border-color:var(--sage);color:var(--sage)}
+.step-circle.s2{border-color:var(--yellow);color:var(--yellow)}
+.step-circle.s3{border-color:var(--white);color:var(--white)}
+.how-step h3{font-family:'Cabinet Grotesk',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px}
+.how-step p{font-size:13px;opacity:0.6;line-height:1.5}
+
+.footer{background:var(--charcoal);padding:60px 48px 32px;color:var(--sage);border-top:2px solid rgba(255,255,255,0.1)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;max-width:1200px;margin:0 auto}
+.footer-logo{font-family:'Cabinet Grotesk',sans-serif;font-size:24px;font-weight:800;color:var(--white);margin-bottom:12px}
+.footer h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--white);margin-bottom:16px}
+.footer a{font-size:14px;text-decoration:none;color:var(--sage);display:block;margin-bottom:8px;transition:color 0.2s}
+.footer a:hover{color:var(--yellow)}
+
+@media(max-width:768px){
+  .nav{padding:0 20px;height:64px}.nav-links{display:none}
+  .hero{grid-template-columns:1fr;padding:100px 20px 60px}
+  .features{padding:60px 20px}.feature-grid{grid-template-columns:1fr}
+  .how{padding:60px 20px}.how-steps{flex-direction:column}
+  .footer{padding:40px 20px}.footer-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="nav-logo"><div class="nav-icon"><span>⚡</span></div>FLUX</a>
+  <div class="nav-links"><a href="#">Features</a><a href="#">Pricing</a><a href="#">About</a><a href="#" class="nav-cta">START FREE TRIAL</a></div>
+</nav>
+
+<section class="hero">
+  <div>
+    <span class="hero-badge">🆕 AI CONTENT ASSISTANT 2.0</span>
+    <h1>BUILD<br>FASTER.<br><span class="outline">SHIP</span><br>SMARTER.</h1>
+    <p>The all-in-one platform for teams who build products people actually love.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-neo primary">START FREE TRIAL</a>
+      <a href="#" class="btn-neo secondary">WATCH DEMO</a>
+    </div>
+  </div>
+  <div class="hero-mockup">
+    <div class="mockup-bar"><span class="mockup-dot r"></span><span class="mockup-dot y"></span><span class="mockup-dot g"></span></div>
+    <div class="mockup-body">
+      <div class="mock-sidebar"></div>
+      <div class="mock-main"><div class="mock-main-card"><div style="font-weight:700;margin-bottom:8px">Revenue</div><div style="font-size:32px;font-weight:800;font-family:'Cabinet Grotesk'">$42,850</div><div style="font-size:13px;color:green;margin-top:4px">↑ 23.5% this month</div></div></div>
+      <div class="mock-panel"></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>ACME</span><span>GLOBEX</span><span>INITECH</span><span>UMBRELLA</span><span>STARK</span><span>WAYNE</span><span>OSCORP</span><span>CYBERDYNE</span>
+    <span>ACME</span><span>GLOBEX</span><span>INITECH</span><span>UMBRELLA</span><span>STARK</span><span>WAYNE</span><span>OSCORP</span><span>CYBERDYNE</span>
+  </div>
+</div>
+
+<section class="features">
+  <h2>EVERYTHING YOU NEED</h2>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-icon-box">📊</div><h3>Analytics</h3><p>Real-time dashboards that track what matters and ignore vanity metrics.</p></div>
+    <div class="feature-card"><div class="feature-icon-box">⚡</div><h3>Automation</h3><p>Set workflows once, then watch your team reclaim hours every week.</p></div>
+    <div class="feature-card"><div class="feature-icon-box">🔒</div><h3>Security</h3><p>Enterprise-grade protection without the enterprise-grade complexity.</p></div>
+  </div>
+</section>
+
+<section class="how">
+  <h2>HOW IT WORKS</h2>
+  <div class="how-steps">
+    <div class="how-step"><div class="step-circle s1">1</div><h3>CONNECT</h3><p>Link your tools in under 2 minutes. We integrate with everything.</p></div>
+    <div class="how-step"><div class="step-circle s2">2</div><h3>CONFIGURE</h3><p>Set your workflows and automations with our visual builder.</p></div>
+    <div class="how-step"><div class="step-circle s3">3</div><h3>LAUNCH</h3><p>Go live and start seeing results from day one.</p></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div><div class="footer-logo">FLUX</div><p style="font-size:14px;opacity:0.5;line-height:1.6">Build faster. Ship smarter.</p></div>
+    <div><h4>Product</h4><a href="#">Features</a><a href="#">Pricing</a><a href="#">Changelog</a></div>
+    <div><h4>Company</h4><a href="#">About</a><a href="#">Blog</a><a href="#">Careers</a></div>
+    <div><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Security</a></div>
+  </div>
+</footer>
+
+</body>
+</html>

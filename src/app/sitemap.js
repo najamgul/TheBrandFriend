@@ -15,6 +15,7 @@ export default function sitemap() {
   return [
     { url: `${BASE_URL}/`, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
     { url: `${BASE_URL}/services/`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE_URL}/designs/`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
     ...servicePages,
     { url: `${BASE_URL}/about/`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/process/`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
