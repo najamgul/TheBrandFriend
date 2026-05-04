@@ -17,11 +17,15 @@ export default function HomePage() {
             <h1 className="hero-headline">
               WE SHIP<br />BRANDS THAT<br /><span className="volt">DOMINATE</span>
             </h1>
+            <div className="delivery-badge">
+              <span className="delivery-dot"></span>
+              <span className="delivery-text">🚀 YOUR BRAND, LIVE IN <strong>3 DAYS</strong>. GUARANTEED.</span>
+            </div>
             <p className="hero-sub">
               <em>Strategy. Design. Development. Marketing.<br />Everything your brand needs to break the internet.</em>
             </p>
             <BrutalistForm variant="hero" />
-            <p className="tech-label">// 50+ BRANDS SHIPPED &bull; 3X AVG ROAS &bull; 24/7 SUPPORT</p>
+            <p className="tech-label">// 50+ BRANDS SHIPPED &bull; 3-DAY DELIVERY &bull; 24/7 SUPPORT</p>
           </div>
           <div className="hero-anim">
             <CreattieEmbed src="https://ik.imagekit.io/creattie/main/saved_colors/145118/wCSJQov3DLRpg8sp.json" />

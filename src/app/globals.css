@@ -96,6 +96,26 @@ a { color: inherit; }
   margin-bottom: 20px; letter-spacing: -1px;
 }
 .hero-sub { font-size: 15px; color: var(--grey); font-weight: 400; line-height: 1.6; max-width: 600px; margin-bottom: 32px; }
+
+/* 3-Day Delivery Badge */
+.delivery-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--volt); color: var(--black);
+  border: 3px solid var(--black); box-shadow: 4px 4px 0 var(--black);
+  padding: 10px 20px; margin-bottom: 20px;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.delivery-badge strong { font-size: 16px; letter-spacing: 0.02em; }
+.delivery-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--black); flex-shrink: 0;
+  animation: deliveryPulse 1.5s ease-in-out infinite;
+}
+@keyframes deliveryPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+}
 .hero-anim { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 280px; margin: 20px auto 0; }
 .creattie-wrapper { width: 100%; }
 
