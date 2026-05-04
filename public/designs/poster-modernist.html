@@ -4,68 +4,78 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Poster Modernist — Design Preview</title>
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400;500;600;700;900&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#E3E2DE;--text:#141414;--blue:#1351AA;--gray:#7A7A7A;--dgray:#444343;--border:#C7C7C7}
-body{background:var(--bg);color:var(--text);font-family:'General Sans',sans-serif;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'General Sans',sans-serif;font-weight:400;overflow-x:hidden}
 ::selection{background:var(--blue);color:#fff}
 
-.nav{position:sticky;top:0;height:80px;display:grid;grid-template-columns:3fr 6fr 3fr;align-items:center;padding:0 48px;border-bottom:1px solid var(--border);background:rgba(227,226,222,0.95);backdrop-filter:blur(12px);z-index:100}
-.nav-logo{font-size:18px;font-weight:900;letter-spacing:-0.03em;text-decoration:none;color:var(--text);text-transform:uppercase}
-.nav-right{display:flex;gap:24px;justify-content:flex-end}
-.nav-right a{font-size:13px;font-weight:600;text-decoration:none;color:var(--text)}
+/* ===== NAVIGATION ===== */
+.nav{position:sticky;top:0;height:72px;display:grid;grid-template-columns:200px 1fr 200px;align-items:center;padding:0 clamp(20px,3vw,48px);border-bottom:1px solid var(--border);background:rgba(227,226,222,0.95);backdrop-filter:blur(12px);z-index:100}
+.nav-logo{font-size:16px;font-weight:900;letter-spacing:-0.03em;text-decoration:none;color:var(--text);text-transform:uppercase}
+.nav-center{display:flex;gap:32px;justify-content:center}
+.nav-center a{font-size:12px;font-weight:600;text-decoration:none;color:var(--gray);letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s}
+.nav-center a:hover{color:var(--text)}
+.nav-right{display:flex;gap:20px;justify-content:flex-end}
+.nav-right a{font-size:12px;font-weight:600;text-decoration:none;color:var(--text);letter-spacing:0.08em;text-transform:uppercase}
 
-.hero{min-height:85vh;display:grid;grid-template-columns:3fr 9fr;border-bottom:1px solid var(--border)}
-.hero-sidebar{border-right:1px solid var(--border);padding:60px 32px;display:flex;flex-direction:column;gap:20px}
-.hero-sidebar-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--gray)}
-.hero-icon{width:16px;height:16px;background:var(--text)}
-.hero-main{padding:60px 48px;display:flex;flex-direction:column;justify-content:center}
-.hero h1{font-size:clamp(48px,9vw,140px);font-weight:900;line-height:0.85;letter-spacing:-0.04em;margin-bottom:40px}
+/* ===== SIDEBAR GRID LAYOUT ===== */
+.grid-layout{display:grid;grid-template-columns:200px 1fr;min-height:calc(100vh - 72px);border-bottom:1px solid var(--border)}
+.sidebar{border-right:1px solid var(--border);padding:clamp(24px,4vw,48px) clamp(16px,2vw,32px);display:flex;flex-direction:column;gap:20px;position:sticky;top:72px;align-self:start;height:calc(100vh - 72px)}
+.sidebar-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.25em;color:var(--gray)}
+.sidebar-icon{width:16px;height:16px;background:var(--text);margin-top:auto}
+.sidebar-meta{font-size:10px;color:var(--gray);letter-spacing:0.15em;text-transform:uppercase;margin-top:auto}
+.main-content{padding:clamp(40px,6vw,80px) clamp(24px,4vw,64px);display:flex;flex-direction:column;justify-content:center}
+
+/* ===== HERO ===== */
+.hero h1{font-size:clamp(48px,10vw,160px);font-weight:900;line-height:0.82;letter-spacing:-0.04em;margin-bottom:clamp(32px,5vw,56px)}
 .hero h1 .accent{color:var(--blue)}
+.hero h1 .outline{-webkit-text-stroke:2px var(--blue);color:transparent}
 .hero-bottom{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:700px}
-.hero-bottom p{font-size:18px;line-height:1.6;color:var(--dgray);max-width:400px}
-.hero-btns{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
-.btn-poster{display:inline-block;background:var(--blue);color:var(--bg);padding:16px 32px;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none;border-radius:0;transition:background 0.3s}
+.hero-desc{font-size:clamp(15px,1.3vw,18px);line-height:1.65;color:var(--dgray);max-width:380px}
+.hero-btns{display:flex;flex-direction:column;gap:16px;align-items:flex-start;justify-content:flex-end}
+.btn-poster{display:inline-block;background:var(--blue);color:var(--bg);padding:16px 40px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;text-decoration:none;transition:background 0.3s}
 .btn-poster:hover{background:var(--text)}
-.btn-link{font-size:14px;font-weight:600;color:var(--text);text-decoration:underline;text-underline-offset:4px}
+.btn-link{font-size:13px;font-weight:600;color:var(--text);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
 
-.system{display:grid;grid-template-columns:3fr 9fr;border-bottom:1px solid var(--border)}
-.system-sidebar{border-right:1px solid var(--border);padding:40px 32px;position:sticky;top:80px;align-self:start}
-.system-sidebar span{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--gray)}
-.system-main{padding:80px 48px}
-.system-headline{font-size:clamp(40px,7vw,100px);font-weight:900;line-height:0.9;letter-spacing:-0.03em;margin-bottom:60px}
+/* ===== SYSTEM SECTION ===== */
+.system-headline{font-size:clamp(40px,8vw,120px);font-weight:900;line-height:0.88;letter-spacing:-0.03em;margin-bottom:clamp(40px,6vw,72px)}
 .system-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
-.system-cell{border:1px solid var(--border);padding:32px;transition:background 0.3s}
-.system-cell:hover{background:rgba(255,255,255,0.2)}
-.system-idx{font-family:monospace;font-size:13px;color:var(--gray);margin-bottom:16px}
-.system-cell h3{font-size:20px;font-weight:700;margin-bottom:12px}
-.system-cell p{font-size:14px;line-height:1.6;color:var(--dgray)}
+.system-cell{border:1px solid var(--border);padding:clamp(20px,3vw,40px);transition:background 0.3s}
+.system-cell:hover{background:rgba(255,255,255,0.3)}
+.system-idx{font-family:monospace;font-size:12px;color:var(--gray);margin-bottom:16px;letter-spacing:0.1em}
+.system-cell h3{font-size:clamp(16px,1.5vw,22px);font-weight:700;margin-bottom:12px;letter-spacing:-0.01em}
+.system-cell p{font-size:14px;line-height:1.65;color:var(--dgray)}
 
-.list-section{display:grid;grid-template-columns:3fr 9fr;border-bottom:1px solid var(--border)}
-.list-sidebar{border-right:1px solid var(--border);padding:40px 32px;position:sticky;top:80px;align-self:start}
-.list-sidebar span{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--gray)}
-.list-main{padding:0 48px}
-.list-item{border-top:1px solid var(--border);padding:32px 0;display:flex;align-items:flex-start;gap:24px;cursor:pointer;transition:color 0.3s}
-.list-item:hover{color:var(--blue)}
-.list-idx{font-family:monospace;font-size:13px;color:var(--gray);padding-top:12px}
-.list-title{font-size:clamp(28px,5vw,64px);font-weight:700;letter-spacing:-0.02em;line-height:1}
+/* ===== LIST SECTION ===== */
+.list-main{padding:0 clamp(24px,4vw,64px)}
+.list-item{border-top:1px solid var(--border);padding:clamp(20px,3vw,36px) 0;display:flex;align-items:center;gap:24px;cursor:pointer;transition:color 0.3s,padding-left 0.3s}
+.list-item:hover{color:var(--blue);padding-left:12px}
+.list-idx{font-family:monospace;font-size:12px;color:var(--gray);letter-spacing:0.1em;min-width:48px}
+.list-title{font-size:clamp(24px,5vw,72px);font-weight:700;letter-spacing:-0.02em;line-height:1;flex:1}
+.list-arrow{font-size:18px;color:var(--gray);transition:color 0.3s,transform 0.3s}
+.list-item:hover .list-arrow{color:var(--blue);transform:translateX(4px)}
 
-.access{display:grid;grid-template-columns:3fr 9fr;min-height:50vh;border-bottom:1px solid var(--border)}
-.access-sidebar{border-right:1px solid var(--border);padding:40px 32px}
-.access-sidebar span{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--gray)}
-.access-main{padding:80px 48px;display:flex;flex-direction:column;justify-content:center}
-.access h2{font-size:clamp(48px,8vw,120px);font-weight:900;line-height:0.85;letter-spacing:-0.04em;margin-bottom:24px}
-.access p{font-size:18px;color:var(--dgray);max-width:500px;margin-bottom:40px;line-height:1.5}
-.btn-dark{display:inline-block;background:var(--text);color:var(--bg);padding:20px 40px;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;text-decoration:none}
+/* ===== ACCESS / CTA ===== */
+.access h2{font-size:clamp(48px,9vw,140px);font-weight:900;line-height:0.82;letter-spacing:-0.04em;margin-bottom:24px}
+.access h2 .accent{color:var(--blue)}
+.access-desc{font-size:clamp(15px,1.3vw,18px);color:var(--dgray);max-width:480px;margin-bottom:40px;line-height:1.6}
+.btn-dark{display:inline-block;background:var(--text);color:var(--bg);padding:20px 48px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;text-decoration:none;transition:background 0.3s}
+.btn-dark:hover{background:var(--blue)}
 
-@media(max-width:768px){
-  .nav{grid-template-columns:1fr;height:auto;padding:16px 20px}.nav-right{display:none}
-  .hero,.system,.list-section,.access{grid-template-columns:1fr}
-  .hero-sidebar,.system-sidebar,.list-sidebar,.access-sidebar{display:none}
-  .hero-main,.system-main,.list-main,.access-main{padding:40px 20px}
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .system-grid{grid-template-columns:1fr 1fr}
   .hero-bottom{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .nav{grid-template-columns:1fr;height:auto;padding:16px 20px}.nav-center,.nav-right{display:none}
+  .grid-layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .main-content{padding:40px 20px}
   .system-grid{grid-template-columns:1fr}
+  .list-main{padding:0 20px}
 }
 </style>
 </head>
@@ -73,48 +83,63 @@ body{background:var(--bg);color:var(--text);font-family:'General Sans',sans-seri
 
 <nav class="nav">
   <a href="#" class="nav-logo">POSTER</a>
-  <div></div>
-  <div class="nav-right"><a href="#">System</a><a href="#">Access</a></div>
+  <div class="nav-center"><a href="#">System</a><a href="#">Process</a><a href="#">Archive</a></div>
+  <div class="nav-right"><a href="#">Contact</a></div>
 </nav>
 
-<section class="hero">
-  <div class="hero-sidebar"><span class="hero-sidebar-label">Manifesto</span><div class="hero-icon"></div></div>
-  <div class="hero-main">
+<!-- HERO -->
+<section class="grid-layout hero">
+  <div class="sidebar">
+    <span class="sidebar-label">Manifesto</span>
+    <div class="sidebar-icon"></div>
+    <span class="sidebar-meta">EST. 2019</span>
+  </div>
+  <div class="main-content">
     <h1>REALITY<br>FIRST<br><span class="accent">DESIGN</span></h1>
     <div class="hero-bottom">
-      <p>We reject decorative noise. Every element exists because it must — clarity is the ultimate sophistication.</p>
-      <div class="hero-btns"><a href="#" class="btn-poster">EXPLORE SYSTEM</a><a href="#" class="btn-link">Read Manifesto</a></div>
+      <p class="hero-desc">We reject decorative noise. Every element exists because it must — clarity is the ultimate sophistication in a world drowning in excess.</p>
+      <div class="hero-btns">
+        <a href="#" class="btn-poster">EXPLORE SYSTEM</a>
+        <a href="#" class="btn-link">Read Manifesto</a>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="system">
-  <div class="system-sidebar"><span>SYSTEM</span></div>
-  <div class="system-main">
+<!-- SYSTEM -->
+<section class="grid-layout">
+  <div class="sidebar"><span class="sidebar-label">System</span></div>
+  <div class="main-content">
     <h2 class="system-headline">DESIGN<br>BUILD<br>SHIP</h2>
     <div class="system-grid">
-      <div class="system-cell"><div class="system-idx">01</div><h3>STRATEGY</h3><p>Data-driven research and positioning that separates your brand from commodity competition.</p></div>
-      <div class="system-cell"><div class="system-idx">02</div><h3>DESIGN</h3><p>Systematic visual languages built on grids, type scales, and rational color theory.</p></div>
-      <div class="system-cell"><div class="system-idx">03</div><h3>ENGINEERING</h3><p>Production-grade code that performs under load and scales with your ambition.</p></div>
+      <div class="system-cell"><div class="system-idx">001</div><h3>STRATEGY</h3><p>Data-driven research and positioning that separates your brand from commodity competition.</p></div>
+      <div class="system-cell"><div class="system-idx">002</div><h3>DESIGN</h3><p>Systematic visual languages built on grids, type scales, and rational color theory.</p></div>
+      <div class="system-cell"><div class="system-idx">003</div><h3>ENGINEERING</h3><p>Production-grade code that performs under load and scales with your ambition.</p></div>
+      <div class="system-cell"><div class="system-idx">004</div><h3>TESTING</h3><p>Rigorous quality assurance that ensures pixel-perfect output across every platform.</p></div>
+      <div class="system-cell"><div class="system-idx">005</div><h3>LAUNCH</h3><p>Coordinated deployment with performance monitoring and real-time analytics.</p></div>
+      <div class="system-cell"><div class="system-idx">006</div><h3>SUPPORT</h3><p>Ongoing partnership with dedicated teams focused on continuous improvement.</p></div>
     </div>
   </div>
 </section>
 
-<section class="list-section">
-  <div class="list-sidebar"><span>WHY DIFFERENT</span></div>
+<!-- DIFFERENTIATORS -->
+<section class="grid-layout">
+  <div class="sidebar"><span class="sidebar-label">Why Different</span></div>
   <div class="list-main">
-    <div class="list-item"><span class="list-idx">001</span><span class="list-title">ZERO DECORATION</span></div>
-    <div class="list-item"><span class="list-idx">002</span><span class="list-title">GRID PRECISION</span></div>
-    <div class="list-item"><span class="list-idx">003</span><span class="list-title">TYPE AS INTERFACE</span></div>
-    <div class="list-item"><span class="list-idx">004</span><span class="list-title">DATA OVER OPINION</span></div>
+    <div class="list-item"><span class="list-idx">001</span><span class="list-title">ZERO DECORATION</span><span class="list-arrow">→</span></div>
+    <div class="list-item"><span class="list-idx">002</span><span class="list-title">GRID PRECISION</span><span class="list-arrow">→</span></div>
+    <div class="list-item"><span class="list-idx">003</span><span class="list-title">TYPE AS INTERFACE</span><span class="list-arrow">→</span></div>
+    <div class="list-item"><span class="list-idx">004</span><span class="list-title">DATA OVER OPINION</span><span class="list-arrow">→</span></div>
+    <div class="list-item"><span class="list-idx">005</span><span class="list-title">FUNCTION FIRST</span><span class="list-arrow">→</span></div>
   </div>
 </section>
 
-<section class="access">
-  <div class="access-sidebar"><span>ACCESS</span></div>
-  <div class="access-main">
-    <h2>Start<br>Exploring</h2>
-    <p>Join the system. Build with intention. Ship with confidence.</p>
+<!-- ACCESS CTA -->
+<section class="grid-layout">
+  <div class="sidebar"><span class="sidebar-label">Access</span></div>
+  <div class="main-content access">
+    <h2>Start<br><span class="accent">Exploring</span></h2>
+    <p class="access-desc">Join the system. Build with intention. Ship with confidence. No decoration, no compromise.</p>
     <a href="#" class="btn-dark">GET STARTED →</a>
   </div>
 </section>

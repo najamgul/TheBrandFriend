@@ -4,87 +4,143 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dark Protocol — Design Preview</title>
-<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@700&f[]=general-sans@300;400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@300;400;500;600;700&f[]=general-sans@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#181818;--text:#EBDCC4;--coral:#DC9F85;--earth:#66473B;--umber:#35211A;--sage:#B6A596}
-body{background:var(--bg);color:var(--text);font-family:'General Sans',sans-serif;font-weight:300;overflow-x:hidden;position:relative}
+:root{--bg:#181818;--cream:#EBDCC4;--coral:#DC9F85;--earth:#66473B;--umber:#35211A;--sage:#B6A596;--rust:#C67B5C}
+body{background:var(--bg);color:var(--cream);font-family:'General Sans',sans-serif;font-weight:300;overflow-x:hidden;position:relative}
 ::selection{background:var(--coral);color:var(--bg)}
-.noise{position:fixed;inset:0;pointer-events:none;z-index:50;opacity:0.03;mix-blend-mode:multiply}
+
+/* ===== NOISE ===== */
+.noise{position:fixed;inset:0;pointer-events:none;z-index:50;opacity:0.025;mix-blend-mode:overlay}
 .noise svg{width:100%;height:100%}
 
-.nav{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:32px 48px;z-index:60}
-.nav-brand{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.2em;color:var(--sage)}
-.nav-line{flex:1;height:1px;background:var(--umber);margin:0 40px}
-.nav-status{font-size:10px;text-transform:uppercase;letter-spacing:0.15em;color:var(--umber)}
+/* ===== NAV ===== */
+.nav{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;padding:32px clamp(20px,4vw,48px);z-index:60}
+.nav-brand{font-family:'Clash Grotesk',sans-serif;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.25em;color:var(--sage)}
+.nav-line{flex:1;height:1px;background:var(--umber);margin:0 clamp(16px,3vw,48px)}
+.nav-status{font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:var(--earth)}
 
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;padding:120px 48px}
-.hero-label{display:flex;align-items:center;gap:12px;margin-bottom:32px}
-.hero-label-line{width:24px;height:2px;background:var(--coral)}
-.hero-label span{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.15em;color:var(--sage)}
-.hero-headline{position:relative;margin-bottom:40px}
-.hero-outline{position:absolute;top:4px;left:4px;font-family:'Clash Grotesk',sans-serif;font-size:clamp(40px,11.5vw,160px);font-weight:700;text-transform:uppercase;letter-spacing:-0.04em;line-height:0.85;-webkit-text-stroke:1px var(--earth);color:transparent;pointer-events:none}
-.hero-solid{position:relative;font-family:'Clash Grotesk',sans-serif;font-size:clamp(40px,11.5vw,160px);font-weight:700;text-transform:uppercase;letter-spacing:-0.04em;line-height:0.85;color:var(--text);z-index:2}
-.hero p{font-size:18px;max-width:420px;line-height:1.7;color:var(--sage);font-weight:300;margin-bottom:40px}
+/* ===== HERO ===== */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;padding:clamp(100px,15vh,160px) clamp(20px,4vw,64px) clamp(60px,8vh,100px)}
+.hero-label{display:flex;align-items:center;gap:14px;margin-bottom:36px}
+.hero-label-line{width:28px;height:2px;background:var(--coral)}
+.hero-label span{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.18em;color:var(--sage)}
 
-.hero-bottom{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:80px;border-top:1px solid var(--umber);padding-top:32px}
-.hero-statement{grid-column:1/6;font-size:20px;font-weight:300;line-height:1.7}
-.hero-status{grid-column:1/6;display:flex;align-items:center;gap:10px;margin-top:16px}
-.status-dot{width:8px;height:8px;border-radius:50%;background:var(--coral);animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.status-label{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--sage)}
-.hero-form{grid-column:7/13;display:flex}
-.hero-form input{flex:1;background:transparent;border:1px solid var(--earth);color:var(--text);padding:16px 20px;font-size:14px;border-radius:4px 0 0 4px;outline:none;font-family:inherit}
+/* Outline + solid headline */
+.hero-headline{position:relative;margin-bottom:48px}
+.hero-outline{position:absolute;top:5px;left:5px;font-family:'Clash Grotesk',sans-serif;font-size:clamp(40px,12vw,180px);font-weight:700;text-transform:uppercase;letter-spacing:-0.04em;line-height:0.82;-webkit-text-stroke:1px var(--earth);color:transparent;pointer-events:none;user-select:none}
+.hero-solid{position:relative;font-family:'Clash Grotesk',sans-serif;font-size:clamp(40px,12vw,180px);font-weight:700;text-transform:uppercase;letter-spacing:-0.04em;line-height:0.82;color:var(--cream);z-index:2}
+.hero-desc{font-size:clamp(15px,1.3vw,19px);max-width:420px;line-height:1.75;color:var(--sage);font-weight:300;margin-bottom:48px}
+
+/* Bottom bar */
+.hero-bar{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px);border-top:1px solid var(--umber);padding-top:32px;max-width:1000px}
+.hero-statement{font-family:'Clash Grotesk',sans-serif;font-size:clamp(16px,1.5vw,22px);font-weight:400;line-height:1.6;color:var(--cream)}
+.hero-right{display:flex;flex-direction:column;gap:20px}
+.hero-form{display:flex;border-bottom:1px solid var(--earth);padding-bottom:4px}
+.hero-form input{flex:1;background:transparent;border:none;color:var(--cream);padding:14px 0;font-family:'General Sans',sans-serif;font-size:14px;outline:none;letter-spacing:0.05em}
 .hero-form input::placeholder{color:var(--earth)}
-.hero-form button{background:var(--coral);color:var(--bg);border:none;padding:16px 28px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;border-radius:0 4px 4px 0;cursor:pointer}
-.form-caption{grid-column:7/13;font-size:11px;color:var(--umber);margin-top:8px}
+.hero-form button{background:var(--coral);color:var(--bg);border:none;padding:14px 32px;font-family:'General Sans',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:background 0.3s}
+.hero-form button:hover{background:var(--rust)}
+.form-caption{font-size:11px;color:var(--earth);letter-spacing:0.08em}
+.hero-status{display:flex;align-items:center;gap:10px;margin-top:8px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--coral);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+.status-label{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage)}
 
-.badge{position:fixed;bottom:32px;right:32px;width:64px;height:64px;border:1px solid var(--umber);border-radius:50%;z-index:40;overflow:hidden}
-.badge-text{animation:spin 12s linear infinite;font-size:11px;font-weight:700;text-transform:uppercase;color:var(--umber)}
+/* ===== VALUES ===== */
+.values{padding:clamp(80px,10vw,160px) clamp(20px,4vw,64px);border-top:1px solid var(--umber)}
+.values-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:clamp(40px,6vw,80px);flex-wrap:wrap;gap:24px}
+.values-header h2{font-family:'Clash Grotesk',sans-serif;font-size:clamp(28px,5vw,64px);font-weight:700;text-transform:uppercase;letter-spacing:-0.03em;line-height:0.9}
+.values-header p{font-size:14px;color:var(--sage);max-width:340px;line-height:1.6}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.value-card{padding:clamp(24px,3vw,48px);border:1px solid var(--umber);transition:background 0.35s}
+.value-card:hover{background:rgba(220,159,133,0.06)}
+.value-idx{font-family:monospace;font-size:11px;color:var(--earth);letter-spacing:0.1em;margin-bottom:16px}
+.value-card h3{font-family:'Clash Grotesk',sans-serif;font-size:clamp(16px,1.5vw,22px);font-weight:600;margin-bottom:12px;color:var(--cream)}
+.value-card p{font-size:14px;line-height:1.7;color:var(--sage)}
+
+/* ===== FEATURED QUOTE ===== */
+.quote{padding:clamp(80px,10vw,160px) clamp(20px,4vw,64px);text-align:center;position:relative}
+.quote-mark{font-family:Georgia,serif;font-size:clamp(80px,15vw,200px);color:var(--umber);line-height:0.6;margin-bottom:24px}
+.quote blockquote{font-family:'Clash Grotesk',sans-serif;font-size:clamp(20px,3vw,40px);font-weight:600;text-transform:uppercase;max-width:800px;margin:0 auto 32px;line-height:1.15;letter-spacing:-0.02em}
+.quote-author{font-size:13px;color:var(--sage);letter-spacing:0.15em;text-transform:uppercase}
+
+/* ===== BADGE ===== */
+.badge{position:fixed;bottom:32px;right:32px;width:72px;height:72px;border:1px solid var(--umber);border-radius:50%;z-index:40;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.badge svg{width:100%;height:100%;animation:spin 14s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.badge svg{width:100%;height:100%}
+.badge text{fill:var(--earth);font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;font-family:'General Sans',sans-serif}
 
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .values-grid{grid-template-columns:1fr 1fr}
+}
 @media(max-width:768px){
   .nav{padding:20px}
-  .nav-line{margin:0 16px}
-  .hero{padding:100px 20px 60px;flex-direction:column;align-items:flex-start}
-  .hero-bottom{grid-template-columns:1fr}
-  .hero-statement,.hero-form,.form-caption,.hero-status{grid-column:1/-1}
+  .hero{padding:100px 20px 60px}
+  .hero-bar{grid-template-columns:1fr}
+  .values{padding:60px 20px}
+  .values-grid{grid-template-columns:1fr}
+  .quote{padding:60px 20px}
   .badge{display:none}
 }
 </style>
 </head>
 <body>
 
-<div class="noise"><svg><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg></div>
+<div class="noise"><svg><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg></div>
 
 <nav class="nav">
-  <span class="nav-brand">SD—PROTOCOL 01</span>
+  <span class="nav-brand">SD — PROTOCOL 01</span>
   <div class="nav-line"></div>
   <span class="nav-status">INVITE ONLY</span>
 </nav>
 
 <section class="hero">
-  <div>
-    <div class="hero-label"><div class="hero-label-line"></div><span>EARLY ACCESS</span></div>
-    <div class="hero-headline">
-      <div class="hero-outline">SUPER<br>DESIGN</div>
-      <div class="hero-solid">SUPER<br>DESIGN</div>
-    </div>
-    <p>A curated design protocol for those who understand that exceptional branding is not optional.</p>
+  <div class="hero-label"><div class="hero-label-line"></div><span>EARLY ACCESS — BATCH 003</span></div>
+  <div class="hero-headline">
+    <div class="hero-outline">SUPER<br>DESIGN</div>
+    <div class="hero-solid">SUPER<br>DESIGN</div>
   </div>
-  <div class="hero-bottom">
-    <div class="hero-statement">We don't design for everyone. We design for the obsessed — those who know the difference between good and unforgettable.</div>
-    <div class="hero-status"><span class="status-dot"></span><span class="status-label">Batch 003 Filling</span></div>
-    <div class="hero-form"><input placeholder="YOUR@EMAIL.COM"><button>REQUEST ACCESS</button></div>
-    <div class="form-caption">Zero spam. Pure utility.</div>
+  <p class="hero-desc">A curated design protocol for those who understand that exceptional branding is not optional — it's the difference between noise and legacy.</p>
+  <div class="hero-bar">
+    <div>
+      <div class="hero-statement">We don't design for everyone. We design for the obsessed — those who know the difference between good and unforgettable.</div>
+      <div class="hero-status"><span class="status-dot"></span><span class="status-label">Batch 003 — 8 spots left</span></div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-form"><input placeholder="YOUR@EMAIL.COM"><button>REQUEST ACCESS</button></div>
+      <span class="form-caption">Zero spam. Pure utility. Unsubscribe anytime.</span>
+    </div>
   </div>
 </section>
 
+<section class="values">
+  <div class="values-header">
+    <h2>THE<br>PROTOCOL</h2>
+    <p>A systematic approach to design that eliminates guesswork and delivers measurable results.</p>
+  </div>
+  <div class="values-grid">
+    <div class="value-card"><div class="value-idx">001</div><h3>DISCOVERY</h3><p>Deep-dive research into your market, competitors, and audience to uncover the strategic opportunity.</p></div>
+    <div class="value-card"><div class="value-idx">002</div><h3>DEFINITION</h3><p>Crystal-clear brand positioning and visual direction that serves as the foundation for everything.</p></div>
+    <div class="value-card"><div class="value-idx">003</div><h3>DESIGN</h3><p>Meticulous craft across every touchpoint — from typography systems to interaction patterns.</p></div>
+    <div class="value-card"><div class="value-idx">004</div><h3>DEVELOPMENT</h3><p>Production-grade implementation with performance, accessibility, and scalability built in.</p></div>
+    <div class="value-card"><div class="value-idx">005</div><h3>DELIVERY</h3><p>Handoff with comprehensive documentation, training, and ongoing strategic support.</p></div>
+    <div class="value-card"><div class="value-idx">006</div><h3>EVOLUTION</h3><p>Continuous refinement based on real data, user feedback, and emerging opportunities.</p></div>
+  </div>
+</section>
+
+<section class="quote">
+  <div class="quote-mark">"</div>
+  <blockquote>DESIGN IS NOT WHAT IT LOOKS LIKE. DESIGN IS HOW IT MAKES PEOPLE FEEL.</blockquote>
+  <div class="quote-author">— PROTOCOL PRINCIPLE 01</div>
+</section>
+
 <div class="badge">
-  <svg viewBox="0 0 64 64">
-    <path id="circle" d="M32,4 a28,28 0 1,1 0,56 a28,28 0 1,1 0,-56" fill="none"/>
-    <text class="badge-text"><textPath href="#circle">WAITING LIST • WAITING LIST • </textPath></text>
+  <svg viewBox="0 0 72 72">
+    <path id="circle" d="M36,6 a30,30 0 1,1 0,60 a30,30 0 1,1 0,-60" fill="none"/>
+    <text><textPath href="#circle">WAITING LIST • WAITING LIST • </textPath></text>
   </svg>
 </div>
 

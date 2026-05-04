@@ -4,90 +4,122 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quiet Object — Design Preview</title>
-<link href="https://api.fontshare.com/v2/css?f[]=zodiak@300;400;400i&f[]=general-sans@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=zodiak@200;300;400;400i;500&f[]=general-sans@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#fdfbf9;--text:#1a1a1a;--muted:#737373;--border:#e5e5e5}
+:root{--bg:#fdfbf9;--text:#1a1a1a;--muted:#737373;--light:#a3a3a3;--border:#e5e5e5;--cream:#f7f5f2}
 body{background:var(--bg);color:var(--text);font-family:'General Sans',sans-serif;font-weight:400;overflow-x:hidden}
 ::selection{background:var(--text);color:var(--bg)}
 
+/* ===== PAGE CONTAINER ===== */
 .page{max-width:1440px;margin:0 auto;border-left:1px solid var(--border);border-right:1px solid var(--border);min-height:100vh}
 
-.header{position:sticky;top:0;display:grid;grid-template-columns:1fr 2fr 1fr;align-items:center;padding:20px 40px;border-bottom:1px solid var(--border);background:rgba(253,251,249,0.95);backdrop-filter:blur(8px);z-index:100}
-.header-logo{font-family:'Zodiak',serif;font-size:18px;font-weight:400;text-transform:uppercase;letter-spacing:0.1em}
-.header-nav{display:flex;gap:32px;justify-content:center}
-.header-nav a{font-size:10px;text-transform:uppercase;letter-spacing:0.2em;text-decoration:none;color:var(--muted);font-weight:500;transition:color 0.3s}
+/* ===== HEADER ===== */
+.header{position:sticky;top:0;display:grid;grid-template-columns:1fr 2fr 1fr;align-items:center;padding:18px clamp(16px,3vw,40px);border-bottom:1px solid var(--border);background:rgba(253,251,249,0.95);backdrop-filter:blur(10px);z-index:100}
+.header-logo{font-family:'Zodiak',serif;font-size:clamp(14px,1.3vw,18px);font-weight:400;text-transform:uppercase;letter-spacing:0.12em}
+.header-nav{display:flex;gap:clamp(16px,2.5vw,36px);justify-content:center}
+.header-nav a{font-size:10px;text-transform:uppercase;letter-spacing:0.22em;text-decoration:none;color:var(--muted);font-weight:500;transition:color 0.3s}
 .header-nav a:hover{color:var(--text)}
 .header-util{display:flex;gap:20px;justify-content:flex-end}
-.header-util a{font-size:11px;text-decoration:none;color:var(--muted);font-weight:500}
+.header-util a{font-size:10px;text-decoration:none;color:var(--muted);font-weight:500;letter-spacing:0.15em;text-transform:uppercase}
 
+/* ===== HERO ===== */
 .hero{display:grid;grid-template-columns:65fr 35fr;min-height:80vh;border-bottom:1px solid var(--border)}
 .hero-image{position:relative;overflow:hidden;border-right:1px solid var(--border)}
-.hero-image img{width:100%;height:100%;object-fit:cover;filter:grayscale(10%);transition:transform 2s cubic-bezier(0.2,0.8,0.2,1)}
-.hero-image:hover img{transform:scale(1.01)}
-.hero-fig{position:absolute;bottom:20px;left:20px;font-size:10px;text-transform:uppercase;letter-spacing:0.15em;color:var(--muted);background:rgba(253,251,249,0.8);padding:4px 10px}
-.hero-content{display:flex;flex-direction:column;justify-content:center;padding:60px 48px}
-.hero-vol{font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:var(--muted);margin-bottom:24px}
-.hero h1{font-family:'Zodiak',serif;font-size:clamp(28px,4vw,48px);font-weight:300;line-height:1.2;margin-bottom:24px}
+.hero-image img{width:100%;height:100%;object-fit:cover;filter:grayscale(8%) sepia(5%);transition:transform 3s cubic-bezier(0.2,0.8,0.2,1)}
+.hero-image:hover img{transform:scale(1.02)}
+.hero-fig{position:absolute;bottom:20px;left:20px;font-size:9px;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted);background:rgba(253,251,249,0.85);padding:5px 12px;backdrop-filter:blur(4px)}
+.hero-content{display:flex;flex-direction:column;justify-content:center;padding:clamp(32px,5vw,72px) clamp(24px,3vw,48px)}
+.hero-vol{font-size:9px;text-transform:uppercase;letter-spacing:0.25em;color:var(--light);margin-bottom:clamp(16px,2vw,28px)}
+.hero h1{font-family:'Zodiak',serif;font-size:clamp(24px,3.5vw,48px);font-weight:300;line-height:1.2;margin-bottom:clamp(16px,2vw,28px)}
 .hero h1 em{font-style:italic;font-weight:400}
-.hero p{font-size:15px;line-height:1.8;color:var(--muted);text-align:justify;margin-bottom:32px}
-.hero-cta{font-size:13px;font-weight:500;color:var(--text);text-decoration:none;border-bottom:1px solid var(--text);padding-bottom:2px;transition:border-color 0.3s}
-.hero-cta:hover{border-color:var(--muted)}
+.hero-body{font-size:clamp(13px,1.1vw,15px);line-height:1.85;color:var(--muted);text-align:justify;margin-bottom:clamp(24px,3vw,36px)}
+.hero-cta{font-size:12px;font-weight:500;color:var(--text);text-decoration:none;border-bottom:1px solid var(--text);padding-bottom:3px;letter-spacing:0.08em;text-transform:uppercase;transition:border-color 0.3s,opacity 0.3s}
+.hero-cta:hover{border-color:var(--light);opacity:0.7}
 
-.index{display:grid;grid-template-columns:1fr 3fr;border-bottom:1px solid var(--border)}
-.index-label{padding:24px 40px;font-size:10px;text-transform:uppercase;letter-spacing:0.2em;color:var(--muted);font-weight:600;border-right:1px solid var(--border)}
-.index-list{display:flex;gap:40px;padding:24px 40px;align-items:center}
-.index-item{text-decoration:none;color:var(--muted);transition:color 0.3s,font-style 0.3s}
+/* ===== INDEX BAR ===== */
+.index{display:grid;grid-template-columns:160px 1fr;border-bottom:1px solid var(--border)}
+.index-label{padding:20px clamp(16px,2vw,32px);font-size:9px;text-transform:uppercase;letter-spacing:0.25em;color:var(--light);font-weight:600;border-right:1px solid var(--border);display:flex;align-items:center}
+.index-list{display:flex;gap:clamp(20px,3vw,48px);padding:20px clamp(16px,2vw,32px);align-items:center;overflow-x:auto}
+.index-item{text-decoration:none;color:var(--muted);transition:color 0.3s;flex-shrink:0}
 .index-item:hover{color:var(--text)}
 .index-item:hover .idx-title{font-style:italic}
-.idx-num{font-size:10px;letter-spacing:0.1em;display:block;margin-bottom:2px}
-.idx-title{font-family:'Zodiak',serif;font-size:16px;font-weight:300;transition:font-style 0.3s}
+.idx-num{font-size:9px;letter-spacing:0.12em;display:block;margin-bottom:3px;color:var(--light)}
+.idx-title{font-family:'Zodiak',serif;font-size:clamp(14px,1.3vw,18px);font-weight:300;transition:font-style 0.3s}
 
+/* ===== ROOM ===== */
 .room{display:grid;grid-template-columns:7fr 3fr;border-bottom:1px solid var(--border)}
 .room-image{position:relative;overflow:hidden;border-right:1px solid var(--border)}
-.room-image img{width:100%;height:100%;object-fit:cover;min-height:500px;filter:grayscale(15%);transition:transform 2s cubic-bezier(0.2,0.8,0.2,1)}
+.room-image img{width:100%;height:100%;object-fit:cover;min-height:clamp(300px,50vw,600px);filter:grayscale(12%) sepia(3%);transition:transform 3s cubic-bezier(0.2,0.8,0.2,1)}
 .room-image:hover img{transform:scale(1.01)}
-.room-list{padding:40px;position:sticky;top:100px;align-self:start}
-.room-list h3{font-family:'Zodiak',serif;font-size:20px;font-weight:300;margin-bottom:32px}
-.product-row{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);align-items:center;transition:background 0.3s}
-.product-row:hover{background:#fff}
-.product-thumb{width:48px;height:48px;background:var(--border);border-radius:2px;overflow:hidden;flex-shrink:0}
+.room-caption{position:absolute;bottom:20px;right:20px;font-size:9px;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted);background:rgba(253,251,249,0.85);padding:5px 12px}
+.room-list{padding:clamp(24px,3vw,48px);position:sticky;top:80px;align-self:start}
+.room-list h3{font-family:'Zodiak',serif;font-size:clamp(16px,1.5vw,22px);font-weight:300;margin-bottom:clamp(24px,3vw,40px)}
+.product-row{display:flex;gap:14px;padding:clamp(12px,1.5vw,18px) 0;border-bottom:1px solid var(--border);align-items:center;cursor:pointer;transition:background 0.3s}
+.product-row:hover{background:var(--cream)}
+.product-thumb{width:48px;height:48px;background:var(--border);overflow:hidden;flex-shrink:0}
 .product-thumb img{width:100%;height:100%;object-fit:cover}
-.product-info{flex:1}
-.product-info .name{font-size:12px;text-transform:uppercase;font-weight:600;letter-spacing:0.05em;margin-bottom:2px}
-.product-info .ref{font-size:11px;color:var(--muted)}
-.product-link{font-size:10px;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px;color:var(--muted);white-space:nowrap}
+.product-info{flex:1;min-width:0}
+.product-info .name{font-size:11px;text-transform:uppercase;font-weight:600;letter-spacing:0.06em;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.product-info .ref{font-size:10px;color:var(--light)}
+.product-link{font-size:9px;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px;color:var(--light);white-space:nowrap;transition:color 0.2s}
+.product-link:hover{color:var(--text)}
 
-.materials{padding:80px 40px;border-bottom:1px solid var(--border)}
-.materials h2{font-family:'Zodiak',serif;font-size:24px;font-weight:300;margin-bottom:40px}
-.materials h2 em{font-style:italic}
-.mat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.mat-item{position:relative;overflow:hidden;aspect-ratio:1;border-radius:2px}
-.mat-item img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%)}
-.mat-overlay{position:absolute;bottom:0;left:0;right:0;background:#fff;padding:16px;transform:translateY(100%);transition:transform 0.5s cubic-bezier(0.2,0.8,0.2,1)}
+/* ===== MATERIALS ===== */
+.materials{padding:clamp(48px,6vw,100px) clamp(16px,3vw,40px);border-bottom:1px solid var(--border)}
+.materials-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:clamp(28px,4vw,48px);flex-wrap:wrap;gap:16px}
+.materials h2{font-family:'Zodiak',serif;font-size:clamp(18px,2.5vw,32px);font-weight:300}
+.materials h2 em{font-style:italic;font-weight:400}
+.materials-link{font-size:10px;text-transform:uppercase;letter-spacing:0.15em;text-decoration:none;color:var(--light);transition:color 0.2s}
+.materials-link:hover{color:var(--text)}
+.mat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,1.5vw,16px)}
+.mat-item{position:relative;overflow:hidden;aspect-ratio:1}
+.mat-item img{width:100%;height:100%;object-fit:cover;filter:grayscale(15%);transition:filter 1s,transform 1s}
+.mat-item:hover img{filter:grayscale(0%);transform:scale(1.03)}
+.mat-overlay{position:absolute;bottom:0;left:0;right:0;background:rgba(253,251,249,0.95);padding:clamp(10px,1.5vw,18px);transform:translateY(100%);transition:transform 0.5s cubic-bezier(0.2,0.8,0.2,1)}
 .mat-item:hover .mat-overlay{transform:translateY(0)}
-.mat-overlay .mat-name{font-size:10px;text-transform:uppercase;letter-spacing:0.15em;font-weight:600}
-.mat-overlay .mat-type{font-size:10px;color:var(--muted);margin-top:2px}
+.mat-name{font-size:10px;text-transform:uppercase;letter-spacing:0.18em;font-weight:600}
+.mat-type{font-size:10px;color:var(--light);margin-top:3px}
 
-.footer{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:40px;padding:60px 40px;border-bottom:1px solid var(--border)}
-.footer-logo{font-family:'Zodiak',serif;font-size:18px;margin-bottom:12px}
-.footer-addr{font-size:13px;color:var(--muted);line-height:1.7}
-.footer h4{font-size:10px;text-transform:uppercase;letter-spacing:0.15em;font-weight:600;margin-bottom:16px;color:var(--muted)}
-.footer a{font-size:13px;text-decoration:none;color:var(--text);display:block;margin-bottom:8px;transition:color 0.3s}
-.footer a:hover{color:var(--muted)}
-.footer-newsletter input{width:100%;border:none;border-bottom:1px solid var(--border);padding:8px 0;font-family:inherit;font-size:13px;background:transparent;outline:none}
-.footer-bottom{padding:20px 40px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+/* ===== JOURNAL TEASER ===== */
+.journal{display:grid;grid-template-columns:160px 1fr;border-bottom:1px solid var(--border)}
+.journal-label{padding:clamp(24px,3vw,48px) clamp(16px,2vw,32px);font-size:9px;text-transform:uppercase;letter-spacing:0.25em;color:var(--light);font-weight:600;border-right:1px solid var(--border)}
+.journal-content{padding:clamp(24px,3vw,48px) clamp(16px,2vw,32px)}
+.journal-item{display:flex;gap:clamp(16px,3vw,32px);padding:clamp(16px,2vw,28px) 0;border-bottom:1px solid var(--border);align-items:center;transition:padding-left 0.3s}
+.journal-item:hover{padding-left:8px}
+.journal-date{font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--light);min-width:80px;flex-shrink:0}
+.journal-title{font-family:'Zodiak',serif;font-size:clamp(14px,1.5vw,20px);font-weight:300}
+.journal-title em{font-style:italic}
+.journal-arrow{margin-left:auto;font-size:14px;color:var(--light);transition:transform 0.2s,color 0.2s}
+.journal-item:hover .journal-arrow{transform:translateX(4px);color:var(--text)}
 
+/* ===== FOOTER ===== */
+.footer{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,40px);padding:clamp(40px,5vw,72px) clamp(16px,3vw,40px);border-bottom:1px solid var(--border)}
+.footer-logo{font-family:'Zodiak',serif;font-size:clamp(14px,1.3vw,18px);margin-bottom:14px;letter-spacing:0.08em;text-transform:uppercase}
+.footer-addr{font-size:12px;color:var(--muted);line-height:1.8}
+.footer h4{font-size:9px;text-transform:uppercase;letter-spacing:0.22em;font-weight:600;margin-bottom:18px;color:var(--light)}
+.footer a{font-size:12px;text-decoration:none;color:var(--text);display:block;margin-bottom:10px;transition:color 0.3s}
+.footer a:hover{color:var(--light)}
+.footer-newsletter input{width:100%;border:none;border-bottom:1px solid var(--border);padding:10px 0;font-family:'General Sans',sans-serif;font-size:12px;background:transparent;outline:none;letter-spacing:0.05em}
+.footer-newsletter input::placeholder{color:var(--light)}
+.footer-newsletter button{margin-top:12px;font-size:9px;text-transform:uppercase;letter-spacing:0.15em;font-weight:600;background:none;border:none;color:var(--text);cursor:pointer;transition:opacity 0.2s}
+.footer-newsletter button:hover{opacity:0.5}
+.footer-bottom{padding:18px clamp(16px,3vw,40px);font-size:10px;color:var(--light);display:flex;justify-content:space-between;letter-spacing:0.1em;text-transform:uppercase}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr}.hero-image{border-right:none;border-bottom:1px solid var(--border);min-height:400px}
+  .room{grid-template-columns:1fr}.room-image{border-right:none}.room-list{padding:24px}
+  .mat-grid{grid-template-columns:1fr 1fr}
+}
 @media(max-width:768px){
   .page{border:none}
-  .header{grid-template-columns:1fr;padding:16px 20px;text-align:center}.header-nav,.header-util{display:none}
-  .hero{grid-template-columns:1fr}.hero-image{min-height:300px;border-right:none;border-bottom:1px solid var(--border)}
-  .hero-content{padding:40px 20px}
-  .index{grid-template-columns:1fr}.index-label{border-right:none;border-bottom:1px solid var(--border)}.index-list{flex-wrap:wrap;gap:20px}
-  .room{grid-template-columns:1fr}.room-image{border-right:none}.room-image img{min-height:300px}
-  .room-list{padding:20px}
-  .materials{padding:40px 20px}.mat-grid{grid-template-columns:1fr 1fr}
-  .footer{grid-template-columns:1fr 1fr;padding:40px 20px}
+  .header{grid-template-columns:1fr;text-align:center;padding:16px 20px}.header-nav,.header-util{display:none}
+  .hero-content{padding:32px 20px}
+  .index{grid-template-columns:1fr}.index-label{border-right:none;border-bottom:1px solid var(--border)}
+  .journal{grid-template-columns:1fr}.journal-label{border-right:none;border-bottom:1px solid var(--border)}
+  .materials{padding:32px 20px}
+  .footer{grid-template-columns:1fr 1fr;padding:32px 20px}
   .footer-bottom{padding:16px 20px;flex-direction:column;gap:8px}
 }
 </style>
@@ -97,17 +129,17 @@ body{background:var(--bg);color:var(--text);font-family:'General Sans',sans-seri
 <div class="page">
 
 <header class="header">
-  <span class="header-logo">ATELIER</span>
-  <nav class="header-nav"><a href="#">Catalog</a><a href="#">Journal</a><a href="#">About</a><a href="#">Stockists</a></nav>
+  <span class="header-logo">Atelier</span>
+  <nav class="header-nav"><a href="#">Catalog</a><a href="#">Spaces</a><a href="#">Journal</a><a href="#">About</a><a href="#">Stockists</a></nav>
   <div class="header-util"><a href="#">Search</a><a href="#">Cart (0)</a></div>
 </header>
 
 <section class="hero">
-  <div class="hero-image"><img src="https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=900&q=80" alt=""><span class="hero-fig">Fig 1.0</span></div>
+  <div class="hero-image"><img src="https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=900&q=80" alt="Interior"><span class="hero-fig">Fig. 1.0 — Living Room</span></div>
   <div class="hero-content">
-    <span class="hero-vol">VOL. 04</span>
+    <span class="hero-vol">VOL. 04 — SPRING 2026</span>
     <h1>A Study in <em>Quietude</em></h1>
-    <p>Objects designed for spaces that breathe. Each piece embodies a philosophy of considered materiality — where function and form achieve a quiet equilibrium.</p>
+    <p class="hero-body">Objects designed for spaces that breathe. Each piece embodies a philosophy of considered materiality — where function and form achieve a quiet equilibrium that speaks through restraint.</p>
     <a href="#" class="hero-cta">EXPLORE THE COLLECTION</a>
   </div>
 </section>
@@ -119,21 +151,26 @@ body{background:var(--bg);color:var(--text);font-family:'General Sans',sans-seri
     <a href="#" class="index-item"><span class="idx-num">02</span><span class="idx-title">Dining</span></a>
     <a href="#" class="index-item"><span class="idx-num">03</span><span class="idx-title">Bedroom</span></a>
     <a href="#" class="index-item"><span class="idx-num">04</span><span class="idx-title">Study</span></a>
+    <a href="#" class="index-item"><span class="idx-num">05</span><span class="idx-title">Kitchen</span></a>
   </div>
 </div>
 
 <section class="room">
-  <div class="room-image"><img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=80" alt=""></div>
+  <div class="room-image"><img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=80" alt="Living room"><span class="room-caption">01 — Living</span></div>
   <div class="room-list">
     <h3>01 — Living</h3>
     <div class="product-row"><div class="product-thumb"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=100&q=80" alt=""></div><div class="product-info"><div class="name">Arc Sofa</div><div class="ref">Ref. 882 · Oak / Linen</div></div><a href="#" class="product-link">VIEW</a></div>
     <div class="product-row"><div class="product-thumb"><img src="https://images.unsplash.com/photo-1507473885765-e6ed057ab6fe?w=100&q=80" alt=""></div><div class="product-info"><div class="name">Orb Table Lamp</div><div class="ref">Ref. 445 · Brass / Glass</div></div><a href="#" class="product-link">VIEW</a></div>
     <div class="product-row"><div class="product-thumb"><img src="https://images.unsplash.com/photo-1592078615290-033ee584e267?w=100&q=80" alt=""></div><div class="product-info"><div class="name">Ridge Coffee Table</div><div class="ref">Ref. 201 · Walnut</div></div><a href="#" class="product-link">VIEW</a></div>
+    <div class="product-row"><div class="product-thumb"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=100&q=80" alt=""></div><div class="product-info"><div class="name">Settle Armchair</div><div class="ref">Ref. 338 · Ash / Cotton</div></div><a href="#" class="product-link">VIEW</a></div>
   </div>
 </section>
 
 <section class="materials">
-  <h2>A <em>Close</em> Inspection</h2>
+  <div class="materials-header">
+    <h2>A <em>Close</em> Inspection</h2>
+    <a href="#" class="materials-link">VIEW ALL MATERIALS →</a>
+  </div>
   <div class="mat-grid">
     <div class="mat-item"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=300&q=80" alt=""><div class="mat-overlay"><div class="mat-name">OAK</div><div class="mat-type">Natural Finish</div></div></div>
     <div class="mat-item"><img src="https://images.unsplash.com/photo-1604762512526-b7068b1a2c7b?w=300&q=80" alt=""><div class="mat-overlay"><div class="mat-name">LINEN</div><div class="mat-type">Belgian Weave</div></div></div>
@@ -142,13 +179,22 @@ body{background:var(--bg);color:var(--text);font-family:'General Sans',sans-seri
   </div>
 </section>
 
+<section class="journal">
+  <div class="journal-label">JOURNAL</div>
+  <div class="journal-content">
+    <div class="journal-item"><span class="journal-date">APR 2026</span><span class="journal-title">On the Art of <em>Waiting</em></span><span class="journal-arrow">→</span></div>
+    <div class="journal-item"><span class="journal-date">MAR 2026</span><span class="journal-title">Materials of <em>Memory</em></span><span class="journal-arrow">→</span></div>
+    <div class="journal-item"><span class="journal-date">FEB 2026</span><span class="journal-title">A Conversation with <em>Light</em></span><span class="journal-arrow">→</span></div>
+  </div>
+</section>
+
 <footer class="footer">
-  <div><div class="footer-logo">ATELIER</div><div class="footer-addr">42 Rue du Faubourg<br>Paris, 75008<br>France</div></div>
-  <div><h4>CATALOG</h4><a href="#">Living</a><a href="#">Dining</a><a href="#">Bedroom</a><a href="#">Study</a></div>
-  <div><h4>JOURNAL</h4><a href="#">Stories</a><a href="#">Process</a><a href="#">Archive</a></div>
-  <div><h4>NEWSLETTER</h4><div class="footer-newsletter"><input placeholder="Email address"></div></div>
+  <div><div class="footer-logo">Atelier</div><div class="footer-addr">42 Rue du Faubourg<br>Paris, 75008<br>France</div></div>
+  <div><h4>CATALOG</h4><a href="#">Living</a><a href="#">Dining</a><a href="#">Bedroom</a><a href="#">Study</a><a href="#">Kitchen</a></div>
+  <div><h4>JOURNAL</h4><a href="#">Stories</a><a href="#">Process</a><a href="#">Archive</a><a href="#">About Us</a></div>
+  <div><h4>NEWSLETTER</h4><div class="footer-newsletter"><input placeholder="Your email address"><button>SUBSCRIBE →</button></div></div>
 </footer>
-<div class="footer-bottom"><span>© 2026 Atelier</span><span>Privacy · Terms · Shipping</span></div>
+<div class="footer-bottom"><span>© 2026 Atelier</span><span>PRIVACY · TERMS · SHIPPING</span></div>
 
 </div>
 
