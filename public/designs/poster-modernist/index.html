@@ -5,80 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Poster Modernist — Design Preview</title>
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300;400;500;600;700;900&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#E3E2DE;--text:#141414;--blue:#1351AA;--gray:#7A7A7A;--dgray:#444343;--border:#C7C7C7}
-body{background:var(--bg);color:var(--text);font-family:'General Sans',sans-serif;font-weight:400;overflow-x:hidden}
-::selection{background:var(--blue);color:#fff}
 
-/* ===== NAVIGATION ===== */
-.nav{position:sticky;top:0;height:72px;display:grid;grid-template-columns:200px 1fr 200px;align-items:center;padding:0 clamp(20px,3vw,48px);border-bottom:1px solid var(--border);background:rgba(227,226,222,0.95);backdrop-filter:blur(12px);z-index:100}
-.nav-logo{font-size:16px;font-weight:900;letter-spacing:-0.03em;text-decoration:none;color:var(--text);text-transform:uppercase}
-.nav-center{display:flex;gap:32px;justify-content:center}
-.nav-center a{font-size:12px;font-weight:600;text-decoration:none;color:var(--gray);letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s}
-.nav-center a:hover{color:var(--text)}
-.nav-right{display:flex;gap:20px;justify-content:flex-end}
-.nav-right a{font-size:12px;font-weight:600;text-decoration:none;color:var(--text);letter-spacing:0.08em;text-transform:uppercase}
-
-/* ===== SIDEBAR GRID LAYOUT ===== */
-.grid-layout{display:grid;grid-template-columns:200px 1fr;min-height:calc(100vh - 72px);border-bottom:1px solid var(--border)}
-.sidebar{border-right:1px solid var(--border);padding:clamp(24px,4vw,48px) clamp(16px,2vw,32px);display:flex;flex-direction:column;gap:20px;position:sticky;top:72px;align-self:start;height:calc(100vh - 72px)}
-.sidebar-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.25em;color:var(--gray)}
-.sidebar-icon{width:16px;height:16px;background:var(--text);margin-top:auto}
-.sidebar-meta{font-size:10px;color:var(--gray);letter-spacing:0.15em;text-transform:uppercase;margin-top:auto}
-.main-content{padding:clamp(40px,6vw,80px) clamp(24px,4vw,64px);display:flex;flex-direction:column;justify-content:center}
-
-/* ===== HERO ===== */
-.hero h1{font-size:clamp(48px,10vw,160px);font-weight:900;line-height:0.82;letter-spacing:-0.04em;margin-bottom:clamp(32px,5vw,56px)}
-.hero h1 .accent{color:var(--blue)}
-.hero h1 .outline{-webkit-text-stroke:2px var(--blue);color:transparent}
-.hero-bottom{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:700px}
-.hero-desc{font-size:clamp(15px,1.3vw,18px);line-height:1.65;color:var(--dgray);max-width:380px}
-.hero-btns{display:flex;flex-direction:column;gap:16px;align-items:flex-start;justify-content:flex-end}
-.btn-poster{display:inline-block;background:var(--blue);color:var(--bg);padding:16px 40px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;text-decoration:none;transition:background 0.3s}
-.btn-poster:hover{background:var(--text)}
-.btn-link{font-size:13px;font-weight:600;color:var(--text);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
-
-/* ===== SYSTEM SECTION ===== */
-.system-headline{font-size:clamp(40px,8vw,120px);font-weight:900;line-height:0.88;letter-spacing:-0.03em;margin-bottom:clamp(40px,6vw,72px)}
-.system-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
-.system-cell{border:1px solid var(--border);padding:clamp(20px,3vw,40px);transition:background 0.3s}
-.system-cell:hover{background:rgba(255,255,255,0.3)}
-.system-idx{font-family:monospace;font-size:12px;color:var(--gray);margin-bottom:16px;letter-spacing:0.1em}
-.system-cell h3{font-size:clamp(16px,1.5vw,22px);font-weight:700;margin-bottom:12px;letter-spacing:-0.01em}
-.system-cell p{font-size:14px;line-height:1.65;color:var(--dgray)}
-
-/* ===== LIST SECTION ===== */
-.list-main{padding:0 clamp(24px,4vw,64px)}
-.list-item{border-top:1px solid var(--border);padding:clamp(20px,3vw,36px) 0;display:flex;align-items:center;gap:24px;cursor:pointer;transition:color 0.3s,padding-left 0.3s}
-.list-item:hover{color:var(--blue);padding-left:12px}
-.list-idx{font-family:monospace;font-size:12px;color:var(--gray);letter-spacing:0.1em;min-width:48px}
-.list-title{font-size:clamp(24px,5vw,72px);font-weight:700;letter-spacing:-0.02em;line-height:1;flex:1}
-.list-arrow{font-size:18px;color:var(--gray);transition:color 0.3s,transform 0.3s}
-.list-item:hover .list-arrow{color:var(--blue);transform:translateX(4px)}
-
-/* ===== ACCESS / CTA ===== */
-.access h2{font-size:clamp(48px,9vw,140px);font-weight:900;line-height:0.82;letter-spacing:-0.04em;margin-bottom:24px}
-.access h2 .accent{color:var(--blue)}
-.access-desc{font-size:clamp(15px,1.3vw,18px);color:var(--dgray);max-width:480px;margin-bottom:40px;line-height:1.6}
-.btn-dark{display:inline-block;background:var(--text);color:var(--bg);padding:20px 48px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;text-decoration:none;transition:background 0.3s}
-.btn-dark:hover{background:var(--blue)}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:1024px){
-  .system-grid{grid-template-columns:1fr 1fr}
-  .hero-bottom{grid-template-columns:1fr}
-}
-@media(max-width:768px){
-  .nav{grid-template-columns:1fr;height:auto;padding:16px 20px}.nav-center,.nav-right{display:none}
-  .grid-layout{grid-template-columns:1fr}
-  .sidebar{display:none}
-  .main-content{padding:40px 20px}
-  .system-grid{grid-template-columns:1fr}
-  .list-main{padding:0 20px}
-}
-</style>
-<link rel="stylesheet" href="../_shared/toolbar.css"><link rel="stylesheet" href="../_shared/animations.css"></head>
+<link rel="stylesheet" href="../_shared/toolbar.css">
+  <link rel="stylesheet" href="../_shared/animations.css">
+  <link rel="stylesheet" href="style.css"></head>
 <body>
 
 <nav class="nav">
@@ -144,5 +74,7 @@ body{background:var(--bg);color:var(--text);font-family:'General Sans',sans-seri
   </div>
 </section>
 
-<script src="../_shared/animations.js"></script><script src="../_shared/toolbar.js"></script></body>
+<script src="../_shared/animations.js"></script>
+<script src="script.js"></script>
+<script src="../_shared/toolbar.js"></script></body>
 </html>

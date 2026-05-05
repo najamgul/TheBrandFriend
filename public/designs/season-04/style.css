@@ -1,0 +1,91 @@
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#E3E2DE;--text:#1B0E0D;--red:#C72A09;--neon:#31EF07;--brown:#61220F;--darkBrown:#3A150B}
+body{background:var(--bg);color:var(--text);font-family:'General Sans',sans-serif;font-weight:400;overflow-x:hidden;position:relative}
+::selection{background:var(--red);color:var(--bg)}
+
+/* ===== NOISE OVERLAY ===== */
+.noise{position:fixed;inset:0;pointer-events:none;z-index:50;opacity:0.06;mix-blend-mode:multiply}
+.noise svg{width:100%;height:100%}
+
+/* ===== NAVIGATION ===== */
+.nav{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;padding:20px clamp(20px,4vw,48px);z-index:60;mix-blend-mode:difference;color:#E3E2DE}
+.nav-logo{font-family:'Clash Grotesk',sans-serif;font-size:clamp(18px,2vw,24px);font-weight:700;text-transform:uppercase;text-decoration:none;color:inherit;letter-spacing:-0.02em}
+.nav-center{display:flex;gap:32px}
+.nav-center a{font-size:12px;font-weight:500;text-decoration:none;color:inherit;text-transform:uppercase;letter-spacing:0.15em;position:relative;transition:opacity 0.2s}
+.nav-center a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:2px;background:var(--neon);transition:width 0.4s cubic-bezier(0.165,0.84,0.44,1)}
+.nav-center a:hover::after{width:100%}
+.nav-right{font-size:11px;letter-spacing:0.15em;text-transform:uppercase}
+.nav-right a{text-decoration:none;color:inherit}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;background:var(--text);position:relative;display:flex;align-items:flex-end;padding:0 clamp(20px,4vw,48px) clamp(40px,8vh,80px);overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1400&q=60') center/cover;opacity:0.25;filter:grayscale(100%) contrast(1.3)}
+.hero-content{position:relative;z-index:2;width:100%}
+.hero-meta{font-family:monospace;font-size:10px;letter-spacing:0.25em;color:var(--bg);opacity:0.4;text-transform:uppercase;margin-bottom:24px;border-top:1px solid rgba(227,226,222,0.15);padding-top:16px;display:flex;gap:32px}
+.hero h1{font-family:'Clash Grotesk',sans-serif;font-size:clamp(48px,16vw,220px);font-weight:700;line-height:0.72;letter-spacing:-0.05em;text-transform:uppercase;margin-bottom:48px}
+.hero h1 .line1{color:var(--red);display:block}
+.hero h1 .line2{color:var(--bg);display:block;padding-left:clamp(40px,20vw,280px)}
+.hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.hero-desc{max-width:340px;font-size:15px;line-height:1.7;color:rgba(227,226,222,0.6)}
+.hero-cta{display:inline-flex;align-items:center;gap:12px;background:var(--red);color:var(--bg);padding:20px 48px;font-family:'General Sans',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;text-decoration:none;transition:background 0.3s}
+.hero-cta:hover{background:var(--neon);color:var(--text)}
+
+/* ===== MANIFESTO ===== */
+.manifesto{padding:clamp(80px,10vw,160px) clamp(20px,4vw,48px);display:grid;grid-template-columns:200px 1fr;gap:48px;max-width:1200px;margin:0 auto}
+.manifesto-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;padding-top:20px;border-top:1px solid rgba(27,14,13,0.15)}
+.manifesto-text{font-family:'Clash Grotesk',sans-serif;font-size:clamp(18px,3vw,42px);font-weight:500;text-transform:uppercase;line-height:1.25;text-indent:3rem}
+.manifesto-text strong{color:var(--brown)}
+
+/* ===== LARGE DIVIDER ===== */
+.divider{padding:clamp(16px,3vw,32px) clamp(20px,4vw,48px);border-top:1px solid #D4D3CF;border-bottom:1px solid #D4D3CF}
+.divider h2{font-family:'Clash Grotesk',sans-serif;font-size:clamp(48px,14vw,200px);color:var(--brown);letter-spacing:-0.05em;line-height:0.9;text-transform:uppercase;font-weight:700;opacity:0.9}
+
+/* ===== PRODUCT GRID ===== */
+.product-section{padding:clamp(60px,8vw,100px) clamp(20px,4vw,48px);max-width:1200px;margin:0 auto}
+.product-grid{display:grid;grid-template-columns:7fr 5fr;gap:clamp(16px,2vw,28px)}
+.product-item{position:relative;overflow:hidden;cursor:pointer}
+.product-item img{width:100%;display:block;filter:grayscale(100%) contrast(1.1);transition:filter 0.6s,transform 0.6s cubic-bezier(0.16,1,0.3,1)}
+.product-item:hover img{filter:grayscale(0%);transform:scale(1.04)}
+.p-tall{aspect-ratio:4/5}
+.p-short{aspect-ratio:3/4;margin-top:clamp(48px,10vw,148px)}
+.product-detail{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:2px solid transparent;transition:border-color 0.3s}
+.product-detail:hover{border-color:var(--red)}
+.product-title{font-family:'General Sans',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em}
+.product-price{font-family:monospace;font-size:14px;letter-spacing:0.05em}
+.quick-view{position:absolute;top:16px;right:16px;background:var(--neon);color:var(--text);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:8px 16px;opacity:0;transform:translateY(-8px);transition:all 0.35s cubic-bezier(0.16,1,0.3,1)}
+.product-item:hover .quick-view{opacity:1;transform:translateY(0)}
+
+/* ===== NEWSLETTER ===== */
+.newsletter{background:var(--text);padding:clamp(60px,8vw,100px) clamp(20px,4vw,48px);display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.newsletter h2{font-family:'Clash Grotesk',sans-serif;font-size:clamp(28px,5vw,56px);font-weight:700;color:var(--bg);text-transform:uppercase;line-height:0.9;letter-spacing:-0.03em}
+.newsletter-form{display:flex;border-bottom:1px solid rgba(227,226,222,0.3);padding-bottom:8px}
+.newsletter-form input{background:transparent;border:none;color:var(--bg);padding:12px 0;flex:1;font-family:'General Sans',sans-serif;font-size:14px;outline:none;letter-spacing:0.05em}
+.newsletter-form input::placeholder{color:rgba(227,226,222,0.3)}
+.newsletter-form button{background:var(--neon);color:var(--text);border:none;padding:10px 24px;font-family:'General Sans',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;transition:transform 0.2s}
+.newsletter-form button:hover{transform:scale(1.05)}
+
+/* ===== FOOTER ===== */
+.footer{background:var(--bg);padding:clamp(60px,8vw,100px) clamp(20px,4vw,48px) 40px;border-top:1px solid #D4D3CF}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;max-width:1200px;margin:0 auto}
+.footer-brand{font-family:'Clash Grotesk',sans-serif;font-size:18px;font-weight:700;text-transform:uppercase;margin-bottom:12px;letter-spacing:-0.01em}
+.footer-desc{font-size:14px;opacity:0.5;line-height:1.7;max-width:260px}
+.footer h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;margin-bottom:16px;opacity:0.4}
+.footer a{font-size:14px;text-decoration:none;color:var(--text);opacity:0.6;display:block;margin-bottom:10px;transition:opacity 0.2s}
+.footer a:hover{opacity:1}
+.footer-ghost{font-family:'Clash Grotesk',sans-serif;font-size:clamp(48px,10vw,140px);color:#D6D5D0;text-transform:uppercase;font-weight:700;text-align:center;margin-top:80px;letter-spacing:-0.04em}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .manifesto{grid-template-columns:1fr}
+  .product-grid{grid-template-columns:1fr 1fr}.p-short{margin-top:64px}
+  .newsletter{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .nav-center{display:none}
+  .hero{min-height:70vh}
+  .manifesto{padding:60px 20px}
+  .product-section{padding:40px 20px}.product-grid{grid-template-columns:1fr}.p-short{margin-top:0}
+  .newsletter{padding:40px 20px}
+  .footer{padding:40px 20px}.footer-grid{grid-template-columns:1fr 1fr}
+}

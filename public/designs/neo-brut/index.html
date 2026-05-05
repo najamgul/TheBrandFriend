@@ -5,122 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Brut — Design Preview</title>
 <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500;700;800;900&f[]=satoshi@300;400;500;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--yellow:#ffe17c;--charcoal:#171e19;--sage:#b7c6c2;--white:#ffffff;--black:#000000}
-body{background:var(--yellow);color:var(--black);font-family:'Satoshi',sans-serif;font-weight:400;overflow-x:hidden}
-::selection{background:var(--charcoal);color:var(--yellow)}
 
-/* ===== DOT PATTERN BG ===== */
-.dot-bg{background-image:radial-gradient(circle,rgba(0,0,0,0.06) 1px,transparent 1px);background-size:28px 28px}
-
-/* ===== NAV ===== */
-.nav{position:fixed;top:0;left:0;right:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,3vw,40px);background:var(--yellow);border-bottom:3px solid var(--black);z-index:100}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--black)}
-.nav-icon{width:32px;height:32px;background:var(--black);display:flex;align-items:center;justify-content:center;border-radius:8px}
-.nav-icon span{color:var(--yellow);font-size:16px;font-weight:900}
-.nav-name{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:18px;letter-spacing:-0.02em}
-.nav-links{display:flex;gap:20px;align-items:center}
-.nav-links a{font-size:13px;font-weight:700;text-decoration:none;color:var(--black);letter-spacing:0.02em}
-.nav-cta{background:var(--black);color:var(--white);padding:10px 22px;border:3px solid var(--black);border-radius:12px;font-weight:700;font-size:12px;box-shadow:5px 5px 0 var(--black);transition:transform 0.2s,box-shadow 0.2s;text-decoration:none;letter-spacing:0.04em}
-.nav-cta:hover{transform:translate(5px,5px);box-shadow:none}
-
-/* ===== HERO ===== */
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px);padding:clamp(100px,12vh,140px) clamp(16px,3vw,40px) clamp(60px,8vh,80px);align-items:center}
-.hero-badge{display:inline-block;background:var(--white);border:3px solid var(--black);border-radius:999px;padding:8px 20px;font-size:12px;font-weight:700;margin-bottom:24px;letter-spacing:0.04em}
-.hero h1{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(36px,8vw,110px);font-weight:900;line-height:0.92;letter-spacing:-0.04em;margin-bottom:24px}
-.hero h1 .outline{-webkit-text-stroke:3px var(--black);color:transparent}
-.hero-desc{font-size:clamp(14px,1.3vw,17px);color:rgba(0,0,0,0.55);max-width:400px;line-height:1.65;margin-bottom:32px}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
-.btn-neo{display:inline-block;padding:14px 28px;font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:13px;text-decoration:none;border:3px solid var(--black);border-radius:12px;letter-spacing:0.04em;transition:transform 0.2s cubic-bezier(0.175,0.885,0.32,1.275),box-shadow 0.2s}
-.btn-neo.primary{background:var(--black);color:var(--white);box-shadow:6px 6px 0 var(--black)}
-.btn-neo.primary:hover{transform:translate(6px,6px);box-shadow:none}
-.btn-neo.secondary{background:var(--white);color:var(--black);box-shadow:4px 4px 0 var(--black)}
-.btn-neo.secondary:hover{transform:translate(4px,4px);box-shadow:none}
-
-/* Browser mockup */
-.hero-mockup{background:var(--white);border:3px solid var(--black);border-radius:16px;box-shadow:12px 12px 0 var(--black);overflow:hidden}
-.mockup-bar{background:var(--black);padding:12px 16px;display:flex;gap:8px;align-items:center}
-.mockup-dot{width:12px;height:12px;border-radius:50%}
-.d-r{background:#ff5f57}.d-y{background:#febc2e}.d-g{background:#28c840}
-.mockup-url{flex:1;margin-left:12px;background:rgba(255,255,255,0.1);border-radius:6px;padding:6px 12px;font-size:10px;color:rgba(255,255,255,0.4);font-family:monospace}
-.mockup-body{padding:20px;display:grid;grid-template-columns:1fr 2fr 1fr;gap:12px;min-height:280px}
-.mock-sidebar{background:var(--sage);border-radius:10px;padding:16px}
-.mock-main{background:var(--yellow);border-radius:10px;padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.mock-card{background:var(--white);border:3px solid var(--black);border-radius:10px;padding:20px;width:85%;box-shadow:4px 4px 0 var(--black)}
-.mock-card .label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--sage);margin-bottom:6px}
-.mock-card .value{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-0.03em}
-.mock-card .trend{font-size:12px;color:green;font-weight:700;margin-top:4px}
-.mock-panel{background:var(--charcoal);border-radius:10px;padding:16px}
-
-/* ===== MARQUEE ===== */
-.marquee{background:var(--charcoal);border-top:3px solid var(--black);border-bottom:3px solid var(--black);padding:18px 0;overflow:hidden}
-.marquee-track{display:flex;gap:48px;animation:marquee 22s linear infinite;white-space:nowrap}
-.marquee-track span{font-family:'Cabinet Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--sage);opacity:0.5;text-transform:uppercase;letter-spacing:0.05em}
-@keyframes marquee{to{transform:translateX(-50%)}}
-
-/* ===== FEATURES ===== */
-.features{padding:clamp(60px,8vw,120px) clamp(16px,3vw,40px)}
-.features-header{text-align:center;margin-bottom:clamp(32px,5vw,64px)}
-.features-header h2{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(32px,5vw,64px);font-weight:900;letter-spacing:-0.03em}
-.features-header p{font-size:15px;color:rgba(0,0,0,0.5);max-width:500px;margin:12px auto 0;line-height:1.6}
-.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:1000px;margin:0 auto}
-.feature-card{background:var(--white);border:3px solid var(--black);padding:clamp(20px,3vw,36px);box-shadow:5px 5px 0 var(--black);transition:transform 0.2s,box-shadow 0.2s}
-.feature-card:hover{transform:translate(5px,5px);box-shadow:none}
-.feature-icon-box{width:48px;height:48px;background:var(--sage);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:20px;transition:background 0.3s,transform 0.3s}
-.feature-card:hover .feature-icon-box{background:var(--yellow);transform:rotate(12deg)}
-.feature-card h3{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(18px,1.8vw,24px);font-weight:800;margin-bottom:10px;letter-spacing:-0.02em}
-.feature-card p{font-size:14px;line-height:1.65;color:rgba(0,0,0,0.55)}
-
-/* ===== HOW IT WORKS ===== */
-.how{background:var(--charcoal);padding:clamp(60px,8vw,120px) clamp(16px,3vw,40px);color:var(--white)}
-.how h2{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(32px,5vw,64px);font-weight:900;text-align:center;margin-bottom:clamp(40px,6vw,72px);letter-spacing:-0.03em}
-.how-steps{display:flex;gap:clamp(24px,4vw,48px);max-width:900px;margin:0 auto;align-items:flex-start;justify-content:center}
-.how-step{text-align:center;flex:1}
-.step-circle{width:clamp(48px,5vw,72px);height:clamp(48px,5vw,72px);border-radius:50%;border:4px solid;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:clamp(18px,2.5vw,28px)}
-.step-circle.s1{border-color:var(--sage);color:var(--sage)}
-.step-circle.s2{border-color:var(--yellow);color:var(--yellow)}
-.step-circle.s3{border-color:var(--white);color:var(--white)}
-.how-step h3{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(14px,1.5vw,18px);font-weight:700;margin-bottom:8px}
-.how-step p{font-size:13px;opacity:0.55;line-height:1.6}
-
-/* ===== CTA ===== */
-.final-cta{background:var(--yellow);padding:clamp(60px,8vw,120px) clamp(16px,3vw,40px);text-align:center;position:relative;overflow:hidden;border-top:3px solid var(--black)}
-.cta-ghost{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(100px,22vw,300px);font-weight:900;color:rgba(0,0,0,0.03);text-transform:uppercase;pointer-events:none;letter-spacing:-0.05em}
-.final-cta h2{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(32px,6vw,80px);font-weight:900;line-height:0.9;margin-bottom:16px;position:relative;z-index:2;letter-spacing:-0.03em}
-.final-cta p{font-size:clamp(14px,1.3vw,18px);max-width:460px;margin:0 auto 32px;opacity:0.6;position:relative;z-index:2;line-height:1.6}
-.final-form{display:flex;gap:0;max-width:460px;margin:0 auto;position:relative;z-index:2}
-.final-form input{flex:1;background:var(--white);border:3px solid var(--black);border-right:none;padding:16px 20px;border-radius:12px 0 0 12px;font-family:inherit;font-size:14px;outline:none}
-.final-form button{background:var(--black);color:var(--white);border:3px solid var(--black);padding:16px 28px;border-radius:0 12px 12px 0;font-family:'Cabinet Grotesk',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:transform 0.2s,background 0.2s}
-.final-form button:hover{background:var(--charcoal)}
-
-/* ===== FOOTER ===== */
-.footer{background:var(--charcoal);padding:clamp(40px,5vw,64px) clamp(16px,3vw,40px) 32px;color:var(--sage);border-top:3px solid var(--black)}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;max-width:1200px;margin:0 auto}
-.footer-logo{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(18px,2vw,24px);font-weight:800;color:var(--white);margin-bottom:12px;letter-spacing:-0.02em}
-.footer-desc{font-size:13px;opacity:0.5;line-height:1.7}
-.footer h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--white);margin-bottom:16px}
-.footer a{font-size:13px;text-decoration:none;color:var(--sage);display:block;margin-bottom:8px;transition:color 0.2s}
-.footer a:hover{color:var(--yellow)}
-.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;margin-top:48px;font-size:11px;opacity:0.4;display:flex;justify-content:space-between;max-width:1200px;margin-left:auto;margin-right:auto}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:1024px){
-  .hero{grid-template-columns:1fr}
-  .feature-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:768px){
-  .nav-links{display:none}
-  .hero{padding:100px 16px 60px}
-  .mockup-body{grid-template-columns:1fr}
-  .features{padding:60px 16px}.feature-grid{grid-template-columns:1fr}
-  .how{padding:60px 16px}.how-steps{flex-direction:column}
-  .final-cta{padding:60px 16px}
-  .footer{padding:40px 16px}.footer-grid{grid-template-columns:1fr 1fr}
-  .footer-bottom{flex-direction:column;gap:8px}
-}
-</style>
-<link rel="stylesheet" href="../_shared/toolbar.css"><link rel="stylesheet" href="../_shared/animations.css"></head>
+<link rel="stylesheet" href="../_shared/toolbar.css">
+  <link rel="stylesheet" href="../_shared/animations.css">
+  <link rel="stylesheet" href="style.css"></head>
 <body>
 
 <nav class="nav">
@@ -185,5 +73,7 @@ body{background:var(--yellow);color:var(--black);font-family:'Satoshi',sans-seri
   <div class="footer-bottom"><span>© 2026 Flux Inc.</span><span>Built with ⚡</span></div>
 </footer>
 
-<script src="../_shared/animations.js"></script><script src="../_shared/toolbar.js"></script></body>
+<script src="../_shared/animations.js"></script>
+<script src="script.js"></script>
+<script src="../_shared/toolbar.js"></script></body>
 </html>
