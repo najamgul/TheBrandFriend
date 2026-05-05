@@ -1,0 +1,154 @@
+/* ===== DESIGN PREVIEW TOOLBAR ===== */
+/* Floating responsive preview toolbar injected into each standalone design */
+
+.tbf-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: #0a0a0a;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  z-index: 99999;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  padding: 0 16px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tbf-toolbar.hidden {
+  transform: translateY(-100%);
+}
+
+/* Brand label */
+.tbf-brand {
+  position: absolute;
+  left: 16px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #CDFF57;
+  text-decoration: none;
+}
+
+/* Viewport buttons */
+.tbf-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tbf-btn:hover {
+  border-color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.8);
+}
+
+.tbf-btn.active {
+  background: #CDFF57;
+  color: #0a0a0a;
+  border-color: #CDFF57;
+}
+
+.tbf-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* CTA */
+.tbf-cta {
+  position: absolute;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 18px;
+  background: #CDFF57;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.tbf-cta:hover {
+  transform: scale(1.04);
+  background: #d4ff6e;
+}
+
+/* Toggle collapse button */
+.tbf-collapse {
+  position: fixed;
+  top: 56px;
+  right: 16px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #0a0a0a;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.tbf-toolbar.hidden ~ .tbf-collapse {
+  top: 8px;
+}
+
+.tbf-collapse:hover {
+  border-color: #CDFF57;
+  color: #CDFF57;
+}
+
+/* Content wrapper for viewport switching */
+.tbf-viewport-frame {
+  transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.5s ease;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.tbf-viewport-frame.framed {
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06),
+              0 40px 100px rgba(0,0,0,0.3);
+  overflow-x: hidden;
+}
+
+/* Push body down for toolbar */
+body.tbf-active {
+  padding-top: 48px;
+}
+
+/* Mobile hide toolbar buttons labels */
+@media (max-width: 600px) {
+  .tbf-btn span { display: none; }
+  .tbf-brand { display: none; }
+  .tbf-cta span { display: none; }
+  .tbf-cta::after { content: '♥'; }
+}
