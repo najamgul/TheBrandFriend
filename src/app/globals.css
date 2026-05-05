@@ -212,6 +212,35 @@ a { color: inherit; }
   transition: transform 0.15s, box-shadow 0.15s; display: inline-block; text-decoration: none;
 }
 .btn-submit:hover { transform: translate(8px, 8px); box-shadow: none; }
+.btn-submit:disabled { opacity: 0.5; cursor: wait; transform: none; box-shadow: var(--neo-shadow); }
+
+/* Form States */
+.form-error {
+  color: #FF4444; font-size: 12px; letter-spacing: 0.06em;
+  margin-top: 8px; padding: 8px 12px;
+  border: 1px solid rgba(255,68,68,0.3);
+  background: rgba(255,68,68,0.06);
+}
+.form-success {
+  text-align: center; padding: 64px 24px;
+  border: var(--border); box-shadow: var(--neo-shadow);
+  background: #111;
+}
+.form-success-icon {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--volt); color: var(--black);
+  font-size: 32px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 24px;
+}
+.form-success h3 {
+  font-size: clamp(28px, 5vw, 48px); color: var(--white);
+  margin-bottom: 12px;
+}
+.form-success p {
+  font-size: 13px; color: var(--grey); max-width: 400px;
+  margin: 0 auto; line-height: 1.7;
+}
 
 /* ===== DESIGN LIBRARY GALLERY ===== */
 /* Grid */
