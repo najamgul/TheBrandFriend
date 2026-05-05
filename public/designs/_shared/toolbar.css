@@ -126,26 +126,105 @@
   color: #CDFF57;
 }
 
-/* Content wrapper for viewport switching */
-.tbf-viewport-frame {
-  transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.5s ease;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.tbf-viewport-frame.framed {
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.06),
-              0 40px 100px rgba(0,0,0,0.3);
-  overflow-x: hidden;
-}
-
 /* Push body down for toolbar */
 body.tbf-active {
   padding-top: 48px;
 }
 
-/* Mobile hide toolbar buttons labels */
+/* ===== CONTENT WRAPPER ===== */
+.tbf-content {
+  width: 100%;
+}
+
+/* ===== IFRAME PREVIEW MODE ===== */
+body.tbf-preview-mode {
+  background: #111 !important;
+  overflow: hidden;
+}
+
+.tbf-iframe-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: calc(100vh - 48px);
+  padding: 32px 16px;
+  gap: 16px;
+  background: #111;
+}
+
+/* Device frame with bezel */
+.tbf-device-frame {
+  position: relative;
+  border: 3px solid #333;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 20px 60px rgba(0,0,0,0.5),
+    0 0 120px rgba(0,0,0,0.25);
+  background: #000;
+  max-height: calc(100vh - 140px);
+  /* Scale down if device is too tall */
+  transform-origin: top center;
+}
+
+/* Notch for mobile */
+.tbf-device-bezel {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.tbf-device-notch {
+  width: 120px;
+  height: 28px;
+  background: #000;
+  border-radius: 0 0 16px 16px;
+  margin: 0 auto;
+}
+
+/* The actual iframe */
+.tbf-preview-iframe {
+  border: none;
+  display: block;
+  background: #fff;
+  width: 100%;
+  height: 100%;
+}
+
+/* Resolution label */
+.tbf-device-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ===== RESPONSIVE SCALING ===== */
+/* Scale device frame to fit screen on smaller viewports */
+@media (max-width: 900px) {
+  .tbf-device-frame[style*="width:768"] {
+    transform: scale(0.65);
+    margin-bottom: -200px;
+  }
+}
+@media (max-width: 500px) {
+  .tbf-device-frame[style*="width:375"] {
+    transform: scale(0.85);
+  }
+  .tbf-device-frame[style*="width:768"] {
+    transform: scale(0.45);
+    margin-bottom: -350px;
+  }
+}
+
+/* Mobile hide toolbar button labels */
 @media (max-width: 600px) {
   .tbf-btn span { display: none; }
   .tbf-brand { display: none; }
