@@ -26,8 +26,9 @@ export default function VoiceAgent() {
   const vizBarsRef    = useRef(null);
   const speakTimeoutRef = useRef(null);
   const ringtoneRef   = useRef(null);
+  const audioUnlockedRef = useRef(false);
 
-  // ─── 40-second idle trigger ───────────────────────────────
+  // ─── Idle trigger ─────────────────────────────────────────
   useEffect(() => {
     // Don't re-trigger if already dismissed or shown this session
     if (typeof window === 'undefined') return;
@@ -44,28 +45,63 @@ export default function VoiceAgent() {
     return () => clearTimeout(timer);
   }, []);
 
-  // ─── Ringtone playback ────────────────────────────────────
+  // ─── Pre-load ringtone & unlock audio on first interaction ─
   useEffect(() => {
-    if (phase === 'ringing') {
-      const audio = new Audio(RINGTONE_URL);
-      audio.loop = true;
-      audio.volume = 0.7;
-      audio.play().catch(() => {}); // autoplay may be blocked; that's ok
-      ringtoneRef.current = audio;
-    } else {
-      // Stop ringtone whenever we leave the ringing phase
-      if (ringtoneRef.current) {
-        ringtoneRef.current.pause();
-        ringtoneRef.current.currentTime = 0;
-        ringtoneRef.current = null;
-      }
-    }
+    if (typeof window === 'undefined') return;
+
+    // Create the Audio element eagerly so the browser associates it
+    // with a user gesture when we warm it up below.
+    const audio = new Audio(RINGTONE_URL);
+    audio.loop = true;
+    audio.volume = 0.7;
+    audio.preload = 'auto';
+    ringtoneRef.current = audio;
+
+    // Unlock audio playback on the very first user interaction.
+    // We play a silent blip (volume=0) then immediately pause.
+    // After this, subsequent .play() calls are allowed by the browser.
+    const unlock = () => {
+      if (audioUnlockedRef.current) return;
+      audioUnlockedRef.current = true;
+      audio.volume = 0;
+      audio.play().then(() => {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.volume = 0.7;
+      }).catch(() => {});
+      document.removeEventListener('click', unlock);
+      document.removeEventListener('touchstart', unlock);
+      document.removeEventListener('keydown', unlock);
+      document.removeEventListener('scroll', unlock);
+    };
+
+    document.addEventListener('click', unlock, { once: false });
+    document.addEventListener('touchstart', unlock, { once: false });
+    document.addEventListener('keydown', unlock, { once: false });
+    document.addEventListener('scroll', unlock, { once: false, passive: true });
+
     return () => {
+      document.removeEventListener('click', unlock);
+      document.removeEventListener('touchstart', unlock);
+      document.removeEventListener('keydown', unlock);
+      document.removeEventListener('scroll', unlock);
       if (ringtoneRef.current) {
         ringtoneRef.current.pause();
         ringtoneRef.current = null;
       }
     };
+  }, []);
+
+  // ─── Play / stop ringtone based on phase ──────────────────
+  useEffect(() => {
+    if (phase === 'ringing' && ringtoneRef.current) {
+      ringtoneRef.current.currentTime = 0;
+      ringtoneRef.current.volume = 0.7;
+      ringtoneRef.current.play().catch(() => {});
+    } else if (ringtoneRef.current) {
+      ringtoneRef.current.pause();
+      ringtoneRef.current.currentTime = 0;
+    }
   }, [phase]);
 
   // ─── Call timer ───────────────────────────────────────────
