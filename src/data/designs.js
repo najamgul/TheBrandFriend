@@ -98,6 +98,15 @@ export const designs = [
     fonts: ['Zodiak', 'General Sans'],
     industries: ['Interior', 'Architecture', 'Catalog'],
   },
+  {
+    slug: 'clinical-luxury',
+    name: 'Clinical Luxury',
+    style: 'MEDICAL SPA',
+    description: 'High-end clinical aesthetic with pristine white space, ice blue accents, and evidence-based structural layouts.',
+    colors: ['#ffffff', '#eef5f8', '#0a192f', '#f5f5f5'],
+    fonts: ['Inter'],
+    industries: ['Medical', 'Spa', 'Skincare'],
+  },
 ];
 
 export function getDesignBySlug(slug) {

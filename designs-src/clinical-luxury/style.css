@@ -1,0 +1,350 @@
+/* CLINICAL LUXURY - Medical Spa System */
+
+:root {
+  --white: #ffffff;
+  --ice-blue: #eef5f8;
+  --navy: #0a192f;
+  --gray-light: #f5f5f5;
+  --gray-text: #666666;
+
+  --font-main: 'Inter', sans-serif;
+  --clinical-curve: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background-color: var(--white);
+  color: var(--navy);
+  font-family: var(--font-main);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--ice-blue);
+  color: var(--navy);
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* Navigation */
+.clinic-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 48px;
+  z-index: 100;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.nav-brand {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+}
+
+.nav-links a {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--gray-text); }
+
+.btn-book {
+  background: var(--navy);
+  color: var(--white);
+  padding: 14px 28px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  transition: background 0.3s;
+}
+
+.btn-book:hover {
+  background: #15305b;
+}
+
+/* Hero Section */
+.clinic-hero {
+  padding: 160px 48px 80px;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--gray-text);
+  margin-bottom: 24px;
+}
+
+.hero-heading {
+  font-size: clamp(48px, 5vw, 80px);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+}
+
+.hero-body {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--gray-text);
+  margin-bottom: 48px;
+  max-width: 400px;
+}
+
+.btn-large {
+  padding: 20px 40px;
+  font-size: 12px;
+}
+
+.hero-right {
+  width: 100%;
+}
+
+.img-mask {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background: var(--ice-blue);
+  overflow: hidden;
+}
+
+.img-inner {
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(20%);
+  transition: transform 1s var(--clinical-curve);
+}
+
+.img-mask:hover .img-inner {
+  transform: scale(1.05);
+}
+
+/* Services Grid */
+.clinic-services {
+  padding: 120px 48px;
+  background: var(--gray-light);
+}
+
+.services-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 64px;
+  max-width: 1400px;
+  margin-left: auto; margin-right: auto;
+}
+
+.services-header h2 {
+  font-size: 32px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+}
+
+.view-all {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.service-card {
+  background: var(--white);
+  transition: transform 0.4s var(--clinical-curve), box-shadow 0.4s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(10, 25, 47, 0.05);
+}
+
+.card-img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(40%);
+  transition: filter 0.4s ease;
+}
+
+.service-card:hover .card-img { filter: grayscale(0%); }
+
+.card-content {
+  padding: 32px;
+}
+
+.card-content h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.card-content p {
+  font-size: 14px;
+  color: var(--gray-text);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.price-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--navy);
+  border-bottom: 1px solid var(--navy);
+  padding-bottom: 4px;
+}
+
+/* Editorial Section */
+.clinic-editorial {
+  padding: 160px 48px;
+}
+
+.editorial-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.ed-left h2 {
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.ed-right p {
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--gray-text);
+  margin-bottom: 48px;
+}
+
+.stats-row {
+  display: flex;
+  gap: 64px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-num {
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--navy);
+}
+
+.stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--gray-text);
+}
+
+/* Footer */
+.clinic-footer {
+  background: var(--navy);
+  color: var(--white);
+  padding: 80px 48px 40px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 80px;
+  margin-bottom: 40px;
+  max-width: 1400px;
+  margin-left: auto; margin-right: auto;
+}
+
+.footer-top h2 {
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+}
+
+.footer-links {
+  display: flex;
+  gap: 40px;
+}
+
+.footer-links a {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  transition: opacity 0.3s;
+}
+
+.footer-links a:hover { opacity: 0.7; }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.5);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hero-split, .editorial-grid { grid-template-columns: 1fr; gap: 64px; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .services-grid { grid-template-columns: 1fr; }
+  .services-header { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .stats-row { flex-direction: column; gap: 32px; }
+  .footer-top { flex-direction: column; gap: 40px; align-items: flex-start; }
+  .footer-bottom { flex-direction: column; gap: 16px; }
+}
