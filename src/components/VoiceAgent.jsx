@@ -5,8 +5,9 @@ import './VoiceAgent.css';
 // ─── Config ─────────────────────────────────────────────────
 const AGENT_ID = 'edccea7e-4727-48e1-ab2e-4f97ff753814';
 const WS_BASE  = 'wss://stellar-viking.fly.dev';
-const IDLE_DELAY_MS = 40_000; // 40 seconds
+const IDLE_DELAY_MS = 20_000; // 20 seconds
 const VIZ_BAR_COUNT = 24;
+const RINGTONE_URL  = '/ringtone.mp3';
 
 export default function VoiceAgent() {
   // Widget states: 'idle' | 'ringing' | 'connecting' | 'active' | 'dismissed'
@@ -24,6 +25,7 @@ export default function VoiceAgent() {
   const timerRef      = useRef(null);
   const vizBarsRef    = useRef(null);
   const speakTimeoutRef = useRef(null);
+  const ringtoneRef   = useRef(null);
 
   // ─── 40-second idle trigger ───────────────────────────────
   useEffect(() => {
@@ -41,6 +43,30 @@ export default function VoiceAgent() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  // ─── Ringtone playback ────────────────────────────────────
+  useEffect(() => {
+    if (phase === 'ringing') {
+      const audio = new Audio(RINGTONE_URL);
+      audio.loop = true;
+      audio.volume = 0.7;
+      audio.play().catch(() => {}); // autoplay may be blocked; that's ok
+      ringtoneRef.current = audio;
+    } else {
+      // Stop ringtone whenever we leave the ringing phase
+      if (ringtoneRef.current) {
+        ringtoneRef.current.pause();
+        ringtoneRef.current.currentTime = 0;
+        ringtoneRef.current = null;
+      }
+    }
+    return () => {
+      if (ringtoneRef.current) {
+        ringtoneRef.current.pause();
+        ringtoneRef.current = null;
+      }
+    };
+  }, [phase]);
 
   // ─── Call timer ───────────────────────────────────────────
   useEffect(() => {
