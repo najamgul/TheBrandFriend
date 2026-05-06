@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import './VoiceAgent.css';
 
 // ─── Config ─────────────────────────────────────────────────
-const AGENT_ID = 'tbf-maya-design-consultant';
+const AGENT_ID = 'edccea7e-4727-48e1-ab2e-4f97ff753814';
 const WS_BASE  = 'wss://stellar-viking.fly.dev';
 const IDLE_DELAY_MS = 40_000; // 40 seconds
 const VIZ_BAR_COUNT = 24;
