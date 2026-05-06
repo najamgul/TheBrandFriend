@@ -1,0 +1,362 @@
+/* ═══════════════════════════════════════════════════════════════
+   VoiceAgent.css — Premium "Incoming Call" Widget
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Overlay Backdrop ─────────────────────────────────────── */
+.va-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  z-index: 9998;
+  animation: va-fadeIn 0.4s ease-out;
+}
+
+/* ─── Main Widget Container ────────────────────────────────── */
+.va-widget {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 9999;
+  animation: va-slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Incoming Call Card ───────────────────────────────────── */
+.va-card {
+  width: 340px;
+  background: rgba(20, 20, 30, 0.92);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 32px;
+  color: #fff;
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ─── Ringing State ────────────────────────────────────────── */
+.va-ringing-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.va-ring-animation {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.va-ring-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(16, 185, 129, 0.4);
+  animation: va-ringPulse 1.8s ease-out infinite;
+}
+
+.va-ring-pulse:nth-child(2) { animation-delay: 0.4s; }
+.va-ring-pulse:nth-child(3) { animation-delay: 0.8s; }
+
+.va-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981, #059669);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+}
+
+.va-caller-name {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+
+.va-caller-role {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.02em;
+}
+
+.va-incoming-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #10b981;
+  margin-bottom: 12px;
+  animation: va-blink 1.2s ease-in-out infinite;
+}
+
+/* ─── Action Buttons (Accept / Decline) ────────────────────── */
+.va-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.va-btn {
+  flex: 1;
+  padding: 14px 0;
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.va-btn:hover {
+  transform: translateY(-2px);
+}
+
+.va-btn-accept {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+}
+
+.va-btn-accept:hover {
+  box-shadow: 0 6px 24px rgba(16, 185, 129, 0.5);
+}
+
+.va-btn-decline {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.va-btn-decline:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* ─── Active Call Card ─────────────────────────────────────── */
+.va-active-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.va-active-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981, #059669);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.va-active-info {
+  flex: 1;
+}
+
+.va-active-name {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.va-active-status {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.va-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+
+.va-status-dot.speaking {
+  background: #f59e0b;
+  box-shadow: 0 0 6px #f59e0b;
+  animation: va-blink 0.8s ease-in-out infinite;
+}
+
+.va-timer {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Audio Visualizer ─────────────────────────────────────── */
+.va-visualizer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 48px;
+  margin-bottom: 20px;
+  padding: 0 12px;
+}
+
+.va-viz-bar {
+  width: 3px;
+  min-height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #10b981, #059669);
+  transition: height 0.08s ease;
+}
+
+/* ─── Transcript Area ──────────────────────────────────────── */
+.va-transcript {
+  max-height: 140px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding-right: 4px;
+}
+
+.va-transcript::-webkit-scrollbar {
+  width: 3px;
+}
+.va-transcript::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.va-transcript-line {
+  padding: 6px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.va-transcript-line:last-child {
+  border-bottom: none;
+}
+
+.va-role {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-right: 8px;
+}
+
+.va-role-user { color: #06b6d4; }
+.va-role-agent { color: #10b981; }
+.va-role-system { color: rgba(255, 255, 255, 0.3); font-style: italic; }
+
+/* ─── End Call Button ──────────────────────────────────────── */
+.va-btn-end {
+  width: 100%;
+  padding: 14px;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 14px;
+  color: #ef4444;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.va-btn-end:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  transform: translateY(-1px);
+}
+
+/* ─── Mic Permission Prompt ────────────────────────────────── */
+.va-mic-prompt {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.va-mic-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+  animation: va-blink 1.5s ease-in-out infinite;
+}
+
+.va-mic-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+}
+
+/* ─── Animations ───────────────────────────────────────────── */
+@keyframes va-slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes va-fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes va-ringPulse {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes va-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ─── Responsive ───────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .va-widget {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+  }
+
+  .va-card {
+    width: 100%;
+    padding: 24px;
+    border-radius: 20px;
+  }
+}

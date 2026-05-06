@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Sidebar from '@/components/Sidebar';
 import Animations from '@/components/Animations';
+import VoiceAgent from '@/components/VoiceAgent';
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -86,6 +87,7 @@ export default function RootLayout({ children }) {
           <Footer />
         </main>
         <Animations />
+        <VoiceAgent />
       </body>
     </html>
   );
