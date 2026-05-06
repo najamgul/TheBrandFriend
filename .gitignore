@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# design source projects (AI Studio)
+designs-src/*/node_modules
+designs-src/*/dist
+designs-src/*/.vite
