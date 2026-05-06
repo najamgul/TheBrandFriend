@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gen-Z Brutal — Design Preview</title>
+  <meta name="description" content="Expressive, playful, and high-contrast Neo-Brutalist UI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- STICKY NAV PILL -->
+<div class="nav-pill-wrapper">
+  <nav class="nav-pill">
+    <div class="nav-logo">✦</div>
+    <div class="nav-links">
+      <a href="#">features</a>
+      <a href="#">pricing</a>
+      <a href="#">faq</a>
+    </div>
+    <a href="#" class="btn-black wobble">get app</a>
+  </nav>
+</div>
+
+<!-- HERO SECTION -->
+<header class="hero">
+  <div class="hero-bg-shapes">
+    <div class="bg-circle pink-circle"></div>
+    <div class="bg-circle purple-circle"></div>
+  </div>
+  
+  <div class="hero-container">
+    <div class="hero-left">
+      <h1>
+        <span class="gradient-text">breaking</span><br>
+        the boring<br>
+        internet.
+      </h1>
+      <p class="subtext">
+        say goodbye to corporate sameness. build stuff that actually pops off the screen with our new neo-brutalist toolkit.
+      </p>
+      <div class="hero-cta-row">
+        <a href="#" class="btn-black wobble">start creating</a>
+        <a href="#" class="btn-white wobble">view docs</a>
+      </div>
+    </div>
+    
+    <div class="hero-right">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <!-- Mockup Feed -->
+          <div class="mock-post" style="transform: rotate(-1deg);">
+            <div class="mock-user"></div>
+            <div class="mock-line"></div>
+            <div class="mock-line short"></div>
+          </div>
+          <div class="mock-post" style="transform: rotate(1deg);">
+            <div class="mock-image"></div>
+            <div class="mock-line"></div>
+          </div>
+          
+          <div class="mock-tab-bar">
+            <div class="tab-icon"></div>
+            <div class="tab-icon"></div>
+            <div class="tab-action"></div>
+            <div class="tab-icon"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Floating Stickers -->
+      <div class="sticker s-1">✨</div>
+      <div class="sticker s-2">🔥</div>
+      <div class="sticker s-3">🚀</div>
+    </div>
+  </div>
+</header>
+
+<!-- SLANTED MARQUEE -->
+<div class="marquee-container slanted">
+  <div class="marquee-track">
+    <span>neo-brutalist toolkit</span> <span class="bullet">✦</span>
+    <span>zero boring allowed</span> <span class="bullet">✦</span>
+    <span>high contrast only</span> <span class="bullet">✦</span>
+    <span>make it bounce</span> <span class="bullet">✦</span>
+  </div>
+</div>
+
+<!-- BENTO FEATURE GRID -->
+<section class="bento-section">
+  <div class="bento-container">
+    <!-- Card A (7 cols) -->
+    <div class="bento-card span-7 bg-light rotate-neg">
+      <div class="bento-content">
+        <h2>hard shadows.</h2>
+        <p>no soft blurs here. we use 6px solid black offsets for maximum impact.</p>
+      </div>
+      <div class="bento-icon">◼</div>
+    </div>
+    
+    <!-- Card B (5 cols) -->
+    <div class="bento-card span-5 bg-black rotate-pos">
+      <div class="bento-content text-white">
+        <h2>neon core.</h2>
+        <p>acid green & hot pink accents.</p>
+        <div class="neon-badge">#ccff00</div>
+      </div>
+    </div>
+    
+    <!-- Card C (12 cols) -->
+    <div class="bento-card span-12 bg-pink">
+      <div class="bento-content">
+        <h2>bouncy interactions.</h2>
+        <p>custom cubic-bezier curves make every button feel alive.</p>
+      </div>
+      <div class="interactive-demo">
+        <button class="btn-black wobble">hover me!</button>
+        <button class="btn-white wobble">click me!</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRUTALIST FAQ -->
+<section class="faq-section">
+  <div class="faq-container">
+    <h2 class="section-title">questions?</h2>
+    
+    <details class="faq-item">
+      <summary>is this actually usable? <span class="faq-icon">+</span></summary>
+      <div class="faq-content">
+        <p>yes! it's highly accessible because of the insane contrast. just don't stare at the acid green for too long.</p>
+      </div>
+    </details>
+    
+    <details class="faq-item">
+      <summary>can i change the colors? <span class="faq-icon">+</span></summary>
+      <div class="faq-content">
+        <p>absolutely. swap out the css variables and make it your own weird masterpiece.</p>
+      </div>
+    </details>
+    
+    <details class="faq-item">
+      <summary>why so many borders? <span class="faq-icon">+</span></summary>
+      <div class="faq-content">
+        <p>because borders build character. 4px solid black everywhere. no exceptions.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- GIANT CTA & FOOTER -->
+<section class="giant-cta">
+  <div class="sticker s-4">🦄</div>
+  <div class="sticker s-5">💣</div>
+  <h2>ready to<br>go wild?</h2>
+  <a href="#" class="btn-black wobble giant-btn">download now</a>
+</section>
+
+<footer class="footer">
+  <div class="footer-bg-text">ACID</div>
+  <div class="footer-content">
+    <div class="footer-left">
+      <div class="footer-logo">✦ acid youth</div>
+    </div>
+    <div class="footer-right">
+      <a href="#">twitter</a>
+      <a href="#">instagram</a>
+      <a href="#">dribbble</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

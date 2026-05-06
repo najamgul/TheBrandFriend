@@ -1,5 +1,14 @@
 export const designs = [
   {
+    slug: 'gen-z-brutal',
+    name: 'Acid Youth',
+    style: 'NEO-BRUTALIST',
+    description: 'Expressive, playful Gen-Z aesthetic with high-saturation colors, hard offset shadows, and bouncy micro-interactions.',
+    colors: ['#ccff00', '#7000ff', '#ff0099', '#0a0a0a'],
+    fonts: ['Space Grotesk', 'DM Sans'],
+    industries: ['Creator', 'Gen-Z', 'Tech'],
+  },
+  {
     slug: 'swiss-echo',
     name: 'Swiss Echo',
     style: 'MINIMALIST',
