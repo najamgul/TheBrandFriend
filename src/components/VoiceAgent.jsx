@@ -6,8 +6,7 @@ import './VoiceAgent.css';
 const AGENT_ID = 'edccea7e-4727-48e1-ab2e-4f97ff753814';
 const WS_BASE  = 'wss://stellar-viking.fly.dev';
 const IDLE_DELAY_MS = 20_000; // 20 seconds
-const VIZ_BAR_COUNT = 24;
-const RINGTONE_URL  = '/ringtone.mp3';
+const VIZ_BAR_COUNT = 18; // fewer bars for mobile
 
 export default function VoiceAgent() {
   // Widget states: 'idle' | 'ringing' | 'connecting' | 'active' | 'dismissed'
@@ -16,21 +15,20 @@ export default function VoiceAgent() {
   const [callTime, setCallTime] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
-  // Refs for audio/ws resources (not state to avoid re-renders)
-  const wsRef         = useRef(null);
-  const micStreamRef  = useRef(null);
-  const micCtxRef     = useRef(null);
+  // Refs for audio/ws resources
+  const wsRef          = useRef(null);
+  const micStreamRef   = useRef(null);
+  const micCtxRef      = useRef(null);
   const playbackCtxRef = useRef(null);
-  const nextPlayRef   = useRef(0);
-  const timerRef      = useRef(null);
-  const vizBarsRef    = useRef(null);
+  const nextPlayRef    = useRef(0);
+  const timerRef       = useRef(null);
+  const vizBarsRef     = useRef(null);
   const speakTimeoutRef = useRef(null);
-  const ringtoneRef   = useRef(null);
-  const audioUnlockedRef = useRef(false);
+  const ringtoneRef    = useRef(null);
+  const audioCtxRef    = useRef(null); // Shared AudioContext for ringtone unlock
 
   // ─── Idle trigger ─────────────────────────────────────────
   useEffect(() => {
-    // Don't re-trigger if already dismissed or shown this session
     if (typeof window === 'undefined') return;
     if (sessionStorage.getItem('va_shown')) {
       setPhase('dismissed');
@@ -45,59 +43,73 @@ export default function VoiceAgent() {
     return () => clearTimeout(timer);
   }, []);
 
-  // ─── Pre-load ringtone & unlock audio on first interaction ─
+  // ─── Unlock audio on first user interaction ───────────────
+  // Mobile Safari / Chrome require an AudioContext to be resumed
+  // inside a user gesture. We create one and resume it on first tap.
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    // Create the Audio element eagerly so the browser associates it
-    // with a user gesture when we warm it up below.
-    const audio = new Audio(RINGTONE_URL);
-    audio.loop = true;
-    audio.volume = 0.7;
-    audio.preload = 'auto';
-    ringtoneRef.current = audio;
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
 
-    // Unlock audio playback on the very first user interaction.
-    // We play a silent blip (volume=0) then immediately pause.
-    // After this, subsequent .play() calls are allowed by the browser.
+    const ctx = new AudioContextClass();
+    audioCtxRef.current = ctx;
+
     const unlock = () => {
-      if (audioUnlockedRef.current) return;
-      audioUnlockedRef.current = true;
-      audio.volume = 0;
-      audio.play().then(() => {
-        audio.pause();
-        audio.currentTime = 0;
+      // Resume AudioContext if suspended (required on iOS/mobile)
+      if (ctx.state === 'suspended') {
+        ctx.resume().catch(() => {});
+      }
+      // Also pre-load ringtone into an Audio element during gesture
+      if (!ringtoneRef.current) {
+        const audio = new Audio('/ringtone.mp3');
+        audio.loop = true;
         audio.volume = 0.7;
-      }).catch(() => {});
-      document.removeEventListener('click', unlock);
-      document.removeEventListener('touchstart', unlock);
-      document.removeEventListener('keydown', unlock);
-      document.removeEventListener('scroll', unlock);
+        audio.preload = 'auto';
+        // iOS trick: load the audio element during a user gesture
+        audio.load();
+        ringtoneRef.current = audio;
+      }
     };
 
-    document.addEventListener('click', unlock, { once: false });
-    document.addEventListener('touchstart', unlock, { once: false });
-    document.addEventListener('keydown', unlock, { once: false });
-    document.addEventListener('scroll', unlock, { once: false, passive: true });
+    // Listen on multiple events (touch is critical for mobile)
+    const events = ['touchstart', 'touchend', 'click', 'keydown', 'scroll'];
+    events.forEach(e => document.addEventListener(e, unlock, { passive: true, capture: true }));
 
     return () => {
-      document.removeEventListener('click', unlock);
-      document.removeEventListener('touchstart', unlock);
-      document.removeEventListener('keydown', unlock);
-      document.removeEventListener('scroll', unlock);
-      if (ringtoneRef.current) {
-        ringtoneRef.current.pause();
-        ringtoneRef.current = null;
-      }
+      events.forEach(e => document.removeEventListener(e, unlock, { capture: true }));
+      if (ctx.state !== 'closed') ctx.close().catch(() => {});
     };
   }, []);
 
   // ─── Play / stop ringtone based on phase ──────────────────
   useEffect(() => {
-    if (phase === 'ringing' && ringtoneRef.current) {
-      ringtoneRef.current.currentTime = 0;
-      ringtoneRef.current.volume = 0.7;
-      ringtoneRef.current.play().catch(() => {});
+    if (phase === 'ringing') {
+      // If ringtone was pre-loaded during gesture, play it.
+      // If not (no gesture happened yet), create it now as best-effort.
+      if (!ringtoneRef.current) {
+        const audio = new Audio('/ringtone.mp3');
+        audio.loop = true;
+        audio.volume = 0.7;
+        ringtoneRef.current = audio;
+      }
+      const audio = ringtoneRef.current;
+      audio.currentTime = 0;
+      audio.volume = 0.7;
+      // Use a promise chain — on mobile this may only work after gesture
+      const playPromise = audio.play();
+      if (playPromise) {
+        playPromise.catch(() => {
+          // Autoplay blocked — try again on next user interaction
+          const retryPlay = () => {
+            audio.play().catch(() => {});
+            document.removeEventListener('touchstart', retryPlay);
+            document.removeEventListener('click', retryPlay);
+          };
+          document.addEventListener('touchstart', retryPlay, { once: true, passive: true });
+          document.addEventListener('click', retryPlay, { once: true });
+        });
+      }
     } else if (ringtoneRef.current) {
       ringtoneRef.current.pause();
       ringtoneRef.current.currentTime = 0;
@@ -122,10 +134,11 @@ export default function VoiceAgent() {
   // ─── Teardown helper ──────────────────────────────────────
   const teardown = useCallback(() => {
     if (wsRef.current) { wsRef.current.close(); wsRef.current = null; }
-    if (micCtxRef.current) { micCtxRef.current.close(); micCtxRef.current = null; }
-    if (playbackCtxRef.current) { playbackCtxRef.current.close(); playbackCtxRef.current = null; }
+    if (micCtxRef.current) { micCtxRef.current.close().catch(() => {}); micCtxRef.current = null; }
+    if (playbackCtxRef.current) { playbackCtxRef.current.close().catch(() => {}); playbackCtxRef.current = null; }
     if (micStreamRef.current) { micStreamRef.current.getTracks().forEach(t => t.stop()); micStreamRef.current = null; }
     if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
+    if (ringtoneRef.current) { ringtoneRef.current.pause(); ringtoneRef.current = null; }
   }, []);
 
   // ─── Add transcript line ──────────────────────────────────
@@ -138,8 +151,20 @@ export default function VoiceAgent() {
     setPhase('connecting');
     addLine('system', 'Connecting...');
 
-    // Initialize playback context
-    playbackCtxRef.current = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 24000 });
+    // Stop ringtone
+    if (ringtoneRef.current) {
+      ringtoneRef.current.pause();
+      ringtoneRef.current.currentTime = 0;
+    }
+
+    // Initialize playback context — use device default sample rate then
+    // resample during playback (more compatible with mobile)
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    playbackCtxRef.current = new AudioContextClass();
+    // Resume if suspended (iOS requirement after user gesture)
+    if (playbackCtxRef.current.state === 'suspended') {
+      await playbackCtxRef.current.resume();
+    }
     nextPlayRef.current = playbackCtxRef.current.currentTime;
 
     // Open WebSocket to Stellar Viking
@@ -159,13 +184,11 @@ export default function VoiceAgent() {
         if (msg.type === 'audio') {
           queueAudioPlayback(msg.data);
           setIsSpeaking(true);
-          // Reset speaking indicator after a gap
           clearTimeout(speakTimeoutRef.current);
           speakTimeoutRef.current = setTimeout(() => setIsSpeaking(false), 600);
         } else if (msg.type === 'transcript') {
           addLine(msg.role, msg.text);
           if (msg.role === 'agent') {
-            // agent finished its turn — short delay then stop speaking indicator
             clearTimeout(speakTimeoutRef.current);
             speakTimeoutRef.current = setTimeout(() => setIsSpeaking(false), 800);
           }
@@ -184,17 +207,31 @@ export default function VoiceAgent() {
   }, [addLine, teardown]);
 
   // ─── Start Microphone ─────────────────────────────────────
+  // Mobile browsers don't honor sampleRate constraints in getUserMedia.
+  // We capture at the browser's native rate and downsample to 16kHz.
   const startMicrophone = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        audio: { sampleRate: 16000, channelCount: 1, echoCancellation: true, noiseSuppression: true }
+        audio: {
+          channelCount: 1,
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        }
       });
       micStreamRef.current = stream;
-      const ctx = new AudioContext({ sampleRate: 16000 });
+
+      // Create AudioContext at default rate (mobile-safe)
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      const ctx = new AudioContextClass();
+      if (ctx.state === 'suspended') await ctx.resume();
       micCtxRef.current = ctx;
 
+      const nativeRate = ctx.sampleRate; // typically 44100 or 48000 on mobile
+      const targetRate = 16000;
+
       const source = ctx.createMediaStreamSource(stream);
-      const processor = ctx.createScriptProcessor(2048, 1, 1);
+      const processor = ctx.createScriptProcessor(4096, 1, 1);
       source.connect(processor);
       processor.connect(ctx.destination);
 
@@ -210,11 +247,17 @@ export default function VoiceAgent() {
         for (let i = 0; i < f32.length; i++) sumSq += f32[i] * f32[i];
         if (Math.sqrt(sumSq / f32.length) < 0.008) return;
 
-        // Convert Float32 → PCM 16-bit LE → Base64
-        const pcm16 = new Int16Array(f32.length);
-        for (let i = 0; i < f32.length; i++) {
-          pcm16[i] = Math.max(-32768, Math.min(32767, Math.round(f32[i] * 32767)));
+        // Downsample from native rate → 16kHz
+        const ratio = nativeRate / targetRate;
+        const outLen = Math.floor(f32.length / ratio);
+        const pcm16 = new Int16Array(outLen);
+        for (let i = 0; i < outLen; i++) {
+          const srcIdx = Math.floor(i * ratio);
+          const sample = f32[Math.min(srcIdx, f32.length - 1)];
+          pcm16[i] = Math.max(-32768, Math.min(32767, Math.round(sample * 32767)));
         }
+
+        // Convert to Base64
         const u8 = new Uint8Array(pcm16.buffer);
         let bin = '';
         for (let i = 0; i < u8.length; i++) bin += String.fromCharCode(u8[i]);
@@ -226,9 +269,14 @@ export default function VoiceAgent() {
   };
 
   // ─── Audio Playback Queue ─────────────────────────────────
+  // Server sends PCM 24kHz. We decode and resample to the
+  // AudioContext's native rate for correct playback on all devices.
   const queueAudioPlayback = (base64Pcm24k) => {
     const pCtx = playbackCtxRef.current;
-    if (!pCtx) return;
+    if (!pCtx || pCtx.state === 'closed') return;
+
+    // Resume context if it got suspended (iOS can suspend anytime)
+    if (pCtx.state === 'suspended') pCtx.resume().catch(() => {});
 
     const raw = atob(base64Pcm24k);
     const bytes = new Uint8Array(raw.length);
@@ -237,11 +285,23 @@ export default function VoiceAgent() {
     const pcm16 = new Int16Array(bytes.buffer);
     if (pcm16.length === 0) return;
 
-    const f32 = new Float32Array(pcm16.length);
-    for (let i = 0; i < pcm16.length; i++) f32[i] = pcm16[i] / 32768;
+    const srcRate = 24000;
+    const dstRate = pCtx.sampleRate; // device native rate
+    const ratio = dstRate / srcRate;
+    const outLen = Math.round(pcm16.length * ratio);
 
-    const buffer = pCtx.createBuffer(1, f32.length, 24000);
-    buffer.getChannelData(0).set(f32);
+    const buffer = pCtx.createBuffer(1, outLen, dstRate);
+    const channelData = buffer.getChannelData(0);
+
+    // Linear interpolation resample 24kHz → native rate
+    for (let i = 0; i < outLen; i++) {
+      const srcPos = i / ratio;
+      const srcIdx = Math.floor(srcPos);
+      const frac = srcPos - srcIdx;
+      const s0 = srcIdx < pcm16.length ? pcm16[srcIdx] / 32768 : 0;
+      const s1 = (srcIdx + 1) < pcm16.length ? pcm16[srcIdx + 1] / 32768 : s0;
+      channelData[i] = s0 + frac * (s1 - s0);
+    }
 
     const src = pCtx.createBufferSource();
     src.buffer = buffer;
@@ -262,13 +322,14 @@ export default function VoiceAgent() {
       let sum = 0;
       for (let j = 0; j < step; j++) sum += Math.abs(samples[i * step + j] || 0);
       const avg = sum / step;
-      const h = Math.max(4, Math.min(40, avg * 280));
+      const h = Math.max(4, Math.min(36, avg * 280));
       bars[i].style.height = `${h}px`;
     }
   };
 
   // ─── Decline / End ────────────────────────────────────────
   const declineCall = useCallback(() => {
+    if (ringtoneRef.current) { ringtoneRef.current.pause(); ringtoneRef.current = null; }
     setPhase('dismissed');
   }, []);
 
