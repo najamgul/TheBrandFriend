@@ -55,8 +55,8 @@
 
 .va-ring-animation {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   margin: 0 auto 16px;
   display: flex;
   align-items: center;
@@ -67,30 +67,33 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 2px solid rgba(16, 185, 129, 0.4);
-  animation: va-ringPulse 1.8s ease-out infinite;
+  border: 2px solid rgba(16, 185, 129, 0.5);
+  animation: va-ringPulse 2s ease-out infinite;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
 }
 
-.va-ring-pulse:nth-child(2) { animation-delay: 0.4s; }
-.va-ring-pulse:nth-child(3) { animation-delay: 0.8s; }
+.va-ring-pulse:nth-child(2) { animation-delay: 0.5s; }
+.va-ring-pulse:nth-child(3) { animation-delay: 1.0s; }
 
 .va-avatar {
-  width: 52px;
-  height: 52px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background: linear-gradient(135deg, #10b981, #059669);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   color: #fff;
   position: relative;
   z-index: 2;
+  animation: va-avatarGlow 1.8s ease-in-out infinite;
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);
 }
 
 .va-caller-name {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
   margin-bottom: 3px;
   letter-spacing: -0.02em;
@@ -106,10 +109,21 @@
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   color: #10b981;
-  margin-bottom: 10px;
-  animation: va-blink 1.2s ease-in-out infinite;
+  margin-bottom: 14px;
+  animation: va-shimmer 2s ease-in-out infinite;
+  background: linear-gradient(90deg, #10b981, #34d399, #10b981);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Ringing card gets a breathing glow border */
+.va-card:has(.va-ringing-header) {
+  border-color: rgba(16, 185, 129, 0.2);
+  animation: va-cardGlow 2s ease-in-out infinite;
 }
 
 /* ─── Action Buttons (Accept / Decline) ────────────────────── */
@@ -144,6 +158,7 @@
   background: linear-gradient(135deg, #10b981, #059669);
   color: #fff;
   box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+  animation: va-acceptPulse 1.5s ease-in-out infinite;
 }
 
 .va-btn-decline {
@@ -348,12 +363,50 @@
 
 @keyframes va-ringPulse {
   0% {
-    transform: scale(0.7);
-    opacity: 0.8;
+    transform: scale(0.6);
+    opacity: 0.9;
+    border-color: rgba(16, 185, 129, 0.6);
   }
   100% {
-    transform: scale(1.6);
+    transform: scale(1.8);
     opacity: 0;
+    border-color: rgba(16, 185, 129, 0);
+  }
+}
+
+@keyframes va-avatarGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 36px rgba(16, 185, 129, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes va-shimmer {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+@keyframes va-cardGlow {
+  0%, 100% {
+    border-color: rgba(16, 185, 129, 0.1);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  }
+  50% {
+    border-color: rgba(16, 185, 129, 0.3);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 0 30px rgba(16, 185, 129, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  }
+}
+
+@keyframes va-acceptPulse {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 24px rgba(16, 185, 129, 0.6);
   }
 }
 

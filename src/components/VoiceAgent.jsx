@@ -174,7 +174,6 @@ export default function VoiceAgent() {
 
     ws.onopen = async () => {
       setPhase('active');
-      addLine('system', 'Connected — speak into your microphone');
       await startMicrophone();
     };
 
@@ -187,6 +186,8 @@ export default function VoiceAgent() {
           clearTimeout(speakTimeoutRef.current);
           speakTimeoutRef.current = setTimeout(() => setIsSpeaking(false), 600);
         } else if (msg.type === 'transcript') {
+          // Don't display system-level debug messages to the user
+          if (msg.role === 'system') return;
           addLine(msg.role, msg.text);
           if (msg.role === 'agent') {
             clearTimeout(speakTimeoutRef.current);
@@ -198,9 +199,8 @@ export default function VoiceAgent() {
       } catch { /* ignore parse errors */ }
     };
 
-    ws.onerror = () => addLine('system', 'Connection error');
+    ws.onerror = () => addLine('system', 'Connection error — please try again');
     ws.onclose = () => {
-      addLine('system', 'Call ended');
       setPhase('dismissed');
       teardown();
     };
