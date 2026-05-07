@@ -366,9 +366,9 @@ export default function VoiceAgent() {
                   <div className="va-ring-pulse" />
                   <div className="va-ring-pulse" />
                   <div className="va-ring-pulse" />
-                  <div className="va-avatar">M</div>
+                  <div className="va-avatar">B</div>
                 </div>
-                <div className="va-caller-name">Maya</div>
+                <div className="va-caller-name">Brandi</div>
                 <div className="va-caller-role">Design Consultant · TheBrandFriend</div>
               </div>
               <div className="va-actions">
@@ -387,7 +387,7 @@ export default function VoiceAgent() {
             <div className="va-mic-prompt">
               <div className="va-mic-icon">🎙️</div>
               <div className="va-mic-text">
-                Connecting to Maya...<br />
+                Connecting to Brandi...<br />
                 Please allow microphone access when prompted.
               </div>
             </div>
@@ -397,9 +397,9 @@ export default function VoiceAgent() {
           {phase === 'active' && (
             <>
               <div className="va-active-header">
-                <div className="va-active-avatar">M</div>
+                <div className="va-active-avatar">B</div>
                 <div className="va-active-info">
-                  <div className="va-active-name">Maya</div>
+                  <div className="va-active-name">Brandi</div>
                   <div className="va-active-status">
                     <div className={`va-status-dot${isSpeaking ? ' speaking' : ''}`} />
                     {isSpeaking ? 'Speaking...' : 'Listening'}
