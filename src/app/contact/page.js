@@ -5,7 +5,7 @@ import CreattieEmbed from '@/components/CreattieEmbed';
 
 export const metadata = {
   title: 'Contact Us — Get A Free Brand Consultation',
-  description: 'Ready to ship your brand? Contact TheBrandFriend for a free consultation. We respond within 24 hours.',
+  description: 'Ready to ship your brand? Contact TheBrandFriend for a free consultation. We respond within 3 hours during business hours.',
   keywords: 'contact digital agency, free brand consultation, hire web developer, hire marketing agency',
 };
 
@@ -20,7 +20,7 @@ export default function ContactPage() {
             </div>
             <h1 className="hero-headline">LET&apos;S<br /><span className="volt">TALK</span></h1>
             <p className="hero-sub">
-              <em>Drop your details below. We&apos;ll get back within 24 hours with a game plan for your brand. No strings attached.</em>
+              <em>Drop your details below. We&apos;ll get back within 3 hours during business hours with a game plan for your brand. No strings attached.</em>
             </p>
           </div>
           <div className="hero-anim">
@@ -30,7 +30,7 @@ export default function ContactPage() {
       </section>
 
       <section className="section section-dark">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '48px', maxWidth: '1000px' }}>
+        <div className="contact-grid">
           <div>
             <span className="mono tag tag-volt">SEND US A MESSAGE</span>
             <h2 className="ranchers" style={{ fontSize: 'clamp(32px, 5vw, 56px)', margin: '12px 0 28px' }}>PROJECT BRIEF</h2>
@@ -44,11 +44,11 @@ export default function ContactPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
                 <p className="mono" style={{ fontSize: '10px', color: '#475569', marginBottom: '4px' }}>EMAIL</p>
-                <a href="mailto:hello@thebrandfriend.com" style={{ fontSize: '15px', color: '#CCFF00', textDecoration: 'none' }}>hello@thebrandfriend.com</a>
+                <a href="mailto:care@thebrandfriend.com" style={{ fontSize: '15px', color: '#CCFF00', textDecoration: 'none' }}>care@thebrandfriend.com</a>
               </div>
               <div>
                 <p className="mono" style={{ fontSize: '10px', color: '#475569', marginBottom: '4px' }}>RESPONSE TIME</p>
-                <p style={{ fontSize: '15px' }}>Within 24 hours</p>
+                <p style={{ fontSize: '15px' }}>Within 3 hours (business hours)</p>
               </div>
               <div>
                 <p className="mono" style={{ fontSize: '10px', color: '#475569', marginBottom: '4px' }}>EXPLORE</p>

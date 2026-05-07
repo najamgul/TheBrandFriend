@@ -20,7 +20,7 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://the-brand-friend.vercel.app'),
+  metadataBase: new URL('https://thebrandfriend.com'),
   title: {
     default: 'TheBrandFriend — Digital Agency | Strategy, Design, Development, Marketing',
     template: '%s | TheBrandFriend',
@@ -63,8 +63,8 @@ export default function RootLayout({ children }) {
               '@context': 'https://schema.org',
               '@type': 'Organization',
               name: 'TheBrandFriend',
-              url: 'https://the-brand-friend.vercel.app',
-              logo: 'https://the-brand-friend.vercel.app/logo-full.png',
+              url: 'https://thebrandfriend.com',
+              logo: 'https://thebrandfriend.com/logo-full.png',
               description: 'Brutally effective digital agency — Strategy, Design, Development, Marketing.',
               sameAs: [
                 'https://instagram.com/thebrandfriend',
@@ -73,7 +73,7 @@ export default function RootLayout({ children }) {
               contactPoint: {
                 '@type': 'ContactPoint',
                 contactType: 'sales',
-                email: 'hello@thebrandfriend.com',
+                email: 'care@thebrandfriend.com',
               },
             }),
           }}

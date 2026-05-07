@@ -65,7 +65,7 @@ export async function POST(request) {
     let emailError = null;
     try {
       const resendKey = process.env.RESEND_API_KEY;
-      const teamEmail = process.env.TEAM_EMAIL || 'hello@thebrandfriend.com';
+      const teamEmail = process.env.TEAM_EMAIL || 'care@thebrandfriend.com';
       const fromEmail = process.env.FROM_EMAIL || 'TheBrandFriend <noreply@thebrandfriend.com>';
 
       if (!resendKey) {

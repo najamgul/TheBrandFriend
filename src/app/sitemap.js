@@ -2,7 +2,7 @@ export const dynamic = 'force-static';
 
 import { services } from '@/data/services';
 
-const BASE_URL = 'https://the-brand-friend.vercel.app';
+const BASE_URL = 'https://thebrandfriend.com';
 
 export default function sitemap() {
   const servicePages = services.map(s => ({

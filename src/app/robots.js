@@ -8,6 +8,6 @@ export default function robots() {
         allow: '/',
       },
     ],
-    sitemap: 'https://the-brand-friend.vercel.app/sitemap.xml',
+    sitemap: 'https://thebrandfriend.com/sitemap.xml',
   };
 }

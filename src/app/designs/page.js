@@ -3,7 +3,7 @@ import DesignGalleryClient from '@/components/DesignGalleryClient';
 
 export const metadata = {
   title: 'Design Library — Pick Your Website Style',
-  description: 'Browse 10 handcrafted website designs. Pick a style you love, and we\'ll build your brand around it — delivered in 3 days.',
+  description: 'Browse 12 handcrafted website designs. Pick a style you love, and we\'ll build your brand around it — delivered in 3 days.',
   keywords: 'website design templates, website styles, design picker, website inspiration, TheBrandFriend designs',
 };
 
@@ -18,7 +18,7 @@ export default function DesignsPage() {
             </div>
             <h1 className="hero-headline">DESIGN<br /><span className="volt">LIBRARY</span></h1>
             <p className="hero-sub">
-              <em>10 handcrafted design styles. Find the one that speaks to your brand. Click &ldquo;I Want This&rdquo; and we&apos;ll build it — in 3 days.</em>
+              <em>12 handcrafted design styles. Find the one that speaks to your brand. Click &ldquo;I Want This&rdquo; and we&apos;ll build it — in 3 days.</em>
             </p>
           </div>
           <div className="hero-anim">

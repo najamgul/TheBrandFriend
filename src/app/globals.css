@@ -333,6 +333,10 @@ a { color: inherit; }
 .launch-seq { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 280px; margin: 20px auto 0; }
 
 
+
+/* ===== CONTACT GRID ===== */
+.contact-grid { display: grid; grid-template-columns: 1fr; gap: 48px; max-width: 1000px; }
+
 /* ===== CONTACT FORM ===== */
 .contact-form { display: flex; flex-direction: column; gap: 16px; }
 .form-row { display: grid; grid-template-columns: 1fr; gap: 16px; }
@@ -403,6 +407,7 @@ a { color: inherit; }
   .footer-cols { flex-direction: row; gap: 48px; }
   .related-grid { grid-template-columns: 1fr 1fr; }
   .values-grid { grid-template-columns: 1fr 1fr; }
+  .contact-grid { grid-template-columns: 3fr 2fr; }
   .sticker-bar { padding: 40px 32px; }
   .service-hero { padding: 80px 40px 48px; }
   .deliverables-section { padding: 80px 40px; }

@@ -4,11 +4,25 @@
  */
 
 /**
+ * Escape user input before interpolating into HTML to prevent XSS.
+ */
+function esc(str) {
+  if (!str) return '';
+  return String(str).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[c]));
+}
+
+/**
  * Auto-reply email sent to the prospect immediately after form submission.
  */
 export function buildAutoReplyEmail({ name, service, design }) {
+  const safeName = esc(name);
+  const safeService = esc(service);
+  const safeDesign = design ? esc(design.replace(/-/g, ' ').toUpperCase()) : '';
+
   const designLine = design
-    ? `<p style="margin:0 0 4px;color:#999;font-size:13px;">PREFERRED DESIGN: <strong style="color:#333;">${design.replace(/-/g, ' ').toUpperCase()}</strong></p>`
+    ? `<p style="margin:0 0 4px;color:#999;font-size:13px;">PREFERRED DESIGN: <strong style="color:#333;">${safeDesign}</strong></p>`
     : '';
 
   return {
@@ -27,7 +41,7 @@ export function buildAutoReplyEmail({ name, service, design }) {
 
     <!-- BODY -->
     <div style="background:#ffffff;padding:36px 28px;border-radius:0 0 8px 8px;">
-      <h2 style="margin:0 0 16px;font-size:22px;font-weight:700;color:#111;">Hey ${name.split(' ')[0]} 👋</h2>
+      <h2 style="margin:0 0 16px;font-size:22px;font-weight:700;color:#111;">Hey ${esc(name.split(' ')[0])} 👋</h2>
 
       <p style="margin:0 0 16px;font-size:15px;line-height:1.65;color:#444;">
         We've received your project brief and our team is already reviewing it.
@@ -37,7 +51,7 @@ export function buildAutoReplyEmail({ name, service, design }) {
       <!-- SUBMISSION SUMMARY -->
       <div style="background:#f9f9f9;border:1px solid #eee;border-radius:6px;padding:20px;margin:24px 0;">
         <p style="margin:0 0 4px;color:#999;font-size:11px;font-weight:700;letter-spacing:0.12em;">WHAT YOU SUBMITTED</p>
-        <p style="margin:8px 0 4px;color:#999;font-size:13px;">SERVICE: <strong style="color:#333;">${service}</strong></p>
+        <p style="margin:8px 0 4px;color:#999;font-size:13px;">SERVICE: <strong style="color:#333;">${safeService}</strong></p>
         ${designLine}
       </div>
 
@@ -65,16 +79,24 @@ export function buildAutoReplyEmail({ name, service, design }) {
  * Internal alert email sent to the team when a new lead comes in.
  */
 export function buildTeamAlertEmail({ name, email, phone, service, design, brief }) {
+  const safeName = esc(name);
+  const safeEmail = esc(email);
+  const safeService = esc(service);
+  const safeBrief = esc(brief);
+  const safePhone = phone ? esc(phone) : '';
+  const safePhoneDigits = phone ? phone.replace(/[^0-9]/g, '') : '';
+  const safeDesign = design ? esc(design.replace(/-/g, ' ').toUpperCase()) : '';
+
   const designRow = design
-    ? `<tr><td style="padding:8px 12px;color:#999;font-size:12px;font-weight:700;letter-spacing:0.08em;white-space:nowrap;vertical-align:top;">DESIGN</td><td style="padding:8px 12px;font-size:14px;color:#fff;">${design.replace(/-/g, ' ').toUpperCase()}</td></tr>`
+    ? `<tr><td style="padding:8px 12px;color:#999;font-size:12px;font-weight:700;letter-spacing:0.08em;white-space:nowrap;vertical-align:top;">DESIGN</td><td style="padding:8px 12px;font-size:14px;color:#fff;">${safeDesign}</td></tr>`
     : '';
 
   const phoneRow = phone
-    ? `<tr><td style="padding:8px 12px;color:#999;font-size:12px;font-weight:700;letter-spacing:0.08em;white-space:nowrap;">PHONE</td><td style="padding:8px 12px;font-size:14px;color:#fff;"><a href="https://wa.me/${phone.replace(/[^0-9]/g, '')}" style="color:#CDFF57;text-decoration:none;">${phone}</a></td></tr>`
+    ? `<tr><td style="padding:8px 12px;color:#999;font-size:12px;font-weight:700;letter-spacing:0.08em;white-space:nowrap;">PHONE</td><td style="padding:8px 12px;font-size:14px;color:#fff;"><a href="https://wa.me/${safePhoneDigits}" style="color:#CDFF57;text-decoration:none;">${safePhone}</a></td></tr>`
     : '';
 
   return {
-    subject: `🔥 New Lead: ${name} — ${service}`,
+    subject: `🔥 New Lead: ${safeName} — ${safeService}`,
     html: `
 <!DOCTYPE html>
 <html>
@@ -92,16 +114,16 @@ export function buildTeamAlertEmail({ name, email, phone, service, design, brief
       <table style="width:100%;border-collapse:collapse;">
         <tr>
           <td style="padding:8px 12px;color:#999;font-size:12px;font-weight:700;letter-spacing:0.08em;white-space:nowrap;">NAME</td>
-          <td style="padding:8px 12px;font-size:14px;color:#fff;font-weight:600;">${name}</td>
+          <td style="padding:8px 12px;font-size:14px;color:#fff;font-weight:600;">${safeName}</td>
         </tr>
         <tr>
           <td style="padding:8px 12px;color:#999;font-size:12px;font-weight:700;letter-spacing:0.08em;white-space:nowrap;">EMAIL</td>
-          <td style="padding:8px 12px;font-size:14px;"><a href="mailto:${email}" style="color:#CDFF57;text-decoration:none;">${email}</a></td>
+          <td style="padding:8px 12px;font-size:14px;"><a href="mailto:${safeEmail}" style="color:#CDFF57;text-decoration:none;">${safeEmail}</a></td>
         </tr>
         ${phoneRow}
         <tr>
           <td style="padding:8px 12px;color:#999;font-size:12px;font-weight:700;letter-spacing:0.08em;white-space:nowrap;">SERVICE</td>
-          <td style="padding:8px 12px;font-size:14px;color:#fff;">${service}</td>
+          <td style="padding:8px 12px;font-size:14px;color:#fff;">${safeService}</td>
         </tr>
         ${designRow}
       </table>
@@ -109,13 +131,13 @@ export function buildTeamAlertEmail({ name, email, phone, service, design, brief
       <!-- BRIEF -->
       <div style="margin:16px 12px 0;padding:16px;background:#111;border:1px solid #333;border-radius:4px;">
         <p style="margin:0 0 6px;color:#999;font-size:11px;font-weight:700;letter-spacing:0.1em;">PROJECT BRIEF</p>
-        <p style="margin:0;color:#ddd;font-size:14px;line-height:1.65;white-space:pre-wrap;">${brief}</p>
+        <p style="margin:0;color:#ddd;font-size:14px;line-height:1.65;white-space:pre-wrap;">${safeBrief}</p>
       </div>
     </div>
 
     <!-- ACTION -->
     <div style="text-align:center;padding:24px;">
-      <a href="mailto:${email}?subject=Re: Your project with TheBrandFriend" style="display:inline-block;background:#CDFF57;color:#0a0a0a;padding:12px 32px;border-radius:6px;font-size:13px;font-weight:700;letter-spacing:0.06em;text-decoration:none;">REPLY TO LEAD →</a>
+      <a href="mailto:${safeEmail}?subject=Re: Your project with TheBrandFriend" style="display:inline-block;background:#CDFF57;color:#0a0a0a;padding:12px 32px;border-radius:6px;font-size:13px;font-weight:700;letter-spacing:0.06em;text-decoration:none;">REPLY TO LEAD →</a>
     </div>
 
     <p style="text-align:center;font-size:11px;color:#555;margin:0;">
