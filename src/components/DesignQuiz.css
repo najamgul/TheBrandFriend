@@ -1,0 +1,313 @@
+/* ═══════════════════════════════════════════════════════════════
+   DesignQuiz.css — Premium "Find Your Style" Quiz
+   Full-screen dark overlay with neo-brutalist option tiles.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Quiz Container ──────────────────────────────────────────── */
+.dq-container {
+  min-height: 100vh;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle background grid */
+.dq-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* ─── Progress Bar ────────────────────────────────────────────── */
+.dq-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.dq-progress-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dq-progress-dot.active {
+  background: #ccff00;
+  border-color: #ccff00;
+  box-shadow: 0 0 12px rgba(204, 255, 0, 0.4);
+  transform: scale(1.2);
+}
+
+.dq-progress-dot.done {
+  background: #ccff00;
+  border-color: #ccff00;
+  opacity: 0.5;
+}
+
+.dq-progress-line {
+  width: 32px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1px;
+}
+
+/* ─── Step Card ───────────────────────────────────────────────── */
+.dq-step {
+  text-align: center;
+  max-width: 640px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  animation: dq-fadeSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dq-step-num {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ccff00;
+  margin-bottom: 12px;
+}
+
+.dq-question {
+  font-family: var(--font-display, 'Ranchers', cursive);
+  font-size: clamp(28px, 6vw, 44px);
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 32px;
+  letter-spacing: -0.02em;
+}
+
+/* ─── Option Tiles ────────────────────────────────────────────── */
+.dq-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.dq-option {
+  position: relative;
+  padding: 20px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.dq-option-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.dq-option:hover {
+  background: rgba(204, 255, 0, 0.06);
+  border-color: rgba(204, 255, 0, 0.3);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.dq-option.selected {
+  background: rgba(204, 255, 0, 0.1);
+  border-color: #ccff00;
+  color: #ccff00;
+  box-shadow: 0 0 20px rgba(204, 255, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.dq-option.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 14px;
+  color: #ccff00;
+  font-weight: 700;
+}
+
+/* ─── Navigation ──────────────────────────────────────────────── */
+.dq-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.dq-btn-next {
+  padding: 14px 36px;
+  background: #ccff00;
+  color: #0a0a0a;
+  border: 2px solid #0a0a0a;
+  border-radius: 12px;
+  font-family: var(--font-mono, monospace);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 4px 4px 0 #0a0a0a;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dq-btn-next:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #0a0a0a;
+}
+
+.dq-btn-next:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+.dq-btn-next:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 4px 4px 0 #0a0a0a;
+}
+
+.dq-skip {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 8px;
+  transition: color 0.2s;
+}
+
+.dq-skip:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ─── Results Splash ──────────────────────────────────────────── */
+.dq-results {
+  text-align: center;
+  animation: dq-fadeSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 2;
+}
+
+.dq-results-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  animation: dq-bounce 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dq-results-title {
+  font-family: var(--font-display, 'Ranchers', cursive);
+  font-size: clamp(28px, 6vw, 40px);
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.dq-results-sub {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 28px;
+}
+
+/* ─── Match Badge (on design cards) ───────────────────────────── */
+.design-match-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px 12px;
+  background: #ccff00;
+  color: #0a0a0a;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  border-radius: 6px;
+  z-index: 5;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  text-transform: uppercase;
+}
+
+.design-match-badge.top-pick {
+  background: #ccff00;
+  animation: dq-badgePulse 2s ease-in-out infinite;
+}
+
+/* ─── Animations ──────────────────────────────────────────────── */
+@keyframes dq-fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes dq-bounce {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes dq-badgePulse {
+  0%, 100% { box-shadow: 2px 2px 0 rgba(0,0,0,0.3); }
+  50% { box-shadow: 2px 2px 12px rgba(204, 255, 0, 0.4); }
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .dq-options {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .dq-option {
+    padding: 16px 12px;
+    font-size: 11px;
+  }
+}
