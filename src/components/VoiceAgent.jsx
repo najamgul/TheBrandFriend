@@ -369,7 +369,7 @@ export default function VoiceAgent() {
                   <div className="va-avatar">B</div>
                 </div>
                 <div className="va-caller-name">Brandi</div>
-                <div className="va-caller-role">Design Consultant · TheBrandFriend</div>
+                <div className="va-caller-role">Customer Executive · TheBrandFriend</div>
               </div>
               <div className="va-actions">
                 <button className="va-btn va-btn-decline" onClick={declineCall}>
