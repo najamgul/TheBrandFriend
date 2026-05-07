@@ -18,14 +18,14 @@
 .va-widget {
   position: fixed;
   z-index: 9999;
-  animation: va-slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: va-slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Mobile-first: full width, bottom pinned with safe area */
-  bottom: 0;
+  /* Mobile-first: full width, top pinned with safe area */
+  top: 0;
   left: 0;
   right: 0;
   padding: 12px;
-  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  padding-top: calc(12px + env(safe-area-inset-top, 0px));
 }
 
 /* ─── Incoming Call Card ───────────────────────────────────── */
@@ -330,10 +330,10 @@
 }
 
 /* ─── Animations ───────────────────────────────────────────── */
-@keyframes va-slideUp {
+@keyframes va-slideDown {
   0% {
     opacity: 0;
-    transform: translateY(40px) scale(0.95);
+    transform: translateY(-40px) scale(0.95);
   }
   100% {
     opacity: 1;
@@ -362,14 +362,13 @@
   50% { opacity: 0.4; }
 }
 
-/* ─── Desktop: larger card, positioned bottom-right ────────── */
+/* ─── Desktop: larger card, positioned top-center ──────────── */
 @media (min-width: 480px) {
   .va-widget {
-    bottom: 24px;
-    right: 24px;
-    left: auto;
+    top: 24px;
+    left: 0;
+    right: 0;
     padding: 0;
-    padding-bottom: 0;
   }
 
   .va-card {
