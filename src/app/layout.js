@@ -55,7 +55,8 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Ranchers&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" href="/favicon.png" />
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="128x128" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

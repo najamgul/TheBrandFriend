@@ -20,8 +20,8 @@ export default function Navbar() {
           <Image
             src="/logo-full.png"
             alt="TheBrandFriend - Digital Agency"
-            width={200}
-            height={48}
+            width={180}
+            height={60}
             className="nav-logo-img"
             priority
           />
