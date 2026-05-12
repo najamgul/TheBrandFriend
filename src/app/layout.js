@@ -67,8 +67,8 @@ export default function RootLayout({ children }) {
               logo: 'https://thebrandfriend.com/logo-full.png',
               description: 'Brutally effective digital agency — Strategy, Design, Development, Marketing.',
               sameAs: [
-                'https://instagram.com/thebrandfriend',
-                'https://linkedin.com/company/thebrandfriend',
+                'https://www.instagram.com/thebrandfriend.com_/',
+                'https://www.linkedin.com/company/the-brand-friend',
               ],
               contactPoint: {
                 '@type': 'ContactPoint',
