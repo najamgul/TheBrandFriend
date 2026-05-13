@@ -26,6 +26,7 @@ export default function VoiceAgent() {
   const speakTimeoutRef = useRef(null);
   const ringtoneRef    = useRef(null);
   const audioCtxRef    = useRef(null); // Shared AudioContext for ringtone unlock
+  const retryListenersRef = useRef([]); // Track retry-play listeners for cleanup
 
   // ─── Idle trigger ─────────────────────────────────────────
   useEffect(() => {
@@ -84,6 +85,14 @@ export default function VoiceAgent() {
 
   // ─── Play / stop ringtone based on phase ──────────────────
   useEffect(() => {
+    // Helper: remove any pending retry-play listeners
+    const clearRetryListeners = () => {
+      retryListenersRef.current.forEach(({ event, handler }) => {
+        document.removeEventListener(event, handler);
+      });
+      retryListenersRef.current = [];
+    };
+
     if (phase === 'ringing') {
       // If ringtone was pre-loaded during gesture, play it.
       // If not (no gesture happened yet), create it now as best-effort.
@@ -96,24 +105,40 @@ export default function VoiceAgent() {
       const audio = ringtoneRef.current;
       audio.currentTime = 0;
       audio.volume = 0.7;
+
       // Use a promise chain — on mobile this may only work after gesture
       const playPromise = audio.play();
       if (playPromise) {
         playPromise.catch(() => {
-          // Autoplay blocked — try again on next user interaction
+          // Autoplay blocked — try again on next user interaction,
+          // but ONLY if we're still in the 'ringing' phase.
           const retryPlay = () => {
-            audio.play().catch(() => {});
-            document.removeEventListener('touchstart', retryPlay);
-            document.removeEventListener('click', retryPlay);
+            // Guard: if user already declined/accepted, do NOT play
+            if (!ringtoneRef.current) return;
+            ringtoneRef.current.play().catch(() => {});
           };
-          document.addEventListener('touchstart', retryPlay, { once: true, passive: true });
-          document.addEventListener('click', retryPlay, { once: true });
+          const touchHandler = retryPlay;
+          const clickHandler = retryPlay;
+          document.addEventListener('touchstart', touchHandler, { once: true, passive: true });
+          document.addEventListener('click', clickHandler, { once: true });
+          // Track so we can remove them on cleanup
+          retryListenersRef.current.push(
+            { event: 'touchstart', handler: touchHandler },
+            { event: 'click', handler: clickHandler }
+          );
         });
       }
-    } else if (ringtoneRef.current) {
-      ringtoneRef.current.pause();
-      ringtoneRef.current.currentTime = 0;
+    } else {
+      // Phase is NOT ringing — stop ringtone and remove any retry listeners
+      clearRetryListeners();
+      if (ringtoneRef.current) {
+        ringtoneRef.current.pause();
+        ringtoneRef.current.currentTime = 0;
+      }
     }
+
+    // Cleanup on phase change
+    return () => clearRetryListeners();
   }, [phase]);
 
   // ─── Call timer ───────────────────────────────────────────
@@ -329,7 +354,17 @@ export default function VoiceAgent() {
 
   // ─── Decline / End ────────────────────────────────────────
   const declineCall = useCallback(() => {
-    if (ringtoneRef.current) { ringtoneRef.current.pause(); ringtoneRef.current = null; }
+    // Remove any pending retry-play listeners FIRST to prevent race condition
+    retryListenersRef.current.forEach(({ event, handler }) => {
+      document.removeEventListener(event, handler);
+    });
+    retryListenersRef.current = [];
+    // Stop and destroy ringtone
+    if (ringtoneRef.current) {
+      ringtoneRef.current.pause();
+      ringtoneRef.current.currentTime = 0;
+      ringtoneRef.current = null;
+    }
     setPhase('dismissed');
   }, []);
 
