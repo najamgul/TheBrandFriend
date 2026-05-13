@@ -199,7 +199,12 @@ export default function VoiceAgent() {
 
     ws.onopen = async () => {
       setPhase('active');
-      await startMicrophone();
+      addLine('system', 'Connected — speak into your microphone');
+      try {
+        await startMicrophone();
+      } catch (err) {
+        addLine('system', `Mic error: ${err.message || 'Could not access microphone'}`);
+      }
     };
 
     ws.onmessage = (event) => {
@@ -211,8 +216,6 @@ export default function VoiceAgent() {
           clearTimeout(speakTimeoutRef.current);
           speakTimeoutRef.current = setTimeout(() => setIsSpeaking(false), 600);
         } else if (msg.type === 'transcript') {
-          // Don't display system-level debug messages to the user
-          if (msg.role === 'system') return;
           addLine(msg.role, msg.text);
           if (msg.role === 'agent') {
             clearTimeout(speakTimeoutRef.current);
@@ -224,8 +227,14 @@ export default function VoiceAgent() {
       } catch { /* ignore parse errors */ }
     };
 
-    ws.onerror = () => addLine('system', 'Connection error — please try again');
-    ws.onclose = () => {
+    ws.onerror = (err) => {
+      console.error('[VoiceAgent] WebSocket error:', err);
+      addLine('system', 'Connection error — please try again');
+    };
+    ws.onclose = (e) => {
+      if (e.code !== 1000) {
+        addLine('system', `Disconnected (code ${e.code})`);
+      }
       setPhase('dismissed');
       teardown();
     };
