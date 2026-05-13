@@ -46,8 +46,9 @@ export default function Footer() {
           {/* Social / Contact */}
           <div className="footer-col">
             <h4 className="mono footer-col-title">CONNECT</h4>
-            <a href="https://instagram.com/thebrandfriend" target="_blank" rel="noopener noreferrer" className="mono">INSTAGRAM</a>
-            <a href="https://linkedin.com/company/thebrandfriend" target="_blank" rel="noopener noreferrer" className="mono">LINKEDIN</a>
+            <a href="https://www.instagram.com/thebrandfriend.com_/" target="_blank" rel="noopener noreferrer" className="mono">INSTAGRAM</a>
+            <a href="https://www.linkedin.com/company/the-brand-friend" target="_blank" rel="noopener noreferrer" className="mono">LINKEDIN</a>
+            <a href="https://www.facebook.com/thebrandfriends" target="_blank" rel="noopener noreferrer" className="mono">FACEBOOK</a>
             <a href="mailto:care@thebrandfriend.com" className="mono">EMAIL US</a>
           </div>
         </div>

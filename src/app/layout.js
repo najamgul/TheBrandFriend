@@ -71,6 +71,7 @@ export default function RootLayout({ children }) {
               sameAs: [
                 'https://www.instagram.com/thebrandfriend.com_/',
                 'https://www.linkedin.com/company/the-brand-friend',
+                'https://www.facebook.com/thebrandfriends',
               ],
               contactPoint: {
                 '@type': 'ContactPoint',
