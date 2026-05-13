@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import Sidebar from '@/components/Sidebar';
 import Animations from '@/components/Animations';
 import VoiceAgent from '@/components/VoiceAgent';
+import RecaptchaProvider from '@/components/RecaptchaProvider';
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -81,14 +82,16 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <Sidebar />
-        <main className="main-content">
-          <Navbar />
-          {children}
-          <Footer />
-        </main>
-        <Animations />
-        <VoiceAgent />
+        <RecaptchaProvider>
+          <Sidebar />
+          <main className="main-content">
+            <Navbar />
+            {children}
+            <Footer />
+          </main>
+          <Animations />
+          <VoiceAgent />
+        </RecaptchaProvider>
       </body>
     </html>
   );

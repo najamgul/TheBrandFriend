@@ -221,6 +221,46 @@ a { color: inherit; }
   border: 1px solid rgba(255,68,68,0.3);
   background: rgba(255,68,68,0.06);
 }
+
+/* Field-level validation errors */
+.field-error {
+  color: #FF4444;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+  padding: 0;
+}
+
+/* Input error state — red border highlight */
+.input-error,
+input.input-error,
+select.input-error,
+textarea.input-error {
+  border-color: #FF4444 !important;
+  box-shadow: 0 0 0 1px rgba(255, 68, 68, 0.3) !important;
+}
+
+/* reCAPTCHA privacy notice */
+.recaptcha-notice {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.25);
+  text-align: center;
+  margin-top: 12px;
+  letter-spacing: 0.03em;
+}
+.recaptcha-notice a {
+  color: rgba(255, 255, 255, 0.35);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.recaptcha-notice a:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Hide reCAPTCHA badge — we show our own notice instead */
+.grecaptcha-badge {
+  visibility: hidden !important;
+}
 .form-success {
   text-align: center; padding: 64px 24px;
   border: var(--border); box-shadow: var(--neo-shadow);

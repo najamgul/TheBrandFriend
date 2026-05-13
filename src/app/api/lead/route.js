@@ -3,33 +3,96 @@ import { getSupabase } from '@/lib/supabase';
 import { Resend } from 'resend';
 import { buildAutoReplyEmail, buildTeamAlertEmail } from '@/lib/email-templates';
 
+// ─── reCAPTCHA v3 verification ──────────────────────────────
+const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET_KEY;
+const RECAPTCHA_THRESHOLD = 0.5; // score below this = likely bot
+
+async function verifyRecaptcha(token) {
+  if (!RECAPTCHA_SECRET) {
+    // No secret configured — skip verification (dev mode)
+    return { success: true, score: 1.0, action: 'dev' };
+  }
+
+  if (!token) {
+    return { success: false, score: 0, error: 'Missing reCAPTCHA token' };
+  }
+
+  try {
+    const res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `secret=${encodeURIComponent(RECAPTCHA_SECRET)}&response=${encodeURIComponent(token)}`,
+    });
+
+    const data = await res.json();
+
+    return {
+      success: data.success && (data.score ?? 1.0) >= RECAPTCHA_THRESHOLD,
+      score: data.score ?? 0,
+      action: data.action,
+      error: data['error-codes']?.join(', '),
+    };
+  } catch (err) {
+    console.error('[Lead API] reCAPTCHA verification error:', err.message);
+    // Fail open — don't block legitimate users due to Google API issues
+    return { success: true, score: 0.5, error: 'verification_failed' };
+  }
+}
+
+// ─── Input validation ───────────────────────────────────────
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_RE = /^\+?[\d\s\-().]{7,20}$/;
+
+function validateInput({ name, email, phone, service, brief }) {
+  const errors = [];
+
+  if (!name || !name.trim()) errors.push('Name is required');
+  if (!email) {
+    errors.push('Email is required');
+  } else if (!EMAIL_RE.test(email)) {
+    errors.push('Invalid email address');
+  }
+  if (phone && phone.trim()) {
+    const digits = phone.replace(/\D/g, '');
+    if (digits.length < 7 || digits.length > 15) errors.push('Phone number must be 7–15 digits');
+    if (!PHONE_RE.test(phone.trim())) errors.push('Phone contains invalid characters');
+  }
+  if (!service || !service.trim()) errors.push('Service is required');
+  if (!brief || !brief.trim()) errors.push('Project brief is required');
+
+  return errors;
+}
+
 /**
  * POST /api/lead
  * Handles contact form submissions:
- *  1. Validates input
- *  2. Stores lead in Supabase
- *  3. Sends auto-reply email to prospect
- *  4. Sends internal alert email to team
+ *  1. Verifies reCAPTCHA v3 token
+ *  2. Validates input
+ *  3. Stores lead in Supabase
+ *  4. Sends auto-reply email to prospect
+ *  5. Sends internal alert email to team
  */
 export async function POST(request) {
   try {
     const body = await request.json();
 
-    // ── 1. Validate ──
-    const { name, email, service, design, brief, phone } = body;
-
-    if (!name || !email || !service || !brief) {
+    // ── 0. Verify reCAPTCHA ──
+    const captcha = await verifyRecaptcha(body.recaptchaToken);
+    if (!captcha.success) {
+      console.warn('[Lead API] reCAPTCHA failed:', { score: captcha.score, error: captcha.error });
       return NextResponse.json(
-        { error: 'Missing required fields: name, email, service, brief' },
-        { status: 400 }
+        { error: 'Bot detection failed. Please refresh and try again.' },
+        { status: 403 }
       );
     }
 
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    // ── 1. Validate ──
+    const { name, email, service, design, brief, phone } = body;
+
+    const validationErrors = validateInput({ name, email, phone, service, brief });
+    if (validationErrors.length > 0) {
       return NextResponse.json(
-        { error: 'Invalid email address' },
+        { error: validationErrors.join('; ') },
         { status: 400 }
       );
     }
@@ -41,9 +104,10 @@ export async function POST(request) {
       service: service.trim().slice(0, 200),
       design: design ? design.trim().slice(0, 100) : null,
       brief: brief.trim().slice(0, 5000),
-      phone: phone ? phone.trim().slice(0, 20) : null,
+      phone: phone ? phone.trim().replace(/[^\d+\-() ]/g, '').slice(0, 20) : null,
       source: 'contact-form',
       status: 'new',
+      recaptcha_score: captcha.score,
     };
 
     // ── 2. Store in Supabase ──
