@@ -4,9 +4,6 @@ import {
   animate,
   stagger,
   createTimeline,
-  onScroll,
-  createSpring,
-  utils,
 } from 'animejs';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -38,7 +35,7 @@ export default function Animations() {
 }
 
 /* ═══════════════════════════════════════════════
-   1. HERO — Cinematic Entrance Sequence
+   1. HERO — Clean Block Entrance (no word splitting)
    ═══════════════════════════════════════════════ */
 
 function heroEntrance() {
@@ -51,119 +48,69 @@ function heroEntrance() {
 
   if (!headline) return;
 
-  // Wrap each child text node's words in spans, preserve existing HTML elements
-  const fragment = document.createDocumentFragment();
-  const childNodes = Array.from(headline.childNodes);
-
-  childNodes.forEach(node => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      // Split text into words, wrap each
-      const text = node.textContent;
-      const words = text.split(/\s+/).filter(Boolean);
-      words.forEach((word, i) => {
-        const span = document.createElement('span');
-        span.className = 'hero-word';
-        span.style.display = 'inline-block';
-        span.style.opacity = '0';
-        span.textContent = word;
-        fragment.appendChild(span);
-        if (i < words.length - 1) fragment.appendChild(document.createTextNode(' '));
-      });
-    } else if (node.nodeType === Node.ELEMENT_NODE) {
-      if (node.tagName === 'BR') {
-        fragment.appendChild(node.cloneNode());
-      } else {
-        // Wrap the entire element (e.g. <span class="volt">DOMINATE</span>)
-        const wrapper = document.createElement('span');
-        wrapper.className = 'hero-word';
-        wrapper.style.display = 'inline-block';
-        wrapper.style.opacity = '0';
-        wrapper.appendChild(node.cloneNode(true));
-        fragment.appendChild(wrapper);
-      }
-    }
-  });
-
-  headline.innerHTML = '';
-  headline.appendChild(fragment);
-
-  const heroWords = headline.querySelectorAll('.hero-word');
-  const voltSpan = headline.querySelector('.volt');
-
-  // Initial states
-  const hiddenEls = [stickerHero, deliveryBadge, heroSub, heroForm, techLabel].filter(Boolean);
-  hiddenEls.forEach(el => {
+  // Animate blocks — no DOM rewriting, no word splitting
+  const elements = [stickerHero, headline, deliveryBadge, heroSub, heroForm, techLabel].filter(Boolean);
+  elements.forEach(el => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
+    el.style.transform = 'translateY(24px)';
   });
 
   const tl = createTimeline({ defaults: { ease: 'out(3)' } });
 
-  // Sticker drops in
+  // Sticker drops in with rotation
   if (stickerHero) {
     tl.add(stickerHero, {
       opacity: [0, 1],
-      translateY: [-30, 0],
-      rotate: ['-8deg', '-2deg'],
-      duration: 600,
+      translateY: [-20, 0],
+      rotate: ['-6deg', '-2deg'],
+      duration: 500,
     }, 0);
   }
 
-  // Words cascade in with spring
-  if (heroWords.length > 0) {
-    tl.add(heroWords, {
+  // Headline slides up
+  if (headline) {
+    tl.add(headline, {
       opacity: [0, 1],
-      translateY: [60, 0],
-      duration: 800,
-      delay: stagger(80),
+      translateY: [40, 0],
+      duration: 700,
     }, 100);
   }
 
-  // Volt text pulse
-  if (voltSpan) {
-    tl.add(voltSpan, {
-      scale: [1, 1.08, 1],
-      duration: 500,
-      ease: 'inOut(2)',
-    }, 900);
-  }
-
-  // Delivery badge bounces in
+  // Delivery badge
   if (deliveryBadge) {
     tl.add(deliveryBadge, {
       opacity: [0, 1],
-      translateY: [20, 0],
-      scale: [0.9, 1],
-      duration: 500,
-      ease: 'out(4)',
-    }, 700);
+      translateY: [16, 0],
+      scale: [0.95, 1],
+      duration: 450,
+    }, 500);
   }
 
-  // Sub text fades in
+  // Sub text
   if (heroSub) {
     tl.add(heroSub, {
       opacity: [0, 1],
-      translateY: [20, 0],
-      duration: 600,
-    }, 900);
+      translateY: [16, 0],
+      duration: 500,
+    }, 650);
   }
 
-  // Form slides up
+  // Form
   if (heroForm) {
     tl.add(heroForm, {
       opacity: [0, 1],
-      translateY: [30, 0],
-      duration: 600,
-    }, 1000);
+      translateY: [20, 0],
+      duration: 500,
+    }, 800);
   }
 
-  // Tech label fades in
+  // Tech label
   if (techLabel) {
     tl.add(techLabel, {
       opacity: [0, 1],
-      translateY: [10, 0],
-      duration: 400,
-    }, 1200);
+      translateY: [8, 0],
+      duration: 350,
+    }, 950);
   }
 }
 
@@ -175,8 +122,7 @@ function setupScrollReveals() {
   const revealTargets = [
     { selector: '.service-card', y: 50, staggerDelay: 80, ease: 'out(3)' },
     { selector: '.process-card', y: 60, staggerDelay: 120, ease: 'out(4)' },
-    { selector: '.sticker-card', y: 30, staggerDelay: 100, ease: 'out(3)', rotate: true },
-    { selector: '.compare-row', y: 0, staggerDelay: 0, ease: 'out(3)', custom: true },
+    { selector: '.sticker-card', y: 30, staggerDelay: 100, ease: 'out(3)' },
     { selector: '.stat-box', y: 30, staggerDelay: 100, ease: 'out(3)' },
     { selector: '.value-card', y: 40, staggerDelay: 100, ease: 'out(3)' },
     { selector: '.deliverable-item', y: 0, x: -20, staggerDelay: 50, ease: 'out(2)' },
@@ -193,7 +139,6 @@ function setupScrollReveals() {
     elements.forEach(el => {
       el.style.opacity = '0';
       el.style.transform = `translate(${config.x || 0}px, ${config.y || 0}px)`;
-      el.style.willChange = 'transform, opacity';
     });
 
     // Observe with IntersectionObserver
@@ -201,25 +146,19 @@ function setupScrollReveals() {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
 
-        // For compare rows, do custom wipe
-        if (config.custom && config.selector === '.compare-row') {
-          animateCompareRow(entry.target);
-        } else {
-          // Find all same-type siblings that are now visible
-          const siblings = Array.from(entry.target.parentElement?.querySelectorAll(config.selector) || [])
-            .filter(el => el.style.opacity === '0');
+        // Find all same-type siblings that are still hidden
+        const siblings = Array.from(entry.target.parentElement?.querySelectorAll(config.selector) || [])
+          .filter(el => el.style.opacity === '0');
 
-          if (siblings.length > 0) {
-            animate(siblings, {
-              opacity: [0, 1],
-              translateY: [config.y || 0, 0],
-              translateX: [config.x || 0, 0],
-              ...(config.rotate ? { rotate: [(i) => [-3, 2, -2, 3][i % 4] + 'deg', (i) => [-2, 1.5, -1, 2][i % 4] + 'deg'] } : {}),
-              duration: 700,
-              ease: config.ease,
-              delay: stagger(config.staggerDelay),
-            });
-          }
+        if (siblings.length > 0) {
+          animate(siblings, {
+            opacity: [0, 1],
+            translateY: [config.y || 0, 0],
+            translateX: [config.x || 0, 0],
+            duration: 700,
+            ease: config.ease,
+            delay: stagger(config.staggerDelay),
+          });
         }
 
         observer.unobserve(entry.target);
@@ -228,37 +167,66 @@ function setupScrollReveals() {
 
     elements.forEach(el => observer.observe(el));
   });
+
+  // Compare rows — handle separately with child animations
+  setupCompareReveals();
 }
 
 /* ═══════════════════════════════════════════════
-   3. COMPARE ROWS — Dramatic Wipe Reveal
+   3. COMPARE ROWS — Proper Wipe Reveal
    ═══════════════════════════════════════════════ */
 
-function animateCompareRow(row) {
-  const old = row.querySelector('.compare-old');
-  const nw = row.querySelector('.compare-new');
+function setupCompareReveals() {
+  const rows = document.querySelectorAll('.compare-row');
+  if (!rows.length) return;
 
-  if (old) {
-    old.style.opacity = '0';
-    animate(old, {
-      opacity: [0, 0.7],
-      translateX: [-40, 0],
-      duration: 600,
-      ease: 'out(2)',
-    });
-  }
+  // Hide the children, NOT the row itself
+  rows.forEach(row => {
+    const old = row.querySelector('.compare-old');
+    const nw = row.querySelector('.compare-new');
+    if (old) {
+      old.style.opacity = '0';
+      old.style.transform = 'translateX(-40px)';
+    }
+    if (nw) {
+      nw.style.opacity = '0';
+      nw.style.transform = 'translateX(60px)';
+    }
+  });
 
-  if (nw) {
-    nw.style.opacity = '0';
-    animate(nw, {
-      opacity: [0, 1],
-      translateX: [60, 0],
-      scale: [0.95, 1],
-      duration: 700,
-      ease: 'out(4)',
-      delay: 200,
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const row = entry.target;
+
+      const old = row.querySelector('.compare-old');
+      const nw = row.querySelector('.compare-new');
+
+      if (old) {
+        animate(old, {
+          opacity: [0, 1],
+          translateX: [-40, 0],
+          duration: 600,
+          ease: 'out(3)',
+        });
+      }
+
+      if (nw) {
+        animate(nw, {
+          opacity: [0, 1],
+          translateX: [60, 0],
+          scale: [0.95, 1],
+          duration: 700,
+          ease: 'out(4)',
+          delay: 200,
+        });
+      }
+
+      observer.unobserve(row);
     });
-  }
+  }, { threshold: 0.2 });
+
+  rows.forEach(row => observer.observe(row));
 }
 
 /* ═══════════════════════════════════════════════
@@ -275,7 +243,6 @@ function setupStatCounters() {
       start: 'top 85%',
       once: true,
       onEnter: () => {
-        // Animate with elastic overshoot
         const obj = { val: 0 };
         animate(obj, {
           val: target,
@@ -309,7 +276,6 @@ function setupMarquee() {
   const track = document.querySelector('.sticker-bar-inner');
   if (!track) return;
 
-  // Clone items for seamless loop
   const items = track.querySelectorAll('.sticker-card');
   if (items.length < 2) return;
 
@@ -335,7 +301,6 @@ function setupMagneticButtons() {
   const buttons = document.querySelectorAll('.btn-submit, .btn-nav');
 
   buttons.forEach(btn => {
-    // Add float animation class
     if (btn.classList.contains('btn-submit')) {
       btn.classList.add('btn-float');
     }
