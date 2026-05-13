@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { getSupabase } from '@/lib/supabase';
+import { getSupabase } from '../../../../lib/supabase';
 import { Resend } from 'resend';
-import { buildAutoReplyEmail, buildTeamAlertEmail } from '@/lib/email-templates';
+import { buildAutoReplyEmail, buildTeamAlertEmail } from '../../../../lib/email-templates';
 
 // ─── reCAPTCHA v3 verification ──────────────────────────────
 const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET_KEY;
