@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSupabase } from '../../../../lib/supabase';
-import { Resend } from 'resend';
+import { sendGmail } from '../../../../lib/gmail';
 import { buildAutoReplyEmail, buildTeamAlertEmail } from '../../../../lib/email-templates';
 
 // ─── reCAPTCHA v3 verification ──────────────────────────────
@@ -69,8 +69,8 @@ function validateInput({ name, email, phone, service, brief }) {
  *  1. Verifies reCAPTCHA v3 token
  *  2. Validates input
  *  3. Stores lead in Supabase
- *  4. Sends auto-reply email to prospect
- *  5. Sends internal alert email to team
+ *  4. Sends auto-reply email to prospect via Gmail API
+ *  5. Sends internal alert email to team via Gmail API
  */
 export async function POST(request) {
   try {
@@ -125,33 +125,30 @@ export async function POST(request) {
       // Don't fail the request — still send emails
     }
 
-    // ── 3. Send Emails via Resend ──
+    // ── 3. Send Emails via Gmail API ──
     let emailError = null;
     try {
-      const resendKey = process.env.RESEND_API_KEY;
       const teamEmail = process.env.TEAM_EMAIL || 'care@thebrandfriend.com';
-      const fromEmail = process.env.FROM_EMAIL || 'TheBrandFriend <noreply@thebrandfriend.com>';
+      const fromEmail = process.env.GMAIL_SENDER_EMAIL;
 
-      if (!resendKey) {
-        throw new Error('Missing RESEND_API_KEY');
+      if (!fromEmail) {
+        throw new Error('Missing GMAIL_SENDER_EMAIL');
       }
-
-      const resend = new Resend(resendKey);
 
       // Auto-reply to prospect
       const autoReply = buildAutoReplyEmail(lead);
-      await resend.emails.send({
+      await sendGmail({
         from: fromEmail,
-        to: [lead.email],
+        to: lead.email,
         subject: autoReply.subject,
         html: autoReply.html,
       });
 
       // Internal alert to team
       const teamAlert = buildTeamAlertEmail(lead);
-      await resend.emails.send({
+      await sendGmail({
         from: fromEmail,
-        to: [teamEmail],
+        to: teamEmail,
         replyTo: lead.email, // Reply goes directly to the lead
         subject: teamAlert.subject,
         html: teamAlert.html,
