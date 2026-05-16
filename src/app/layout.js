@@ -6,6 +6,7 @@ import Sidebar from '@/components/Sidebar';
 import Animations from '@/components/Animations';
 import VoiceAgent from '@/components/VoiceAgent';
 import RecaptchaProvider from '@/components/RecaptchaProvider';
+import ClickSpark from '@/components/ClickSpark';
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -83,16 +84,24 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <RecaptchaProvider>
-          <Sidebar />
-          <main className="main-content">
-            <Navbar />
-            {children}
-            <Footer />
-          </main>
-          <Animations />
-          <VoiceAgent />
-        </RecaptchaProvider>
+        <ClickSpark
+          sparkColor='#fff'
+          sparkSize={10}
+          sparkRadius={15}
+          sparkCount={8}
+          duration={400}
+        >
+          <RecaptchaProvider>
+            <Sidebar />
+            <main className="main-content">
+              <Navbar />
+              {children}
+              <Footer />
+            </main>
+            <Animations />
+            <VoiceAgent />
+          </RecaptchaProvider>
+        </ClickSpark>
       </body>
     </html>
   );
