@@ -44,3 +44,5 @@ next-env.d.ts
 designs-src/*/node_modules
 designs-src/*/dist
 designs-src/*/.vite
+
+.vercel
