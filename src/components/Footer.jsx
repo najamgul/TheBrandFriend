@@ -20,6 +20,10 @@ export default function Footer() {
             © {new Date().getFullYear()} THEBRANDFRIEND. ALL RIGHTS RESERVED.<br />
             BUILT WITH OBSESSION.
           </p>
+          <div className="footer-legal">
+            <Link href="/privacy/" className="mono footer-legal-link">PRIVACY POLICY</Link>
+            <Link href="/terms/" className="mono footer-legal-link">TERMS OF SERVICE</Link>
+          </div>
         </div>
 
         <div className="footer-cols">
