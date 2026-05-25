@@ -282,6 +282,86 @@ textarea.input-error {
   margin: 0 auto; line-height: 1.7;
 }
 
+/* ===== CONSENT CHECKBOX ===== */
+.consent-group {
+  margin-top: 4px;
+}
+.consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  cursor: pointer;
+  position: relative;
+  padding: 14px 16px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: border-color 0.2s;
+}
+.consent-label:hover {
+  border-color: rgba(204, 255, 0, 0.3);
+}
+.consent-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.consent-checkmark {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.consent-checkmark::after {
+  content: '';
+  display: none;
+  width: 6px;
+  height: 11px;
+  border: solid var(--black);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+.consent-checkbox:checked ~ .consent-checkmark {
+  background: var(--volt);
+  border-color: var(--volt);
+}
+.consent-checkbox:checked ~ .consent-checkmark::after {
+  display: block;
+}
+.consent-checkbox:focus-visible ~ .consent-checkmark {
+  outline: 2px solid var(--volt);
+  outline-offset: 2px;
+}
+.consent-text {
+  font-size: 10px !important;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+  letter-spacing: 0.04em !important;
+  text-transform: none !important;
+}
+.consent-text strong {
+  color: var(--volt);
+  font-weight: 700;
+}
+.consent-error .consent-label {
+  border-color: #FF4444;
+}
+.consent-error .consent-checkmark {
+  border-color: #FF4444;
+}
+.consent-group .field-error {
+  margin-top: 6px;
+  padding-left: 36px;
+}
+
 /* ===== DESIGN LIBRARY GALLERY ===== */
 /* Grid */
 .designs-grid {

@@ -143,6 +143,7 @@ export default function BrutalistForm({ variant = 'hero' }) {
     const service = e.target.querySelector('#contact-service').value;
     const design = e.target.querySelector('#contact-design')?.value || '';
     const brief = e.target.querySelector('#contact-brief').value;
+    const consent = e.target.querySelector('#contact-consent')?.checked || false;
 
     // Validate all fields
     const errors = {};
@@ -155,6 +156,7 @@ export default function BrutalistForm({ variant = 'hero' }) {
     if (!service) errors.service = 'Please select a service';
     const briefErr = validateBrief(brief);
     if (briefErr) errors.brief = briefErr;
+    if (!consent) errors.consent = 'You must agree to be contacted';
 
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
@@ -179,6 +181,7 @@ export default function BrutalistForm({ variant = 'hero' }) {
           phone: phone.trim(),
           service: service.trim(),
           design,
+          contactConsent: consent,
           brief: brief.trim(),
           recaptchaToken: token,
         }),
@@ -320,6 +323,21 @@ export default function BrutalistForm({ variant = 'hero' }) {
           aria-invalid={!!fieldErrors.brief}
         ></textarea>
         {fieldErrors.brief && <p className="field-error mono">{fieldErrors.brief}</p>}
+      </div>
+      <div className={`consent-group ${fieldErrors.consent ? 'consent-error' : ''}`}>
+        <label className="consent-label" htmlFor="contact-consent">
+          <input
+            type="checkbox"
+            id="contact-consent"
+            disabled={submitting}
+            className="consent-checkbox"
+          />
+          <span className="consent-checkmark"></span>
+          <span className="consent-text mono">
+            I consent to being contacted by <strong>The Brand Friend</strong> via phone call, SMS, or WhatsApp for follow-up regarding my inquiry.
+          </span>
+        </label>
+        {fieldErrors.consent && <p className="field-error mono">{fieldErrors.consent}</p>}
       </div>
       {error && <p className="form-error mono">{error}</p>}
       <button type="submit" className="btn-submit" disabled={submitting}>
