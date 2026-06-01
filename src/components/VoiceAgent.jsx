@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import './VoiceAgent.css';
 
 // ─── Config ─────────────────────────────────────────────────
-const AGENT_ID = '76cf959a-5f50-4c37-83b7-49830659568d';
+const AGENT_ID = 'c152be25-89ed-4d06-b864-176fcdbd6a5d';
 const WS_BASE  = 'wss://voice.tohundguide.com';
 const IDLE_DELAY_MS = 20_000; // 20 seconds
 const VIZ_BAR_COUNT = 18; // fewer bars for mobile
