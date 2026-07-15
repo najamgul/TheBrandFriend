@@ -7,6 +7,7 @@ import Animations from '@/components/Animations';
 import VoiceAgent from '@/components/VoiceAgent';
 import RecaptchaProvider from '@/components/RecaptchaProvider';
 import ClickSpark from '@/components/ClickSpark';
+import MetaPixel from '@/components/MetaPixel';
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -84,6 +85,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <MetaPixel />
         <ClickSpark
           sparkColor='#fff'
           sparkSize={10}
