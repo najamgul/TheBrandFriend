@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { claimNextApprovedPost, recordIndexing, logRun } from '../../../../../lib/blog/store';
+import {
+  claimNextApprovedPost,
+  recordIndexing,
+  logRun,
+  getPublishedPosts,
+} from '../../../../../lib/blog/store';
 import { notifySearchEngines, blogUrl, SITE_URL } from '../../../../../lib/blog/indexing';
 import { isAuthorized, unauthorized } from '../../../../../lib/blog/auth';
 
@@ -34,7 +39,33 @@ function istDayOfWeek() {
 export async function GET(request) {
   if (!isAuthorized(request)) return unauthorized();
 
-  const force = new URL(request.url).searchParams.get('force') === '1';
+  const params = new URL(request.url).searchParams;
+  const force = params.get('force') === '1';
+
+  // Re-submit already-published URLs without publishing anything new. Use this
+  // after fixing an indexing credential — otherwise posts that were published
+  // while Google was misconfigured are never submitted at all.
+  if (params.get('reping') === '1') {
+    const posts = await getPublishedPosts({ limit: 100 });
+    if (!posts.length) {
+      return NextResponse.json(
+        { ok: true, action: 'skipped', summary: 'No published posts to re-submit.' },
+        { status: 200 }
+      );
+    }
+    const urls = [`${SITE_URL}/blog/`, ...posts.map(p => blogUrl(p.slug))];
+    const indexing = await notifySearchEngines(urls);
+    return NextResponse.json(
+      {
+        ok: true,
+        action: 'repinged',
+        summary: `Re-submitted ${urls.length} URL(s)`,
+        detail: { indexing, count: urls.length },
+      },
+      { status: 200 }
+    );
+  }
+
   const today = istDayOfWeek();
 
   if (!force && !PUBLISH_DAYS.includes(today)) {

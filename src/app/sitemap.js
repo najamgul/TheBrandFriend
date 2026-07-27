@@ -3,9 +3,17 @@ import { getPublishedPosts } from '../../lib/blog/store';
 
 import { SITE_URL as BASE_URL } from '../../lib/site';
 
-// Regenerated hourly, and immediately after a publish via revalidatePath.
-// (Was force-static; the blog needs new URLs to appear without a redeploy.)
-export const revalidate = 3600;
+/**
+ * Five minutes, matching the blog pages.
+ *
+ * The publish cron also calls revalidatePath('/sitemap.xml'), but that does
+ * not reliably purge this route on Vercel — observed in production as
+ * X-Vercel-Cache: HIT with a climbing Age after a publish, while the /blog
+ * page revalidated correctly. A short window bounds the staleness regardless
+ * of whether the explicit purge lands. Crawlers fetch this rarely, so the
+ * extra regeneration costs effectively nothing.
+ */
+export const revalidate = 300;
 
 export default async function sitemap() {
   const now = new Date();
