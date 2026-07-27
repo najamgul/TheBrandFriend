@@ -5,8 +5,8 @@ Two posts a week, written and published without you touching anything.
 ## Architecture
 
 ```
-GitHub Actions (daily 02:30 UTC)          Vercel Cron (daily 04:00 UTC)
-  scripts/blog-pipeline.mjs                 /api/blog/publish
+Vercel Cron (daily 02:00 UTC)            Vercel Cron (daily 04:00 UTC)
+  /api/blog/generate                       /api/blog/publish
         │                                         │
    draft   google/gemini-2.5-flash          claim oldest approved
         ↓                                         ↓
@@ -19,13 +19,22 @@ GitHub Actions (daily 02:30 UTC)          Vercel Cron (daily 04:00 UTC)
    blog_posts (status = approved)  ← the content bank
 ```
 
-**Why generation runs in GitHub Actions and not Vercel.** A measured
-end-to-end run takes ~186s (draft 59s, polish 124s, judge 3s). Vercel Hobby
-caps functions at 60s and Pro at 300s — the latter leaves no headroom once a
-JSON repair retry is involved (an early measured run hit 284s). Actions has a
-20-minute budget here and costs nothing.
+**Requires Vercel Pro.** A typical end-to-end run is ~186s (draft 59s, polish
+124s, judge 3s); the slowest observed was 285s when a malformed draft triggered
+a JSON repair retry. That does not fit the 60s Hobby function limit.
 
-**Why publishing stays on Vercel.** It is a database update plus two HTTP
+**The run is deadline-aware.** `maxDuration` is 300s and the route stops
+committing new work 40s before that. If the remaining budget cannot cover the
+polish stage, the pipeline aborts, hands its topic back to the queue, and logs
+`action: aborted`. A run killed anyway is recovered on the next invocation:
+`recoverStaleClaims()` releases any topic left in `generating` for over 20
+minutes, so nothing is stranded.
+
+**Manual fallback.** `.github/workflows/blog-pipeline.yml` runs the identical
+job in GitHub Actions with no time limit. It is manual-dispatch only (a second
+schedule would race Vercel's). Use it if a Vercel run keeps aborting.
+
+**Why publishing is a separate cron.** It is a database update plus two HTTP
 pings (~3-5s), and it needs Next's `revalidatePath` to rebuild cached pages.
 
 **Why a content bank.** Generation keeps four approved articles in reserve;
@@ -39,8 +48,9 @@ disturbs the publishing cadence.
 Run [`supabase/blog-schema.sql`](../supabase/blog-schema.sql) in the Supabase
 SQL editor. Creates `blog_topics`, `blog_posts`, `blog_runs`.
 
-### 2. GitHub repository secrets
+### 2. GitHub repository secrets (manual fallback only)
 
+Only needed if you intend to use the fallback workflow.
 Settings → Secrets and variables → Actions:
 
 | Secret | Required | Notes |
@@ -59,8 +69,9 @@ Settings → Secrets and variables → Actions:
 | `GOOGLE_INDEXING_CLIENT_EMAIL` | falls back to `GOOGLE_SA_CLIENT_EMAIL` |
 | `GOOGLE_INDEXING_PRIVATE_KEY` | falls back to `GOOGLE_SA_PRIVATE_KEY` |
 
-The generation vars (`REPLICATE_*`) are **not** needed on Vercel unless you
-intend to use the manual `/api/blog/generate` escape hatch.
+`REPLICATE_API_TOKEN` **is** required on Vercel — generation runs there.
+Optionally add `REPLICATE_DRAFT_MODEL` / `_POLISH_MODEL` / `_JUDGE_MODEL` to
+override the defaults, and `UNSPLASH_ACCESS_KEY` for cover images.
 
 ### 4. Google Search Console
 
@@ -82,7 +93,14 @@ curl -H "Authorization: Bearer $CRON_SECRET" \
   https://www.thebrandfriend.com/api/blog/publish?force=1
 ```
 
-In GitHub: Actions → "Blog pipeline — generate" → Run workflow.
+Or trigger the Vercel cron endpoint directly:
+
+```bash
+curl -H "Authorization: Bearer $CRON_SECRET"   https://www.thebrandfriend.com/api/blog/generate?force=1
+```
+
+Fallback with no time limit — GitHub → Actions →
+"Blog pipeline — generate (manual fallback)" → Run workflow.
 
 ## Topics
 

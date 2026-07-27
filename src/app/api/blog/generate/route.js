@@ -6,19 +6,23 @@ import { isAuthorized, unauthorized } from '../../../../../lib/blog/auth';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+// Vercel Pro's ceiling. A typical run is ~186s; the slowest observed was 285s
+// when a malformed draft triggered a JSON repair retry.
 export const maxDuration = 300;
 
+// Stop work 40s before Vercel kills the function. The pipeline uses this to
+// abort cleanly and hand its topic back, rather than being killed mid-write
+// and leaving the topic stranded in 'generating'.
+const SAFETY_MARGIN_MS = 40_000;
+
 /**
- * Escape hatch, NOT the scheduled path.
+ * Cron: tops the content bank up to CONTENT_BANK_TARGET approved articles.
+ * Runs daily and no-ops once the bank is full, so a slow or failed generation
+ * never disturbs the publishing cadence.
  *
- * A measured end-to-end run is ~4-5 minutes (draft ~60-120s, polish ~160s),
- * which does not fit Vercel's 60s Hobby limit and leaves no headroom against
- * Pro's 300s ceiling. The scheduled generator therefore runs in GitHub
- * Actions — see .github/workflows/blog-pipeline.yml — where there is no
- * meaningful time limit.
- *
- * This route is kept for a manual top-up when you have Pro and want one now.
- * On Hobby it will time out; use the workflow's "Run workflow" button instead.
+ * Requires Vercel Pro — a run does not fit the 60s Hobby function limit.
+ * For a manual run outside Vercel, `node scripts/blog-pipeline.mjs generate`
+ * does the same work with no time limit.
  *
  * Manual run:  curl -H "Authorization: Bearer $CRON_SECRET" \
  *                https://www.thebrandfriend.com/api/blog/generate?force=1
@@ -28,9 +32,11 @@ export async function GET(request) {
 
   const force = new URL(request.url).searchParams.get('force') === '1';
 
+  const deadline = Date.now() + maxDuration * 1000 - SAFETY_MARGIN_MS;
+
   let result;
   try {
-    result = await runGenerate({ force });
+    result = await runGenerate({ force, deadline });
   } catch (err) {
     console.error('[blog] generate route crashed:', err);
     result = { ok: false, action: 'error', summary: `Unhandled: ${err.message}` };

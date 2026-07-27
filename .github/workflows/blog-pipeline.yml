@@ -1,17 +1,16 @@
-name: Blog pipeline — generate
+name: Blog pipeline — generate (manual fallback)
 
-# Generation runs here rather than on Vercel: a full draft -> polish -> judge
-# cycle measures ~4-5 minutes, which exceeds Vercel's Hobby function limit
-# (60s) and leaves no headroom against Pro's 300s ceiling.
+# The scheduled generator runs on Vercel Cron (see vercel.json). This workflow
+# is deliberately manual-only — a second schedule would race the Vercel one.
 #
-# Publishing stays on Vercel Cron (see vercel.json) because it is fast and
-# needs Next's revalidatePath.
+# Use it when a Vercel run aborts on its time budget. A typical run is ~186s
+# against Vercel Pro's 300s ceiling, so a slow Replicate response or a JSON
+# repair retry can exhaust it. Here there is no meaningful limit.
+#
+# It writes straight to Supabase, exactly as the Vercel route does, so an
+# article generated here is picked up by the normal publish cron.
 
 on:
-  schedule:
-    # 02:30 UTC daily (08:00 IST). The pipeline no-ops once the content bank
-    # holds CONTENT_BANK_TARGET approved articles, so a daily run is cheap.
-    - cron: '30 2 * * *'
   workflow_dispatch:
     inputs:
       force:
@@ -47,8 +46,7 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
           NODE_OPTIONS: --no-warnings=MODULE_TYPELESS_PACKAGE_JSON
-        # github.event.inputs is readable on every trigger (null on schedule);
-        # the `inputs` context only exists for workflow_dispatch. Dispatch
-        # booleans arrive as the strings "true"/"false".
+        # github.event.inputs is readable on every trigger; dispatch booleans
+        # arrive as the strings "true"/"false".
         run: |
           node scripts/blog-pipeline.mjs generate ${{ github.event.inputs.force == 'true' && '--force' || '' }}
