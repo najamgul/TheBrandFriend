@@ -21,10 +21,19 @@
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(here, '..');
+
+/**
+ * Dynamic import of a local module by path.
+ *
+ * A bare absolute path works on Linux but throws on Windows, where "d:" is
+ * parsed as a URL scheme (ERR_UNSUPPORTED_ESM_URL_SCHEME). Always convert to
+ * a file:// URL so this runs the same on a dev machine and in CI.
+ */
+const importLocal = relative => import(pathToFileURL(path.join(root, relative)).href);
 
 // Local convenience only — CI injects real environment variables.
 const envPath = path.join(root, '.env.local');
@@ -47,8 +56,8 @@ if (missing.length) {
 const command = process.argv[2] || 'generate';
 const force = process.argv.includes('--force');
 
-const { runGenerate } = await import(path.join(root, 'lib/blog/pipeline.js'));
-const { logRun } = await import(path.join(root, 'lib/blog/store.js'));
+const { runGenerate } = await importLocal('lib/blog/pipeline.js');
+const { logRun } = await importLocal('lib/blog/store.js');
 
 if (command !== 'generate') {
   console.error(`Unknown command "${command}". Only "generate" runs here; publishing runs on Vercel.`);
