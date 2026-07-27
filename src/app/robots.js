@@ -6,8 +6,11 @@ export default function robots() {
       {
         userAgent: '*',
         allow: '/',
+        // Cron and lead endpoints have nothing to index and should not be crawled.
+        disallow: ['/api/'],
       },
     ],
     sitemap: 'https://thebrandfriend.com/sitemap.xml',
+    host: 'https://thebrandfriend.com',
   };
 }

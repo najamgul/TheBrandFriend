@@ -2,6 +2,8 @@ import Link from 'next/link';
 
 export const metadata = {
   title: '404 — Page Not Found',
+  // Stops soft-404s and dead URLs accumulating in the index.
+  robots: { index: false, follow: true },
 };
 
 export default function NotFound() {

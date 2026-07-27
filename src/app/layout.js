@@ -31,6 +31,7 @@ export const metadata = {
   description: 'TheBrandFriend is a brutally effective digital agency. Strategy, Design, Development, Marketing — we ship brands that dominate the digital space.',
   keywords: ['digital agency', 'web development', 'brand identity', 'social media management', 'performance marketing', 'TheBrandFriend'],
   authors: [{ name: 'TheBrandFriend' }],
+  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -65,21 +66,59 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
-              '@type': 'Organization',
-              name: 'TheBrandFriend',
-              url: 'https://thebrandfriend.com',
-              logo: 'https://thebrandfriend.com/logo-full.png',
-              description: 'Brutally effective digital agency — Strategy, Design, Development, Marketing.',
-              sameAs: [
-                'https://www.instagram.com/thebrandfriend.com_/',
-                'https://www.linkedin.com/company/the-brand-friend',
-                'https://www.facebook.com/thebrandfriends',
+              '@graph': [
+                {
+                  '@type': ['Organization', 'ProfessionalService'],
+                  '@id': 'https://thebrandfriend.com/#organization',
+                  name: 'TheBrandFriend',
+                  url: 'https://thebrandfriend.com',
+                  logo: {
+                    '@type': 'ImageObject',
+                    url: 'https://thebrandfriend.com/logo-full.png',
+                  },
+                  image: 'https://thebrandfriend.com/og-image.png',
+                  description:
+                    'Brutally effective digital agency — Strategy, Design, Development, Marketing.',
+                  slogan: 'We ship brands that dominate.',
+                  areaServed: { '@type': 'Country', name: 'India' },
+                  sameAs: [
+                    'https://www.instagram.com/thebrandfriend.com_/',
+                    'https://www.linkedin.com/company/the-brand-friend',
+                    'https://www.facebook.com/thebrandfriends',
+                  ],
+                  contactPoint: [
+                    {
+                      '@type': 'ContactPoint',
+                      contactType: 'sales',
+                      email: 'care@thebrandfriend.com',
+                      availableLanguage: ['English', 'Hindi'],
+                    },
+                  ],
+                  hasOfferCatalog: {
+                    '@type': 'OfferCatalog',
+                    name: 'Digital Agency Services',
+                    itemListElement: [
+                      'Website Development',
+                      'Software Solutions',
+                      'Social Media Management',
+                      'Performance Marketing',
+                      'Product Reels & Video Content',
+                      'Brand Identity Design',
+                    ].map(name => ({
+                      '@type': 'Offer',
+                      itemOffered: { '@type': 'Service', name },
+                    })),
+                  },
+                },
+                {
+                  '@type': 'WebSite',
+                  '@id': 'https://thebrandfriend.com/#website',
+                  url: 'https://thebrandfriend.com',
+                  name: 'TheBrandFriend',
+                  publisher: { '@id': 'https://thebrandfriend.com/#organization' },
+                  inLanguage: 'en',
+                },
               ],
-              contactPoint: {
-                '@type': 'ContactPoint',
-                contactType: 'sales',
-                email: 'care@thebrandfriend.com',
-              },
             }),
           }}
         />

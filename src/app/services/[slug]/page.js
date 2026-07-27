@@ -15,10 +15,59 @@ export async function generateMetadata({ params }) {
     title: service.metaTitle,
     description: service.metaDesc,
     keywords: service.keywords,
+    alternates: { canonical: `/services/${slug}/` },
     openGraph: {
+      type: 'website',
+      url: `/services/${slug}/`,
       title: service.metaTitle,
       description: service.metaDesc,
     },
+  };
+}
+
+const SITE = 'https://thebrandfriend.com';
+
+function buildServiceSchema(service) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Service',
+        '@id': `${SITE}/services/${service.slug}/#service`,
+        name: service.name,
+        description: service.longDesc || service.shortDesc,
+        serviceType: service.name,
+        url: `${SITE}/services/${service.slug}/`,
+        provider: { '@id': `${SITE}/#organization` },
+        areaServed: { '@type': 'Country', name: 'India' },
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: `${service.name} deliverables`,
+          itemListElement: (service.deliverables || []).map(item => ({
+            '@type': 'Offer',
+            itemOffered: { '@type': 'Service', name: item },
+          })),
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Services',
+            item: `${SITE}/services/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: service.name,
+            item: `${SITE}/services/${service.slug}/`,
+          },
+        ],
+      },
+    ],
   };
 }
 
@@ -31,6 +80,13 @@ export default async function ServiceDetailPage({ params }) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildServiceSchema(service)),
+        }}
+      />
+
       {/* Service Hero */}
       <section className="service-hero">
         <div className="hero-layout">

@@ -7,6 +7,7 @@ export const metadata = {
   title: 'Digital Marketing & Web Development Services',
   description: 'Explore our full range of digital services — website development, software solutions, social media, performance marketing, product reels, and brand identity.',
   keywords: 'digital marketing services, web development services, social media management, brand identity design',
+  alternates: { canonical: '/services/' },
 };
 
 export default function ServicesPage() {

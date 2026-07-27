@@ -4,6 +4,7 @@ export const metadata = {
   title: 'Privacy Policy — TheBrandFriend',
   description: 'How we collect, use, and protect your information at TheBrandFriend. Transparent, direct, and secure data handling practices.',
   keywords: 'privacy policy, legal, data privacy, TheBrandFriend',
+  alternates: { canonical: '/privacy/' },
 };
 
 export default function PrivacyPage() {

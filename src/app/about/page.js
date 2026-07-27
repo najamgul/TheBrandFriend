@@ -6,6 +6,7 @@ export const metadata = {
   title: 'About Us — A Brutally Effective Digital Agency',
   description: 'TheBrandFriend is a results-obsessed digital agency. We combine strategy, design, development, and marketing to ship brands that dominate.',
   keywords: 'about TheBrandFriend, digital agency, branding agency, web agency India',
+  alternates: { canonical: '/about/' },
 };
 
 const values = [

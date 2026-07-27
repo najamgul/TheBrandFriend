@@ -32,6 +32,8 @@ export default function Footer() {
             <h4 className="mono footer-col-title">NAVIGATE</h4>
             <Link href="/" className="mono">HOME</Link>
             <Link href="/services/" className="mono">SERVICES</Link>
+            <Link href="/portfolio/" className="mono">PORTFOLIO</Link>
+            <Link href="/blog/" className="mono">INSIGHTS</Link>
             <Link href="/about/" className="mono">ABOUT US</Link>
             <Link href="/process/" className="mono">OUR PROCESS</Link>
             <Link href="/contact/" className="mono">CONTACT</Link>

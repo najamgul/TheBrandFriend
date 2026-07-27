@@ -7,6 +7,7 @@ export const metadata = {
   title: 'Contact Us — Get A Free Brand Consultation',
   description: 'Ready to ship your brand? Contact TheBrandFriend for a free consultation. We respond within 3 hours during business hours.',
   keywords: 'contact digital agency, free brand consultation, hire web developer, hire marketing agency',
+  alternates: { canonical: '/contact/' },
 };
 
 export default function ContactPage() {

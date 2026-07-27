@@ -4,6 +4,7 @@ export const metadata = {
   title: 'Terms of Service — TheBrandFriend',
   description: 'Terms of Service for TheBrandFriend digital agency. Read our project terms, client responsibilities, payment terms, and intellectual property conditions.',
   keywords: 'terms of service, terms of use, legal agreements, TheBrandFriend',
+  alternates: { canonical: '/terms/' },
 };
 
 export default function TermsPage() {

@@ -6,6 +6,7 @@ export const metadata = {
   title: 'Our Process — How We Ship Winning Brands',
   description: 'Our 3-step process: Discover, Design & Build, Launch & Scale. See how TheBrandFriend takes brands from concept to domination.',
   keywords: 'agency process, web development process, branding process, project workflow',
+  alternates: { canonical: '/process/' },
 };
 
 const steps = [

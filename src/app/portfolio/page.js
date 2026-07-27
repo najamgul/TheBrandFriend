@@ -4,6 +4,7 @@ import PortfolioGallery from '@/components/PortfolioGallery';
 export const metadata = {
   title: 'Portfolio — Our Work',
   description: 'See what TheBrandFriend has built. Real projects, real results. Strategy, Design, Development, Marketing — delivered in days, not months.',
+  alternates: { canonical: '/portfolio/' },
   openGraph: {
     title: 'Portfolio — TheBrandFriend',
     description: 'Real projects. Real results. See our work.',
