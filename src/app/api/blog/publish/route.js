@@ -55,6 +55,12 @@ export async function GET(request) {
     }
     const urls = [`${SITE_URL}/blog/`, ...posts.map(p => blogUrl(p.slug))];
     const indexing = await notifySearchEngines(urls);
+
+    // Keep the stored state truthful — the troubleshooting guide tells you to
+    // read blog_posts.indexing, so a successful re-ping must clear an earlier
+    // failure rather than leaving it stale.
+    await Promise.all(posts.map(p => recordIndexing(p.id, indexing)));
+
     return NextResponse.json(
       {
         ok: true,
