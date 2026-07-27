@@ -144,6 +144,39 @@ After three failures the topic is marked `failed` and skipped.
 keyword overlaps an existing post by 80% or more is skipped outright. This is
 the failure mode that quietly damages rankings on automated blogs.
 
+## Troubleshooting indexing
+
+`blog_posts.indexing` stores the status **and** the failure message for every
+publish, so diagnose from the database rather than serverless logs:
+
+```sql
+select slug, published_at, indexing
+from blog_posts where status = 'published'
+order by published_at desc limit 5;
+```
+
+| `googleMessage` contains | Cause | Fix |
+|---|---|---|
+| `Permission denied. Failed to verify the URL ownership.` | The service account is not a verified **owner** of the property in Search Console. Auth itself worked. | Search Console → the property → Settings → Users and permissions → Add user → the service account email → permission **Owner**. Anything below Owner is rejected. |
+| `Indexing API has not been used in project ... before or it is disabled` | The Web Search Indexing API is off on the Cloud project. | Enable "Web Search Indexing API" in Google Cloud Console for that project. |
+| `invalid_grant` / `Invalid JWT` | Bad or truncated private key. Usually the `\n` escapes were lost when pasting. | Re-paste `GOOGLE_INDEXING_PRIVATE_KEY` with literal `\n` sequences intact, wrapped in double quotes. |
+| status is `skipped` | No credentials found at all. | Set `GOOGLE_INDEXING_CLIENT_EMAIL` + `GOOGLE_INDEXING_PRIVATE_KEY` (or the `GOOGLE_SA_*` fallback). |
+
+**The property must match the canonical host.** URLs are submitted as
+`https://www.thebrandfriend.com/...`, so a URL-prefix property registered for
+the bare apex will fail ownership verification for every URL. A **Domain**
+property covers apex and www together and is the safer choice.
+
+After fixing, re-submit without publishing anything new:
+
+```bash
+curl -H "Authorization: Bearer $CRON_SECRET" \
+  "https://www.thebrandfriend.com/api/blog/publish/?reping=1"
+```
+
+IndexNow (Bing, Yandex, Naver) has no ownership step beyond the key file, so it
+generally reports `sent` even while Google is failing. The two are independent.
+
 ## Monitoring
 
 ```sql
