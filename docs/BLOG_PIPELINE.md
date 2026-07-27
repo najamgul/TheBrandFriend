@@ -34,6 +34,13 @@ minutes, so nothing is stranded.
 job in GitHub Actions with no time limit. It is manual-dispatch only (a second
 schedule would race Vercel's). Use it if a Vercel run keeps aborting.
 
+**Cron paths must end in a slash.** `next.config.mjs` sets
+`trailingSlash: true`, so `/api/blog/generate` returns a 308 redirect to
+`/api/blog/generate/`. Vercel Cron does not follow redirects — it records the
+308 and moves on. A cron entry missing its trailing slash fires on schedule,
+succeeds as far as Vercel is concerned, and does nothing. Keep the slashes in
+`vercel.json`.
+
 **Why publishing is a separate cron.** It is a database update plus two HTTP
 pings (~3-5s), and it needs Next's `revalidatePath` to rebuild cached pages.
 
@@ -90,13 +97,13 @@ node scripts/replicate-schema.js
 
 # Publish now, out of schedule
 curl -H "Authorization: Bearer $CRON_SECRET" \
-  https://www.thebrandfriend.com/api/blog/publish?force=1
+  https://www.thebrandfriend.com/api/blog/publish/?force=1
 ```
 
 Or trigger the Vercel cron endpoint directly:
 
 ```bash
-curl -H "Authorization: Bearer $CRON_SECRET"   https://www.thebrandfriend.com/api/blog/generate?force=1
+curl -H "Authorization: Bearer $CRON_SECRET"   https://www.thebrandfriend.com/api/blog/generate/?force=1
 ```
 
 Fallback with no time limit — GitHub → Actions →

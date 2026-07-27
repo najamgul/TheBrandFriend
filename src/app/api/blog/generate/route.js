@@ -25,7 +25,7 @@ const SAFETY_MARGIN_MS = 40_000;
  * does the same work with no time limit.
  *
  * Manual run:  curl -H "Authorization: Bearer $CRON_SECRET" \
- *                https://www.thebrandfriend.com/api/blog/generate?force=1
+ *                https://www.thebrandfriend.com/api/blog/generate/?force=1
  */
 export async function GET(request) {
   if (!isAuthorized(request)) return unauthorized();
