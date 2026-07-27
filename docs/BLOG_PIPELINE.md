@@ -92,10 +92,10 @@ On Windows, use the PowerShell helper — it loads CRON_SECRET from .env.local
 and handles the trailing slashes the API requires:
 
 ```powershell
-.\scriptslog.ps1 status      # what is live, banked and queued
-.\scriptslog.ps1 generate    # write one article into the bank (~3 min)
-.\scriptslog.ps1 publish     # publish the oldest banked article now
-.\scriptslog.ps1 reping      # re-submit published URLs to search engines
+.\scripts\blog.ps1 status      # what is live, banked and queued
+.\scripts\blog.ps1 generate    # write one article into the bank (~3 min)
+.\scripts\blog.ps1 publish     # publish the oldest banked article now
+.\scripts\blog.ps1 reping      # re-submit published URLs to search engines
 ```
 
 Note that `curl` in PowerShell is an alias for `Invoke-WebRequest`, which does
