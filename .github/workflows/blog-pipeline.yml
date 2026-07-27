@@ -47,6 +47,8 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
           NODE_OPTIONS: --no-warnings=MODULE_TYPELESS_PACKAGE_JSON
+        # github.event.inputs is readable on every trigger (null on schedule);
+        # the `inputs` context only exists for workflow_dispatch. Dispatch
+        # booleans arrive as the strings "true"/"false".
         run: |
-          node scripts/blog-pipeline.mjs generate \
-            ${{ inputs.force && '--force' || '' }}
+          node scripts/blog-pipeline.mjs generate ${{ github.event.inputs.force == 'true' && '--force' || '' }}
