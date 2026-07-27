@@ -23,7 +23,7 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://thebrandfriend.com'),
+  metadataBase: new URL('https://www.thebrandfriend.com'),
   title: {
     default: 'TheBrandFriend — Digital Agency | Strategy, Design, Development, Marketing',
     template: '%s | TheBrandFriend',
@@ -69,14 +69,14 @@ export default function RootLayout({ children }) {
               '@graph': [
                 {
                   '@type': ['Organization', 'ProfessionalService'],
-                  '@id': 'https://thebrandfriend.com/#organization',
+                  '@id': 'https://www.thebrandfriend.com/#organization',
                   name: 'TheBrandFriend',
-                  url: 'https://thebrandfriend.com',
+                  url: 'https://www.thebrandfriend.com',
                   logo: {
                     '@type': 'ImageObject',
-                    url: 'https://thebrandfriend.com/logo-full.png',
+                    url: 'https://www.thebrandfriend.com/logo-full.png',
                   },
-                  image: 'https://thebrandfriend.com/og-image.png',
+                  image: 'https://www.thebrandfriend.com/og-image.png',
                   description:
                     'Brutally effective digital agency — Strategy, Design, Development, Marketing.',
                   slogan: 'We ship brands that dominate.',
@@ -112,10 +112,10 @@ export default function RootLayout({ children }) {
                 },
                 {
                   '@type': 'WebSite',
-                  '@id': 'https://thebrandfriend.com/#website',
-                  url: 'https://thebrandfriend.com',
+                  '@id': 'https://www.thebrandfriend.com/#website',
+                  url: 'https://www.thebrandfriend.com',
                   name: 'TheBrandFriend',
-                  publisher: { '@id': 'https://thebrandfriend.com/#organization' },
+                  publisher: { '@id': 'https://www.thebrandfriend.com/#organization' },
                   inLanguage: 'en',
                 },
               ],

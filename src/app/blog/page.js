@@ -24,21 +24,21 @@ export default async function BlogIndexPage() {
   const collectionSchema = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    '@id': 'https://thebrandfriend.com/blog/#blog',
+    '@id': 'https://www.thebrandfriend.com/blog/#blog',
     name: 'TheBrandFriend Insights',
     description:
       'Articles on web development, brand identity, and performance marketing for growing businesses.',
-    url: 'https://thebrandfriend.com/blog/',
+    url: 'https://www.thebrandfriend.com/blog/',
     publisher: {
       '@type': 'Organization',
       name: 'TheBrandFriend',
-      url: 'https://thebrandfriend.com',
-      logo: 'https://thebrandfriend.com/logo-full.png',
+      url: 'https://www.thebrandfriend.com',
+      logo: 'https://www.thebrandfriend.com/logo-full.png',
     },
     blogPost: posts.slice(0, 20).map(p => ({
       '@type': 'BlogPosting',
       headline: p.seo_title,
-      url: `https://thebrandfriend.com/blog/${p.slug}/`,
+      url: `https://www.thebrandfriend.com/blog/${p.slug}/`,
       datePublished: p.published_at,
       author: { '@type': 'Organization', name: 'TheBrandFriend' },
     })),
@@ -52,13 +52,13 @@ export default async function BlogIndexPage() {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://thebrandfriend.com/',
+        item: 'https://www.thebrandfriend.com/',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Insights',
-        item: 'https://thebrandfriend.com/blog/',
+        item: 'https://www.thebrandfriend.com/blog/',
       },
     ],
   };

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { services, getServiceBySlug, getRelatedServices } from '@/data/services';
 import CTABanner from '@/components/CTABanner';
 import CreattieEmbed from '@/components/CreattieEmbed';
+import { SITE_URL as SITE } from '../../../../lib/site';
 
 export function generateStaticParams() {
   return services.map(s => ({ slug: s.slug }));
@@ -24,8 +25,6 @@ export async function generateMetadata({ params }) {
     },
   };
 }
-
-const SITE = 'https://thebrandfriend.com';
 
 function buildServiceSchema(service) {
   return {

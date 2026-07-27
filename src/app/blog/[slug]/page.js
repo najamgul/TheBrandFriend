@@ -7,7 +7,7 @@ import { getPostBySlug, getPublishedPosts } from '../../../../lib/blog/store';
 import CTABanner from '@/components/CTABanner';
 import '@/components/Blog.css';
 
-const SITE = 'https://thebrandfriend.com';
+import { SITE_URL as SITE } from '../../../../lib/site';
 
 export const revalidate = 300;
 // Posts appear after the build, so allow rendering slugs not in the static list.

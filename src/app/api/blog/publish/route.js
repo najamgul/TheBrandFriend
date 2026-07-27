@@ -29,7 +29,7 @@ function istDayOfWeek() {
  * Google Indexing API.
  *
  * Manual run:  curl -H "Authorization: Bearer $CRON_SECRET" \
- *                https://thebrandfriend.com/api/blog/publish?force=1
+ *                https://www.thebrandfriend.com/api/blog/publish?force=1
  */
 export async function GET(request) {
   if (!isAuthorized(request)) return unauthorized();

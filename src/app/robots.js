@@ -10,7 +10,7 @@ export default function robots() {
         disallow: ['/api/'],
       },
     ],
-    sitemap: 'https://thebrandfriend.com/sitemap.xml',
-    host: 'https://thebrandfriend.com',
+    sitemap: 'https://www.thebrandfriend.com/sitemap.xml',
+    host: 'https://www.thebrandfriend.com',
   };
 }

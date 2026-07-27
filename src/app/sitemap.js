@@ -1,7 +1,7 @@
 import { services } from '@/data/services';
 import { getPublishedPosts } from '../../lib/blog/store';
 
-const BASE_URL = 'https://thebrandfriend.com';
+import { SITE_URL as BASE_URL } from '../../lib/site';
 
 // Regenerated hourly, and immediately after a publish via revalidatePath.
 // (Was force-static; the blog needs new URLs to appear without a redeploy.)

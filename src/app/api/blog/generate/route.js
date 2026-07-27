@@ -21,7 +21,7 @@ export const maxDuration = 300;
  * On Hobby it will time out; use the workflow's "Run workflow" button instead.
  *
  * Manual run:  curl -H "Authorization: Bearer $CRON_SECRET" \
- *                https://thebrandfriend.com/api/blog/generate?force=1
+ *                https://www.thebrandfriend.com/api/blog/generate?force=1
  */
 export async function GET(request) {
   if (!isAuthorized(request)) return unauthorized();

@@ -79,7 +79,7 @@ node scripts/replicate-schema.js
 
 # Publish now, out of schedule
 curl -H "Authorization: Bearer $CRON_SECRET" \
-  https://thebrandfriend.com/api/blog/publish?force=1
+  https://www.thebrandfriend.com/api/blog/publish?force=1
 ```
 
 In GitHub: Actions → "Blog pipeline — generate" → Run workflow.
