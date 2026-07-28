@@ -14,7 +14,7 @@
  *   node scripts/blog-pipeline.mjs generate [--force]
  *
  * Env required: REPLICATE_API_TOKEN, SUPABASE_URL, SUPABASE_SERVICE_KEY
- * Optional:     UNSPLASH_ACCESS_KEY, REPLICATE_*_MODEL
+ * Optional:     PEXELS_API_KEY, REPLICATE_*_MODEL
  *
  * Locally it reads .env.local; in CI the values come from repository secrets.
  */

@@ -186,13 +186,35 @@ export default async function BlogPostPage({ params }) {
         </header>
 
         {post.cover_image && (
-          <div className="post-cover">
+          <figure className="post-cover">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={post.cover_image}
               alt={post.cover_image_alt || post.seo_title}
             />
-          </div>
+            {post.cover_image_credit?.photographer && (
+              /* The Pexels API guidelines require a visible photographer
+                 credit and a link back to Pexels. */
+              <figcaption className="post-cover-credit mono">
+                Photo by{' '}
+                <a
+                  href={post.cover_image_credit.photographerUrl || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                >
+                  {post.cover_image_credit.photographer}
+                </a>{' '}
+                on{' '}
+                <a
+                  href={post.cover_image_credit.photoUrl || 'https://www.pexels.com'}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                >
+                  {post.cover_image_credit.source || 'Pexels'}
+                </a>
+              </figcaption>
+            )}
+          </figure>
         )}
 
         <div className="post-body-section">

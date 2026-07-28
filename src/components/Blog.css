@@ -278,6 +278,8 @@
 .post-cover {
   border-bottom: var(--border-heavy);
   background: var(--black);
+  margin: 0;
+  position: relative;
 }
 
 .post-cover img {
@@ -286,6 +288,23 @@
   object-fit: cover;
   display: block;
 }
+
+/* Photographer credit — required by the Pexels API guidelines. */
+.post-cover-credit {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--grey);
+  background: var(--black);
+  padding: 8px 16px;
+  text-align: right;
+}
+
+.post-cover-credit a {
+  color: var(--volt);
+  text-decoration: none;
+}
+
+.post-cover-credit a:hover { text-decoration: underline; }
 
 .post-body-section {
   background: var(--white);

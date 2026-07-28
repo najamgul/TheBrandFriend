@@ -54,6 +54,9 @@ create table if not exists blog_posts (
 
   cover_image       text,
   cover_image_alt   text,
+  -- { photographer, photographerUrl, photoUrl, source } — the Pexels API
+  -- guidelines require a visible credit, so it is stored with the URL.
+  cover_image_credit jsonb,
 
   internal_links    jsonb not null default '[]'::jsonb,
   external_links    jsonb not null default '[]'::jsonb,

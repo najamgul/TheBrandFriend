@@ -65,7 +65,7 @@ Settings → Secrets and variables → Actions:
 | `REPLICATE_API_TOKEN` | yes | https://replicate.com/account/api-tokens |
 | `SUPABASE_URL` | yes | same value as Vercel |
 | `SUPABASE_SERVICE_KEY` | yes | service role key |
-| `UNSPLASH_ACCESS_KEY` | no | omit and posts render a branded placeholder card |
+| `PEXELS_API_KEY` | no | omit and posts render a branded placeholder card |
 
 ### 3. Vercel environment variables
 
@@ -78,7 +78,7 @@ Settings → Secrets and variables → Actions:
 
 `REPLICATE_API_TOKEN` **is** required on Vercel — generation runs there.
 Optionally add `REPLICATE_DRAFT_MODEL` / `_POLISH_MODEL` / `_JUDGE_MODEL` to
-override the defaults, and `UNSPLASH_ACCESS_KEY` for cover images.
+override the defaults, and `PEXELS_API_KEY` for cover images.
 
 ### 4. Google Search Console
 
