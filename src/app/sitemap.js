@@ -4,16 +4,20 @@ import { getPublishedPosts } from '../../lib/blog/store';
 import { SITE_URL as BASE_URL } from '../../lib/site';
 
 /**
- * Five minutes, matching the blog pages.
+ * Always generated fresh. No ISR, no edge cache.
  *
- * The publish cron also calls revalidatePath('/sitemap.xml'), but that does
- * not reliably purge this route on Vercel — observed in production as
- * X-Vercel-Cache: HIT with a climbing Age after a publish, while the /blog
- * page revalidated correctly. A short window bounds the staleness regardless
- * of whether the explicit purge lands. Crawlers fetch this rarely, so the
- * extra regeneration costs effectively nothing.
+ * Two cache-based approaches were tried in production and both failed:
+ * revalidatePath('/sitemap.xml') from the publish route never purged this
+ * metadata route, and revalidate = 300 still served a cached copy with
+ * X-Vercel-Cache: HIT and Age over 600s well after a publish.
+ *
+ * A sitemap is fetched by crawlers a handful of times a day, so the one
+ * Supabase query per request is irrelevant, while a stale sitemap actively
+ * withholds new URLs from search engines. Correctness wins over a cache
+ * that saves nothing measurable.
  */
-export const revalidate = 300;
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function sitemap() {
   const now = new Date();
