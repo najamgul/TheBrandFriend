@@ -13,11 +13,13 @@ import './globals.css';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import Reveal from '@/components/Reveal';
+import Cursor from '@/components/Cursor';
 import VoiceAgent from '@/components/VoiceAgent';
 import RecaptchaProvider from '@/components/RecaptchaProvider';
 import MetaPixel from '@/components/MetaPixel';
 import { SkinProvider, skinBootScript } from '@/components/SkinProvider';
 import SkinSwitcher from '@/components/SkinSwitcher';
+import OpeningSequence from '@/components/OpeningSequence';
 import { skinsToCSS } from '@/data/skins';
 
 /* ── Typefaces ─────────────────────────────────────────────────────────
@@ -79,7 +81,8 @@ export const metadata = {
 
 export const viewport = {
   // Matches the default skin's --bg so the browser chrome never flashes white.
-  themeColor: '#F3F1EC',
+  themeColor: '#0B0B0C',
+  colorScheme: 'dark light',
 };
 
 const jsonLd = {
@@ -155,8 +158,10 @@ export default function RootLayout({ children }) {
             <Footer />
             <SkinSwitcher />
           </RecaptchaProvider>
+          <OpeningSequence />
         </SkinProvider>
         <Reveal />
+        <Cursor />
         <VoiceAgent />
       </body>
     </html>

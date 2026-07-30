@@ -318,7 +318,171 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .navdrawer a:hover { color: var(--accent); }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   HERO
+   CINEMATIC HERO
+   A full-height stage: shader field at the back, a scrim to hold contrast,
+   type in front. Everything below the fold returns to the quieter system.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.stage {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-block: clamp(6rem, 14vh, 10rem) clamp(2rem, 5vh, 4rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* The shader host. Also the fallback: this gradient is what a phone with no
+   WebGL, a blocked bundle, or reduce-motion actually sees — so it has to
+   stand on its own, not look like a missing image. */
+.herocanvas {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(120% 90% at 72% 18%, color-mix(in srgb, var(--accent) 42%, transparent), transparent 62%),
+    radial-gradient(90% 80% at 12% 88%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 58%),
+    var(--bg);
+}
+.herocanvas canvas { opacity: 0.98; }
+
+/* Keeps the headline legible wherever the field happens to be bright. */
+.stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    var(--bg) 0%,
+    color-mix(in srgb, var(--bg) 82%, transparent) 26%,
+    color-mix(in srgb, var(--bg) 30%, transparent) 62%,
+    color-mix(in srgb, var(--bg) 55%, transparent) 100%
+  );
+}
+
+.stage__top {
+  position: absolute;
+  top: clamp(5rem, 12vh, 8rem);
+  left: 0; right: 0;
+}
+.stage__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  color: var(--muted);
+}
+.stage__title { margin-bottom: clamp(1.5rem, 3vw, 2.25rem); }
+.stage__title em { font-style: normal; color: var(--accent); }
+
+.stage__foot {
+  display: grid;
+  gap: var(--s-6);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--line);
+}
+@media (min-width: 900px) {
+  .stage__foot { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto; align-items: end; }
+}
+
+.scrollcue {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.scrollcue__rail {
+  position: relative;
+  width: 54px; height: 1px;
+  background: var(--line);
+  overflow: hidden;
+}
+.scrollcue__rail::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 40%;
+  background: var(--accent);
+  animation: railSweep 2.6s var(--ease) infinite;
+}
+@keyframes railSweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   TITLE SEQUENCE
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* While the reel is running, suppress the per-property transitions so the
+   cuts land hard instead of smearing between four palettes at once. */
+[data-opening] * { transition: none !important; }
+
+.opening {
+  position: fixed;
+  z-index: 1400;
+  left: 50%;
+  bottom: clamp(5rem, 12vh, 8rem);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.opening__name {
+  display: block;
+  padding: 0.5em 1em;
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-radius: var(--radius);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CUSTOM CURSOR
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.has-cursor,
+.has-cursor a,
+.has-cursor button,
+.has-cursor [role='button'] { cursor: none; }
+
+.cursor-dot, .cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 1500;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: 50%;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+.cursor-dot {
+  width: 6px; height: 6px;
+  margin: -3px 0 0 -3px;
+  background: #fff;
+}
+.cursor-ring {
+  width: 34px; height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  transition: width 260ms var(--ease), height 260ms var(--ease),
+              margin 260ms var(--ease), background-color 260ms var(--ease);
+}
+.cursor-ring.is-active {
+  width: 52px; height: 52px;
+  margin: -26px 0 0 -26px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PARALLAX
+   ═══════════════════════════════════════════════════════════════════════ */
+
+[data-parallax] { transform: translate3d(0, var(--py, 0px), 0); will-change: transform; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   HERO (interior pages)
    ═══════════════════════════════════════════════════════════════════════ */
 
 .hero { padding-block: clamp(3rem, 8vw, 7rem) clamp(2.5rem, 5vw, 4rem); }
@@ -530,12 +694,34 @@ body { padding-bottom: clamp(4.5rem, 8vw, 6rem); }
   border-radius: var(--radius-lg);
 }
 .workitem__media img,
+.workitem__media video,
 .workitem__media > .workitem__ph {
   width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform 900ms var(--ease), filter 700ms var(--ease);
+  /* Desaturated until you look at it — the standard filmic move, and it also
+     stops mismatched client photography from fighting the palette. */
+  filter: grayscale(1) contrast(1.08);
+  transform: scale(1.02);
+  transition: transform 1100ms var(--ease), filter 800ms var(--ease);
 }
-.workitem:hover .workitem__media img { transform: scale(1.04); }
+.workitem:hover .workitem__media img,
+.workitem:hover .workitem__media video {
+  filter: grayscale(0) contrast(1);
+  transform: scale(1.06);
+}
+
+/* A slow sheen that crosses the frame on hover. */
+.workitem__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%,
+              color-mix(in srgb, var(--fg) 12%, transparent) 50%, transparent 62%);
+  transform: translateX(-120%);
+  transition: transform 1100ms var(--ease);
+}
+.workitem:hover .workitem__media::after { transform: translateX(120%); }
 
 /* Placeholder for projects with no image yet — a typographic plate, not a
    grey box. Reads as intentional even before real photography lands. */

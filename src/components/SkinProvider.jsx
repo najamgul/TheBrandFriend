@@ -13,16 +13,33 @@ const SkinContext = createContext(null);
  * The `data-skin` attribute on <html> is the single source of truth for
  * appearance — it is set by the blocking script in layout.js before first
  * paint, so React never causes a flash of the default skin. This provider
- * mirrors that attribute into state (for anything that wants to *name* the
- * current skin) and is the only thing allowed to change it.
+ * mirrors that attribute into state and is the only thing allowed to change it.
+ *
+ * Two ways to change it:
+ *   setSkin      — a deliberate choice by the visitor. Persisted, animated.
+ *   previewSkin  — a transient change (the title sequence). Never persisted,
+ *                  never animated, so it cannot overwrite a real preference
+ *                  or queue up view transitions faster than they can run.
  */
 export function SkinProvider({ children }) {
   const [skinId, setSkinId] = useState(DEFAULT_SKIN);
+  const [hasStoredChoice, setHasStoredChoice] = useState(true); // assume yes until proven otherwise
 
-  // Adopt whatever the pre-paint script decided, rather than overriding it.
   useEffect(() => {
     const applied = document.documentElement.dataset.skin;
     if (applied && skinIds.includes(applied)) setSkinId(applied);
+
+    try {
+      setHasStoredChoice(Boolean(localStorage.getItem(STORAGE_KEY)));
+    } catch {
+      setHasStoredChoice(false);
+    }
+  }, []);
+
+  const previewSkin = useCallback(id => {
+    if (!skinIds.includes(id)) return;
+    document.documentElement.dataset.skin = id;
+    setSkinId(id);
   }, []);
 
   const setSkin = useCallback(id => {
@@ -35,6 +52,7 @@ export function SkinProvider({ children }) {
 
     try {
       localStorage.setItem(STORAGE_KEY, id);
+      setHasStoredChoice(true);
     } catch {
       // Private mode / storage disabled — the switch still works, it just
       // won't survive a reload. Not worth surfacing to the user.
@@ -51,7 +69,7 @@ export function SkinProvider({ children }) {
   const skin = skins.find(s => s.id === skinId) || skins[0];
 
   return (
-    <SkinContext.Provider value={{ skin, skinId, setSkin }}>
+    <SkinContext.Provider value={{ skin, skinId, setSkin, previewSkin, hasStoredChoice }}>
       {children}
     </SkinContext.Provider>
   );

@@ -28,6 +28,46 @@ const F = {
 
 export const skins = [
   {
+    /* The house style. Everything else in this list is a system we can build
+       for a client; this is the one we build for ourselves. Near-black so the
+       WebGL field and the work imagery both have somewhere to sit, with a
+       single hot ember accent doing all the pointing. */
+    id: 'noir',
+    name: 'Noir',
+    note: 'House style',
+    kind: 'dark',
+    tokens: {
+      '--bg': '#0B0B0C',
+      '--bg-alt': '#121215',
+      '--fg': '#F2EFE9',
+      '--muted': '#847F76',
+      '--surface': '#141417',
+      '--line': 'rgba(242, 239, 233, 0.14)',
+      '--accent': '#FF4D2E',
+      '--accent-fg': '#0B0B0C',
+      '--signal': '#FF4D2E',
+      '--font-display': F.archivo,
+      '--font-body': F.dm,
+      '--font-label': F.mono,
+      '--display-weight': '760',
+      '--display-tracking': '-0.055em',
+      '--display-leading': '0.82',
+      '--display-case': 'uppercase',
+      '--display-scale': '1.1',
+      '--label-case': 'uppercase',
+      '--label-tracking': '0.2em',
+      '--radius': '2px',
+      '--radius-lg': '4px',
+      '--stroke': '1px',
+      '--shadow': 'none',
+      '--grain': '0.055',
+      '--logo-invert': '1',
+      '--ease': 'cubic-bezier(0.16, 1, 0.3, 1)',
+      '--dur': '900ms',
+    },
+  },
+
+  {
     id: 'atelier',
     name: 'Atelier',
     note: 'House style',
@@ -40,8 +80,8 @@ export const skins = [
       '--muted': '#6E6A61',
       '--surface': '#FBFAF7',
       '--line': 'rgba(20, 19, 15, 0.14)',
-      '--accent': '#14130F',
-      '--accent-fg': '#F3F1EC',
+      '--accent': '#C3502E',
+      '--accent-fg': '#FCFBF8',
       '--signal': '#C3502E',
       /* type */
       '--font-display': F.archivo,
@@ -79,9 +119,9 @@ export const skins = [
       '--muted': '#8A8A8A',
       '--surface': '#FFFFFF',
       '--line': 'rgba(17, 17, 17, 0.18)',
-      '--accent': '#111111',
-      '--accent-fg': '#F2F2F2',
-      '--signal': '#111111',
+      '--accent': '#E2231A',
+      '--accent-fg': '#FFFFFF',
+      '--signal': '#E2231A',
       '--font-display': F.archivo,
       '--font-body': F.dm,
       '--font-label': F.mono,
@@ -259,7 +299,7 @@ export const skins = [
       '--muted': '#8C877F',
       '--surface': '#FFFFFF',
       '--line': 'rgba(26, 26, 26, 0.12)',
-      '--accent': '#1A1A1A',
+      '--accent': '#9A7B57',
       '--accent-fg': '#FDFBF9',
       '--signal': '#9A7B57',
       '--font-display': F.fraunces,
@@ -320,7 +360,14 @@ export const skins = [
   },
 ];
 
-export const DEFAULT_SKIN = 'atelier';
+export const DEFAULT_SKIN = 'noir';
+
+/**
+ * The title sequence. On a first visit the page flicks through these before
+ * settling on the house style — the site demonstrating what it can be, rather
+ * than asking the visitor to click something to find out.
+ */
+export const OPENING_REEL = ['season', 'acid', 'swiss', 'protocol', DEFAULT_SKIN];
 
 /** Skin ids, for the inline no-flash script's allow-list. */
 export const skinIds = skins.map(s => s.id);

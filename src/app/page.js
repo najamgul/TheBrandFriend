@@ -5,7 +5,10 @@ import { services } from '@/data/services';
 import { designs } from '@/data/designs';
 import { getSupabase } from '../../lib/supabase';
 import LeadForm from '@/components/LeadForm';
-import SkinReadout from '@/components/SkinReadout';
+/* Server-renders to the gradient div that doubles as the no-WebGL fallback;
+   three.js itself is imported inside the effect, so it never touches the
+   initial bundle or the critical path. */
+import HeroCanvas from '@/components/HeroCanvas';
 
 export const revalidate = 60;
 
@@ -13,17 +16,17 @@ const PROCESS = [
   {
     step: '01',
     name: 'Read the room',
-    desc: 'Before anything is drawn we work out what the business actually needs to be true — who is buying, what they already believe, and what the site has to change about that.',
+    desc: 'Before anything is drawn we work out what the business actually needs to be true — who is buying, what they already believe, and what this has to change about that.',
   },
   {
     step: '02',
     name: 'Design the system',
-    desc: 'Not a page: a system. Type scale, palette, grid, motion, and the rules that hold when you add the twentieth page. You see it and sign it off before a line of production code exists.',
+    desc: 'Not a page: a system. Type scale, palette, grid, motion, and the rules that hold when you add the twentieth page. You sign it off before production code exists.',
   },
   {
     step: '03',
     name: 'Build and hand over',
-    desc: 'Hand-written Next.js, measured against Core Web Vitals rather than a screenshot. You get the code, the design files, and documentation you could hand to another studio tomorrow.',
+    desc: 'Hand-written Next.js, measured against Core Web Vitals rather than a screenshot. You get the code, the design files, and documentation you could hand to another studio.',
   },
 ];
 
@@ -54,47 +57,42 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ── HERO ─────────────────────────────────────────────────────── */}
-      <section className="hero">
-        <div className="wrap">
-          <p className="label hero__eyebrow" data-reveal>
+      {/* ── STAGE ────────────────────────────────────────────────────── */}
+      <section className="stage">
+        <HeroCanvas />
+
+        <div className="wrap stage__top">
+          <p className="label stage__eyebrow">
             <span className="hero__dot" aria-hidden="true" />
             Independent design &amp; engineering studio
           </p>
+        </div>
 
-          <h1 className="display hero__title" data-reveal style={{ '--reveal-delay': '60ms' }}>
-            One studio.
+        <div className="wrap">
+          {/* Plain server-rendered text. The shader sits behind it, so the
+              headline is readable with JavaScript disabled or still loading. */}
+          <h1 className="display stage__title">
+            We build the
             <br />
-            Eight ways to
-            <br />
-            look like <em>yourself</em>.
+            <em>unmissable</em>.
           </h1>
 
-          <div className="hero__grid">
-            <p className="lede" data-reveal style={{ '--reveal-delay': '120ms' }}>
-              Everything on this page — the typeface, the palette, the spacing, the way
-              things move — is one of eight design systems we have built and shipped.
-              Change it at the bottom of your screen and watch the site change its mind.
+          <div className="stage__foot">
+            <p className="lede">
+              Brand systems, websites and film for companies that intend to be around
+              in ten years. Everything you just watched this page do, we can do for you.
             </p>
 
-            <div data-reveal style={{ '--reveal-delay': '180ms' }}>
-              <SkinReadout />
-            </div>
-          </div>
-
-          <div className="hero__foot" data-reveal style={{ '--reveal-delay': '240ms' }}>
-            <div>
-              <p className="label muted" style={{ marginBottom: 'var(--s-3)' }}>
-                Start with an email
-              </p>
-              <Suspense fallback={null}>
-                <LeadForm variant="inline" />
-              </Suspense>
-            </div>
-            <p className="formnote" style={{ maxWidth: '26ch' }}>
-              Or read the <Link href="/process/" className="ulink">process</Link> first —
-              most people do.
+            <p className="formnote">
+              Twelve design systems in the library.
+              <br />
+              <Link href="/designs/" className="ulink">See all of them →</Link>
             </p>
+
+            <div className="scrollcue label">
+              <span className="scrollcue__rail" aria-hidden="true" />
+              Scroll
+            </div>
           </div>
         </div>
       </section>
@@ -111,72 +109,22 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* ── SYSTEMS ──────────────────────────────────────────────────── */}
-      <section className="section">
-        <div className="wrap">
-          <header className="sec-head" data-reveal>
-            <h2 className="h2">Twelve systems,<br />built and running</h2>
-            <span className="label sec-head__index">(01) Design library</span>
-          </header>
-
-          <p className="prose muted" data-reveal style={{ marginBottom: 'var(--s-8)' }}>
-            Most studios have one house style and bend every client into it. We keep a
-            library. Each of these is a complete, working design system — real type
-            pairings, real palettes, real code — that we start from and tailor rather
-            than a mood board we hope to reach.
-          </p>
-
-          <div className="syslist">
-            {designs.map((d, i) => (
-              <Link
-                key={d.slug}
-                href="/designs/"
-                className="syscard"
-                data-reveal
-                style={{
-                  '--reveal-delay': `${Math.min(i, 8) * 45}ms`,
-                  background: d.colors[0],
-                  color: d.colors[1],
-                }}
-              >
-                {/* Each card is drawn in its own system's colours, not the page's. */}
-                <span className="label syscard__style" style={{ color: d.colors[2] }}>{d.style}</span>
-                <span className="syscard__name">{d.name}</span>
-                <span className="syscard__swatches" aria-hidden="true">
-                  {d.colors.map(c => <i key={c} style={{ background: c }} />)}
-                </span>
-              </Link>
-            ))}
-          </div>
-
-          <p style={{ marginTop: 'var(--s-7)' }} data-reveal>
-            <Link href="/designs/" className="btn btn--ghost">
-              Open the library
-              <span className="btn__arrow" aria-hidden="true">→</span>
-            </Link>
-          </p>
-        </div>
-      </section>
-
       {/* ── WORK ─────────────────────────────────────────────────────── */}
       {work.length > 0 && (
-        <section className="section section--alt">
+        <section className="section">
           <div className="wrap">
             <header className="sec-head" data-reveal>
               <h2 className="h2">Selected work</h2>
-              <span className="label sec-head__index">(02) Projects</span>
+              <span className="label sec-head__index">(01) Projects</span>
             </header>
 
             <div className="work">
               {work.map((item, i) => (
                 <article className="workitem" key={item.id} data-reveal>
-                  <div className="workitem__media">
+                  <div className="workitem__media" data-parallax={i % 2 ? '0.1' : '0.16'}>
                     {item.media_type === 'video' ? (
-                      <video
-                        src={item.media_url}
-                        poster={item.thumbnail_url || undefined}
-                        muted playsInline loop preload="metadata"
-                      />
+                      <video src={item.media_url} poster={item.thumbnail_url || undefined}
+                             muted playsInline loop preload="metadata" />
                     ) : item.media_url ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
                       <img src={item.media_url} alt={item.title} loading="lazy" />
@@ -214,12 +162,12 @@ export default async function HomePage() {
       )}
 
       {/* ── CAPABILITIES ─────────────────────────────────────────────── */}
-      <section className="section">
+      <section className="section section--alt">
         <div className="wrap">
           <header className="sec-head" data-reveal>
             <h2 className="h2">What we do</h2>
             <span className="label sec-head__index">
-              ({work.length > 0 ? '03' : '02'}) Capabilities
+              ({work.length > 0 ? '02' : '01'}) Capabilities
             </span>
           </header>
 
@@ -230,6 +178,43 @@ export default async function HomePage() {
                 <h3 className="h3">{s.name}</h3>
                 <p className="cap__desc">{s.shortDesc}</p>
                 <span className="label cap__go" aria-hidden="true">→</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SYSTEMS ──────────────────────────────────────────────────── */}
+      <section className="section">
+        <div className="wrap">
+          <header className="sec-head" data-reveal>
+            <h2 className="h2">The library</h2>
+            <span className="label sec-head__index">
+              ({work.length > 0 ? '03' : '02'}) Design systems
+            </span>
+          </header>
+
+          <p className="prose muted" data-reveal style={{ marginBottom: 'var(--s-8)' }}>
+            Most studios have one house style and bend every client into it. We keep
+            twelve, each a complete working system. The switcher at the bottom of this
+            page runs the site through eight of them — that is not a demo, it is the
+            same code we ship.
+          </p>
+
+          <div className="syslist">
+            {designs.map((d, i) => (
+              <Link key={d.slug} href="/designs/" className="syscard" data-reveal
+                    style={{
+                      '--reveal-delay': `${Math.min(i, 8) * 45}ms`,
+                      background: d.colors[0],
+                      color: d.colors[1],
+                    }}>
+                {/* Drawn in its own system's colours, not the page's. */}
+                <span className="label syscard__style" style={{ color: d.colors[2] }}>{d.style}</span>
+                <span className="syscard__name">{d.name}</span>
+                <span className="syscard__swatches" aria-hidden="true">
+                  {d.colors.map(c => <i key={c} style={{ background: c }} />)}
+                </span>
               </Link>
             ))}
           </div>
@@ -274,14 +259,13 @@ export default async function HomePage() {
             something durable.
           </h2>
           <p className="cta__sub" data-reveal style={{ '--reveal-delay': '80ms' }}>
-            Tell us what you&apos;re making and when it needs to be live. We&apos;ll tell you
-            honestly whether we&apos;re the right studio for it.
+            Tell us what you&apos;re making and when it needs to be live. We&apos;ll tell
+            you honestly whether we&apos;re the right studio for it.
           </p>
-          <div data-reveal style={{ '--reveal-delay': '140ms' }}>
-            <Link href="/contact/" className="btn">
-              Start a project
-              <span className="btn__arrow" aria-hidden="true">→</span>
-            </Link>
+          <div data-reveal style={{ '--reveal-delay': '140ms', maxWidth: '34rem', margin: '0 auto' }}>
+            <Suspense fallback={null}>
+              <LeadForm variant="inline" />
+            </Suspense>
           </div>
           <p className="cta__mail" data-reveal>
             or write to{' '}
