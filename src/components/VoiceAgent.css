@@ -39,7 +39,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   padding: 24px;
-  color: #fff;
+  color: var(--fg);
   box-shadow:
     0 24px 48px rgba(0, 0, 0, 0.4),
     0 0 0 1px rgba(255, 255, 255, 0.05) inset;
@@ -85,7 +85,7 @@
   justify-content: center;
   font-size: 24px;
   font-weight: 700;
-  color: #fff;
+  color: var(--fg);
   position: relative;
   z-index: 2;
   animation: va-avatarGlow 1.8s ease-in-out infinite;
@@ -156,7 +156,7 @@
 
 .va-btn-accept {
   background: linear-gradient(135deg, #10b981, #059669);
-  color: #fff;
+  color: var(--fg);
   box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
   animation: va-acceptPulse 1.5s ease-in-out infinite;
 }

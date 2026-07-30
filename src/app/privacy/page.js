@@ -10,32 +10,29 @@ export const metadata = {
 export default function PrivacyPage() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="hero" style={{ minHeight: 'auto' }}>
-        <div className="hero-layout">
-          <div className="hero-inner">
-            <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
-              <span className="mono">LEGAL</span>
-            </div>
-            <h1 className="hero-headline" id="privacy-title">
-              PRIVACY<br />
-              <span className="volt">POLICY</span>
-            </h1>
-            <p className="hero-sub" id="privacy-intro">
-              <em>LAST UPDATED: MAY 22, 2026. TRANSPARENCY IS OUR FOUNDATION. HERE IS HOW WE RESPECT AND SAFEGUARD YOUR DATA.</em>
-            </p>
-          </div>
+      <section className="pagehead">
+        <div className="wrap">
+          <span className="label pagehead__label">Legal — last updated 22 May 2026</span>
+          <h1 className="display pagehead__title" id="privacy-title">
+            Privacy
+            <br />
+            policy
+          </h1>
+          <p className="lede pagehead__lede" id="privacy-intro">
+            How we collect, use and protect your information — written to be read, not to be survived.
+          </p>
         </div>
       </section>
 
       {/* Content Section */}
-      <section className="section section-dark">
+      <section className="section">
+        <div className="wrap">
         <div className="legal-container">
           
           <div className="legal-section">
             <h2>1. OVERVIEW</h2>
             <p>
-              At TheBrandFriend, we are committed to maintaining the trust and confidence of our clients and website visitors. This Privacy Policy details how we collect, use, and protect your personal information when you interact with our website or use our agency <Link href="/services/" className="volt" style={{ textDecoration: 'underline' }}>services</Link>.
+              At TheBrandFriend, we are committed to maintaining the trust and confidence of our clients and website visitors. This Privacy Policy details how we collect, use, and protect your personal information when you interact with our website or use our agency <Link href="/services/" className="ulink">services</Link>.
             </p>
           </div>
 
@@ -45,7 +42,7 @@ export default function PrivacyPage() {
               We only collect information that is necessary to deliver our services, communicate project updates, or improve your website experience:
             </p>
             <ul>
-              <li><strong>Contact Information:</strong> Your name, email address, phone number, and company name when you fill out our contact form or submit a request on our <Link href="/contact/" className="volt" style={{ textDecoration: 'underline' }}>contact page</Link>.</li>
+              <li><strong>Contact Information:</strong> Your name, email address, phone number, and company name when you fill out our contact form or submit a request on our <Link href="/contact/" className="ulink">contact page</Link>.</li>
               <li><strong>Project Details:</strong> Information regarding your business goals, design assets, and marketing preferences provided during onboarding or proposal phases.</li>
               <li><strong>Usage Data:</strong> Anonymous analytical data, such as IP addresses, browser types, and referring pages, collected via cookies to help us optimize website performance.</li>
             </ul>
@@ -57,7 +54,7 @@ export default function PrivacyPage() {
               Your data is processed based on legitimate business interests and the execution of project contracts. Specifically, we use your information to:
             </p>
             <ul>
-              <li>Provide, execute, and deliver custom design, development, and marketing campaigns as described in <Link href="/process/" className="volt" style={{ textDecoration: 'underline' }}>our process</Link>.</li>
+              <li>Provide, execute, and deliver custom design, development, and marketing campaigns as described in <Link href="/process/" className="ulink">our process</Link>.</li>
               <li>Respond to inquiries, send proposals, or coordinate client calls.</li>
               <li>Analyze website performance and user interaction to refine our design and user experience.</li>
               <li>Comply with legal obligations, prevent fraudulent submissions, and secure our contact interfaces using Google reCAPTCHA.</li>
@@ -97,11 +94,12 @@ export default function PrivacyPage() {
             </p>
             <p className="mono" style={{ color: '#fff', fontSize: '13px' }}>
               THEBRANDFRIEND LEGAL TEAM<br />
-              EMAIL: <a href="mailto:care@thebrandfriend.com" id="privacy-contact-link" className="volt" style={{ textDecoration: 'underline' }}>CARE@THEBRANDFRIEND.COM</a><br />
-              WEBSITE: <Link href="/" className="volt" style={{ textDecoration: 'underline' }}>WWW.THEBRANDFRIEND.COM</Link>
+              EMAIL: <a href="mailto:care@thebrandfriend.com" id="privacy-contact-link" className="ulink">CARE@THEBRANDFRIEND.COM</a><br />
+              WEBSITE: <Link href="/" className="ulink">WWW.THEBRANDFRIEND.COM</Link>
             </p>
           </div>
 
+        </div>
         </div>
       </section>
     </>

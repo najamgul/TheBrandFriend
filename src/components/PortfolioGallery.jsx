@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef, useCallback } from 'react';
-import Link from 'next/link';
+import CTABanner from '@/components/CTABanner';
 import './PortfolioGallery.css';
 
 const CATEGORIES = [
@@ -87,16 +87,18 @@ export default function PortfolioGallery({ items = [] }) {
 
   return (
     <>
-      {/* ── Hero ── */}
-      <section className="portfolio-hero" id="portfolio-hero">
-        <div className="portfolio-hero-tag">SELECTED WORKS</div>
-        <h1 className="portfolio-hero-title">
-          OUR<br />WORK
-        </h1>
-        <p className="portfolio-hero-sub">
-          Every project ships with obsessive attention to detail.
-          Here&apos;s proof.
-        </p>
+      <section className="pagehead">
+        <div className="wrap">
+          <span className="label pagehead__label">Work</span>
+          <h1 className="display pagehead__title">
+            Things we
+            <br />
+            actually shipped.
+          </h1>
+          <p className="lede pagehead__lede">
+            Identity, sites, film and campaigns. Click any piece to see it full size.
+          </p>
+        </div>
       </section>
 
       {/* ── Category Filters ── */}
@@ -193,32 +195,10 @@ export default function PortfolioGallery({ items = [] }) {
         )}
       </section>
 
-      {/* ── CTA ── */}
-      <section className="portfolio-cta" id="portfolio-cta">
-        <h2 className="portfolio-cta-headline">
-          LIKE WHAT<br />YOU SEE?
-        </h2>
-        <p className="portfolio-cta-sub">
-          We built these. Let us build yours.
-        </p>
-        <Link href="/contact/" className="btn-submit">
-          START YOUR PROJECT →
-        </Link>
-        <div className="portfolio-cta-stats">
-          <div className="portfolio-cta-stat">
-            <span className="portfolio-cta-stat-num ranchers">50+</span>
-            <span className="portfolio-cta-stat-label">PROJECTS SHIPPED</span>
-          </div>
-          <div className="portfolio-cta-stat">
-            <span className="portfolio-cta-stat-num ranchers">3 DAYS</span>
-            <span className="portfolio-cta-stat-label">AVG. DELIVERY</span>
-          </div>
-          <div className="portfolio-cta-stat">
-            <span className="portfolio-cta-stat-num ranchers">24/7</span>
-            <span className="portfolio-cta-stat-label">SUPPORT</span>
-          </div>
-        </div>
-      </section>
+      <CTABanner
+        title={<>Like what<br />you see?</>}
+        sub="We built these. Tell us what you need and we'll tell you honestly whether we're the right studio for it."
+      />
 
       {/* ── Lightbox ── */}
       <div

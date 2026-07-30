@@ -10,26 +10,23 @@ export const metadata = {
 export default function TermsPage() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="hero" style={{ minHeight: 'auto' }}>
-        <div className="hero-layout">
-          <div className="hero-inner">
-            <div className="sticker sticker-hero" style={{ '--rot': '1deg' }}>
-              <span className="mono">LEGAL</span>
-            </div>
-            <h1 className="hero-headline" id="terms-title">
-              TERMS OF<br />
-              <span className="volt">SERVICE</span>
-            </h1>
-            <p className="hero-sub" id="terms-intro">
-              <em>LAST UPDATED: MAY 22, 2026. THE TERMS OF WORK. PLEASE READ CAREFULLY TO UNDERSTAND HOW WE ENGAGE AND EXECUTE PROJECTS.</em>
-            </p>
-          </div>
+      <section className="pagehead">
+        <div className="wrap">
+          <span className="label pagehead__label">Legal — last updated 22 May 2026</span>
+          <h1 className="display pagehead__title" id="terms-title">
+            Terms of
+            <br />
+            service
+          </h1>
+          <p className="lede pagehead__lede" id="terms-intro">
+            The terms we work under: what we commit to, what we need from you, and who owns what at the end.
+          </p>
         </div>
       </section>
 
       {/* Content Section */}
-      <section className="section section-dark">
+      <section className="section">
+        <div className="wrap">
         <div className="legal-container">
           
           <div className="legal-section">
@@ -42,7 +39,7 @@ export default function TermsPage() {
           <div className="legal-section">
             <h2>2. SCOPE OF SERVICES</h2>
             <p>
-              We provide professional creative and development services, including strategy, design, front-end and back-end development, social media management, and performance marketing, as outlined on our <Link href="/services/" className="volt" style={{ textDecoration: 'underline' }}>services page</Link>.
+              We provide professional creative and development services, including strategy, design, front-end and back-end development, social media management, and performance marketing, as outlined on our <Link href="/services/" className="ulink">services page</Link>.
             </p>
             <p>
               All projects are executed based on a signed proposal or statement of work (SOW) which details the specific deliverables, timelines, and budgets. Any work outside the defined SOW is subject to change orders and additional billing.
@@ -52,7 +49,7 @@ export default function TermsPage() {
           <div className="legal-section">
             <h2>3. CLIENT RESPONSIBILITIES</h2>
             <p>
-              To ensure projects are delivered fast and correctly (following <Link href="/process/" className="volt" style={{ textDecoration: 'underline' }}>our process</Link>), client collaboration is essential:
+              To ensure projects are delivered fast and correctly (following <Link href="/process/" className="ulink">our process</Link>), client collaboration is essential:
             </p>
             <ul>
               <li><strong>Content & Assets:</strong> The client must provide text, images, logos, and login credentials in a timely manner. Delays in asset submission will extend project timelines.</li>
@@ -102,15 +99,16 @@ export default function TermsPage() {
               Either party may terminate an ongoing SOW with fifteen (15) days written notice if either party breaches their material obligations under the contract.
             </p>
             <p>
-              For legal inquiries, contract clarifications, or onboarding questions, please reach out to our team via our <Link href="/contact/" className="volt" style={{ textDecoration: 'underline' }}>contact page</Link> or contact us at:
+              For legal inquiries, contract clarifications, or onboarding questions, please reach out to our team via our <Link href="/contact/" className="ulink">contact page</Link> or contact us at:
             </p>
             <p className="mono" style={{ color: '#fff', fontSize: '13px' }}>
               THEBRANDFRIEND LEGAL TEAM<br />
-              EMAIL: <a href="mailto:care@thebrandfriend.com" id="terms-contact-link" className="volt" style={{ textDecoration: 'underline' }}>CARE@THEBRANDFRIEND.COM</a><br />
-              WEBSITE: <Link href="/" className="volt" style={{ textDecoration: 'underline' }}>WWW.THEBRANDFRIEND.COM</Link>
+              EMAIL: <a href="mailto:care@thebrandfriend.com" id="terms-contact-link" className="ulink">CARE@THEBRANDFRIEND.COM</a><br />
+              WEBSITE: <Link href="/" className="ulink">WWW.THEBRANDFRIEND.COM</Link>
             </p>
           </div>
 
+        </div>
         </div>
       </section>
     </>

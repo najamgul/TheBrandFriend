@@ -1,95 +1,100 @@
-import Link from 'next/link';
 import CTABanner from '@/components/CTABanner';
-import CreattieEmbed from '@/components/CreattieEmbed';
 
 export const metadata = {
-  title: 'About Us — A Brutally Effective Digital Agency',
-  description: 'TheBrandFriend is a results-obsessed digital agency. We combine strategy, design, development, and marketing to ship brands that dominate.',
-  keywords: 'about TheBrandFriend, digital agency, branding agency, web agency India',
+  title: 'Studio — How we think and who we are',
+  description:
+    'TheBrandFriend is an independent design and engineering studio. We build brand systems, websites and the campaigns that carry them — and we keep a library of design systems rather than one house style.',
+  keywords: 'about TheBrandFriend, design studio India, branding agency, web design studio',
   alternates: { canonical: '/about/' },
 };
 
-const values = [
-  { num: '01', title: 'SHIP FAST, SHIP RIGHT', desc: "Speed without quality is waste. We deliver on aggressive timelines without cutting corners. Every project has a deadline — and we beat it." },
-  { num: '02', title: 'DATA OVER OPINIONS', desc: "We don't guess. Every design decision, campaign strategy, and feature priority is backed by data, research, and proven frameworks." },
-  { num: '03', title: 'OBSESSIVE CRAFTSMANSHIP', desc: "Every pixel matters. Every line of code matters. We're perfectionists who won't ship until it's genuinely excellent." },
-  { num: '04', title: 'TRANSPARENT PARTNERSHIP', desc: "No hidden costs. No vague timelines. No corporate BS. You get honest communication, clear deliverables, and a team that actually cares." },
+const principles = [
+  {
+    num: '01',
+    title: 'A system, not a page',
+    desc: 'Anyone can make one screen look good. The work is the rules underneath it — the type scale, the grid, the spacing, the states — so the twentieth page looks as considered as the first, whoever builds it.',
+  },
+  {
+    num: '02',
+    title: 'A library, not a house style',
+    desc: 'We keep twelve complete design systems and start from whichever genuinely fits the business. A skincare brand and a logistics platform should not come out of the same studio looking like siblings.',
+  },
+  {
+    num: '03',
+    title: 'Code we would inherit',
+    desc: 'Hand-written Next.js, semantic markup, measured against Core Web Vitals rather than a screenshot. You get the repository and the design files. Nothing is held hostage.',
+  },
+  {
+    num: '04',
+    title: 'Say the inconvenient thing',
+    desc: 'If the timeline is wrong, or the brief is solving the wrong problem, or we are not the right studio for it — you hear that early, when it is still cheap to act on.',
+  },
 ];
 
 export default function AboutPage() {
   return (
     <>
-      <section className="hero" style={{ minHeight: 'auto' }}>
-        <div className="hero-layout">
-          <div className="hero-inner">
-            <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
-              <span className="mono">WHO WE ARE</span>
-            </div>
-            <h1 className="hero-headline">THE<br /><span className="volt">BRAND</span><br />FRIEND</h1>
-            <p className="hero-sub">
-              <em>We&apos;re not just another agency. We&apos;re a team of designers, developers, strategists, and marketers who are obsessed with one thing: making your brand win.</em>
-            </p>
+      <section className="pagehead">
+        <div className="wrap">
+          <span className="label pagehead__label" data-reveal>Studio</span>
+          <h1 className="display pagehead__title" data-reveal style={{ '--reveal-delay': '60ms' }}>
+            We build the
+            <br />
+            thing underneath.
+          </h1>
+          <p className="lede pagehead__lede" data-reveal style={{ '--reveal-delay': '120ms' }}>
+            An independent team of designers, engineers and strategists. We make brand
+            systems and the products that carry them — for companies that intend to be
+            around in ten years.
+          </p>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="wrap">
+          <header className="sec-head" data-reveal>
+            <h2 className="h2">How we work</h2>
+            <span className="label sec-head__index">(01) Principles</span>
+          </header>
+
+          <div className="cardgrid">
+            {principles.map((p, i) => (
+              <div className="card" key={p.num} data-reveal style={{ '--reveal-delay': `${i * 80}ms` }}>
+                <span className="label card__num">{p.num}</span>
+                <h3 className="h3">{p.title}</h3>
+                <p>{p.desc}</p>
+              </div>
+            ))}
           </div>
-          <div className="hero-anim">
-            <CreattieEmbed src="https://ik.imagekit.io/creattie/main/saved_colors/145118/wCSJQov3DLRpg8sp.json" />
-          </div>
         </div>
       </section>
 
-      {/* Mission */}
-      <section className="section section-volt">
-        <div className="section-header">
-          <span className="mono tag tag-black">OUR MISSION</span>
-          <h2 className="ranchers" style={{ fontSize: 'clamp(36px, 6vw, 80px)', color: '#000', lineHeight: 0.9 }}>
-            BUILD BRANDS THAT<br />BREAK THE INTERNET
-          </h2>
-        </div>
-        <p style={{ fontSize: '16px', maxWidth: '700px', lineHeight: 1.7, color: '#000' }}>
-          Every business deserves a brand that commands attention. We combine strategy, design, development, and marketing into one relentless pipeline — taking brands from invisible to unforgettable. No fluff. No filler. Just results.
-        </p>
-      </section>
+      <section className="section section--alt">
+        <div className="wrap">
+          <header className="sec-head" data-reveal>
+            <h2 className="h2">Where we came out</h2>
+            <span className="label sec-head__index">(02) Record</span>
+          </header>
 
-      {/* Values */}
-      <section className="section section-dark">
-        <div className="section-header">
-          <span className="mono tag tag-volt">WHAT DRIVES US</span>
-          <h2 className="section-title ranchers">VALUES</h2>
-        </div>
-        <div className="values-grid">
-          {values.map((v, i) => (
-            <div key={i} className="value-card">
-              <span className="value-num ranchers">{v.num}</span>
-              <h3>{v.title}</h3>
-              <p>{v.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Stats */}
-      <section className="section section-volt">
-        <div className="section-header">
-          <span className="mono tag tag-black">BY THE NUMBERS</span>
-          <h2 className="ranchers" style={{ fontSize: 'clamp(40px, 8vw, 100px)', color: '#000', lineHeight: 0.9 }}>OUTPUT LOG</h2>
-        </div>
-        <div className="stats-row">
-          {[
-            { target: 50, suffix: '+', label: 'PROJECTS SHIPPED' },
-            { target: 35, suffix: '+', label: 'HAPPY CLIENTS' },
-            { target: 3, suffix: 'X', label: 'AVG. ROAS' },
-            { target: 24, suffix: '/7', label: 'SUPPORT' },
-          ].map((s, i) => (
-            <div key={i} className="stat-box">
-              <span className="stat-num" data-target={s.target} data-suffix={s.suffix}>0</span>
-              <span className="mono stat-label">{s.label}</span>
-            </div>
-          ))}
+          <dl className="facts">
+            {[
+              { k: '50+', v: 'Projects shipped' },
+              { k: '35+', v: 'Clients' },
+              { k: '3×', v: 'Average return on ad spend' },
+              { k: '6', v: 'Capabilities under one roof' },
+            ].map(f => (
+              <div className="fact" key={f.v} data-reveal>
+                <dt className="fact__num">{f.k}</dt>
+                <dd className="label fact__label">{f.v}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
       <CTABanner
-        headline={<>WANT TO<br />WORK<br /><span className="volt">TOGETHER?</span></>}
-        sub="We're always looking for ambitious brands to partner with."
+        title={<>Want to work<br />together?</>}
+        sub="We take on a small number of engagements at a time so that each one gets the studio's actual attention."
       />
     </>
   );

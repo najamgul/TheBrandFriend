@@ -1,66 +1,71 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
-import BrutalistForm from '@/components/BrutalistForm';
-import CreattieEmbed from '@/components/CreattieEmbed';
+import LeadForm from '@/components/LeadForm';
 
 export const metadata = {
-  title: 'Contact Us — Get A Free Brand Consultation',
-  description: 'Ready to ship your brand? Contact TheBrandFriend for a free consultation. We respond within 3 hours during business hours.',
-  keywords: 'contact digital agency, free brand consultation, hire web developer, hire marketing agency',
+  title: 'Contact — Send us the brief',
+  description:
+    'Tell us what you are building and when it needs to be live. We reply within one business day with an honest read on whether we are the right studio for it.',
+  keywords: 'contact design studio, project brief, hire web developer, hire branding agency',
   alternates: { canonical: '/contact/' },
 };
 
 export default function ContactPage() {
   return (
     <>
-      <section className="hero" style={{ minHeight: 'auto' }}>
-        <div className="hero-layout">
-          <div className="hero-inner">
-            <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
-              <span className="mono">GET IN TOUCH</span>
-            </div>
-            <h1 className="hero-headline">LET&apos;S<br /><span className="volt">TALK</span></h1>
-            <p className="hero-sub">
-              <em>Drop your details below. We&apos;ll get back within 3 hours during business hours with a game plan for your brand. No strings attached.</em>
-            </p>
-          </div>
-          <div className="hero-anim">
-            <CreattieEmbed src="https://ik.imagekit.io/creattie/main/saved_colors/145118/j9x5pS5KblJLvXEF.json" speed="101" />
-          </div>
+      <section className="pagehead">
+        <div className="wrap">
+          <span className="label pagehead__label" data-reveal>Contact</span>
+          <h1 className="display pagehead__title" data-reveal style={{ '--reveal-delay': '60ms' }}>
+            Send us
+            <br />
+            the brief.
+          </h1>
+          <p className="lede pagehead__lede" data-reveal style={{ '--reveal-delay': '120ms' }}>
+            Describe the problem rather than the deliverable — it tells us far more. We
+            read every enquiry properly and reply within one business day.
+          </p>
         </div>
       </section>
 
-      <section className="section section-dark">
-        <div className="contact-grid">
-          <div>
-            <span className="mono tag tag-volt">SEND US A MESSAGE</span>
-            <h2 className="ranchers" style={{ fontSize: 'clamp(32px, 5vw, 56px)', margin: '12px 0 28px' }}>PROJECT BRIEF</h2>
-            <Suspense fallback={<div>Loading form...</div>}>
-              <BrutalistForm variant="full" />
+      <section className="section">
+        <div className="wrap contactlayout">
+          <div data-reveal>
+            <Suspense fallback={null}>
+              <LeadForm variant="full" />
             </Suspense>
           </div>
-          <div>
-            <span className="mono tag tag-white">QUICK CONNECT</span>
-            <h2 className="ranchers" style={{ fontSize: 'clamp(28px, 4vw, 48px)', margin: '12px 0 24px' }}>INFO</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div>
-                <p className="mono" style={{ fontSize: '10px', color: '#475569', marginBottom: '4px' }}>EMAIL</p>
-                <a href="mailto:care@thebrandfriend.com" style={{ fontSize: '15px', color: '#CCFF00', textDecoration: 'none' }}>care@thebrandfriend.com</a>
-              </div>
-              <div>
-                <p className="mono" style={{ fontSize: '10px', color: '#475569', marginBottom: '4px' }}>RESPONSE TIME</p>
-                <p style={{ fontSize: '15px' }}>Within 3 hours (business hours)</p>
-              </div>
-              <div>
-                <p className="mono" style={{ fontSize: '10px', color: '#475569', marginBottom: '4px' }}>EXPLORE</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '4px' }}>
-                  <Link href="/services/" className="mono" style={{ fontSize: '11px', color: '#CCFF00', textDecoration: 'none' }}>VIEW ALL SERVICES →</Link>
-                  <Link href="/process/" className="mono" style={{ fontSize: '11px', color: '#CCFF00', textDecoration: 'none' }}>LEARN OUR PROCESS →</Link>
-                  <Link href="/about/" className="mono" style={{ fontSize: '11px', color: '#CCFF00', textDecoration: 'none' }}>ABOUT OUR TEAM →</Link>
-                </div>
+
+          <aside className="contactaside" data-reveal style={{ '--reveal-delay': '100ms' }}>
+            <div>
+              <h2 className="label muted">Email</h2>
+              <a href="mailto:care@thebrandfriend.com" className="ulink contactaside__big">
+                care@thebrandfriend.com
+              </a>
+            </div>
+
+            <div>
+              <h2 className="label muted">Response time</h2>
+              <p>Within one business day, every time.</p>
+            </div>
+
+            <div>
+              <h2 className="label muted">Before you write</h2>
+              <div className="contactaside__links">
+                <Link href="/process/" className="ulink">How a project runs</Link>
+                <Link href="/services/" className="ulink">What we do</Link>
+                <Link href="/designs/" className="ulink">The design library</Link>
               </div>
             </div>
-          </div>
+
+            <div>
+              <h2 className="label muted">Elsewhere</h2>
+              <div className="contactaside__links">
+                <a href="https://www.instagram.com/thebrandfriend.com_/" target="_blank" rel="noopener noreferrer" className="ulink">Instagram</a>
+                <a href="https://www.linkedin.com/company/the-brand-friend" target="_blank" rel="noopener noreferrer" className="ulink">LinkedIn</a>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
     </>

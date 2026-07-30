@@ -1,7 +1,6 @@
 'use client';
 import { Suspense, useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
-import CreattieEmbed from '@/components/CreattieEmbed';
 import DesignGalleryClient from '@/components/DesignGalleryClient';
 import DesignQuiz from '@/components/DesignQuiz';
 
@@ -33,40 +32,32 @@ function DesignsContent() {
   }
 
   // ─── Gallery Phase ──────────────────────────────────────────
-  const heroSticker = quizAnswers ? '🎯 YOUR TOP PICKS' : '🎨 PICK YOUR VIBE';
-  const heroSubtext = quizAnswers
-    ? 'Designs sorted by your preferences. Best matches first.'
-    : '12 handcrafted design styles. Find the one that speaks to your brand. Click \u201cI Want This\u201d and we\u2019ll build it \u2014 in 3 days.';
-
   return (
     <>
-      <section className="hero" style={{ minHeight: 'auto' }}>
-        <div className="hero-layout">
-          <div className="hero-inner">
-            <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
-              <span className="mono">{heroSticker}</span>
-            </div>
-            <h1 className="hero-headline">DESIGN<br /><span className="volt">LIBRARY</span></h1>
-            <p className="hero-sub">
-              <em>{heroSubtext}</em>
-            </p>
-          </div>
-          <div className="hero-anim">
-            <CreattieEmbed src="https://ik.imagekit.io/creattie/main/saved_colors/145118/fOmq6VjhbpevoY1i.json" />
-          </div>
+      <section className="pagehead">
+        <div className="wrap">
+          <span className="label pagehead__label">Design library</span>
+          <h1 className="display pagehead__title">
+            Twelve systems.
+            <br />
+            One of them is yours.
+          </h1>
+          <p className="lede pagehead__lede">
+            {quizAnswers
+              ? 'Sorted against your answers — closest fit first. Every one of these is a complete, working system, not a mood board.'
+              : 'Each of these is a complete, working design system: real type pairings, real palettes, real code. We start from whichever genuinely fits and tailor it to you.'}
+          </p>
         </div>
       </section>
 
-      <section className="section section-dark">
-        <div className="section-header">
-          <span className="mono tag tag-volt">
-            {quizAnswers ? 'PERSONALIZED FOR YOU' : 'BROWSE STYLES'}
-          </span>
-          <h2 className="section-title ranchers">
-            {quizAnswers ? 'YOUR BEST MATCHES' : 'CHOOSE YOUR WEAPON'}
-          </h2>
+      <section className="section">
+        <div className="wrap">
+          <header className="sec-head">
+            <h2 className="h2">{quizAnswers ? 'Your closest matches' : 'Browse the library'}</h2>
+            <span className="label sec-head__index">12 systems</span>
+          </header>
+          <DesignGalleryClient quizAnswers={quizAnswers} />
         </div>
-        <DesignGalleryClient quizAnswers={quizAnswers} />
       </section>
     </>
   );

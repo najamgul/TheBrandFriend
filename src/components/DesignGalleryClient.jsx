@@ -74,8 +74,8 @@ export default function DesignGalleryClient({ quizAnswers = null }) {
           <div className="design-preview">
             {/* Match Badge */}
             {quizAnswers && d.matchScore >= 60 && (
-              <div className={`design-match-badge${d.matchScore >= 80 ? ' top-pick' : ''}`}>
-                {d.matchScore >= 80 ? '🎯 ' : ''}{d.matchScore}% MATCH
+              <div className={`label design-match${d.matchScore >= 80 ? ' design-match--top' : ''}`}>
+                {d.matchScore}% match
               </div>
             )}
             <div className="design-iframe-wrap">
@@ -91,32 +91,34 @@ export default function DesignGalleryClient({ quizAnswers = null }) {
                 href={`/designs/${d.slug}/`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="design-view-btn mono"
+                className="btn"
               >
-                VIEW FULL DEMO →
+                Open full demo
+                <span className="btn__arrow" aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
           <div className="design-info">
             <div className="design-meta">
-              <span className="design-num ranchers">{String(i + 1).padStart(2, '0')}</span>
-              <span className="mono tag tag-volt design-style-tag">{d.style}</span>
+              <span className="label design-num">{String(i + 1).padStart(2, '0')}</span>
+              <span className="tagpill">{d.style}</span>
             </div>
-            <h3 className="design-name ranchers">{d.name}</h3>
+            <h3 className="h3 design-name">{d.name}</h3>
             <p className="design-desc">{d.description}</p>
             <div className="design-colors">
               {d.colors.map((c, j) => (
                 <span key={j} className="design-swatch" style={{ backgroundColor: c }} title={c} />
               ))}
             </div>
-            <div className="design-fonts mono">{d.fonts.join(' • ')}</div>
-            <div className="design-industries mono">
+            <p className="label design-fonts">{d.fonts.join(' · ')}</p>
+            <div className="design-industries">
               {d.industries.map((ind, j) => (
-                <span key={j} className="industry-tag">{ind}</span>
+                <span key={j} className="tagpill">{ind}</span>
               ))}
             </div>
-            <Link href={`/contact/?design=${d.slug}`} className="design-cta">
-              I WANT THIS →
+            <Link href={`/contact/?design=${d.slug}`} className="btn">
+              Build me this
+              <span className="btn__arrow" aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

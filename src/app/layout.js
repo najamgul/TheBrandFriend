@@ -1,148 +1,163 @@
-import { Plus_Jakarta_Sans, Space_Mono } from 'next/font/google';
+import {
+  Anton,
+  Archivo,
+  DM_Sans,
+  Fraunces,
+  Instrument_Serif,
+  Space_Grotesk,
+  Space_Mono,
+  Syne,
+} from 'next/font/google';
+
 import './globals.css';
-import Navbar from '@/components/Navbar';
+import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-import Sidebar from '@/components/Sidebar';
-import Animations from '@/components/Animations';
+import Reveal from '@/components/Reveal';
 import VoiceAgent from '@/components/VoiceAgent';
 import RecaptchaProvider from '@/components/RecaptchaProvider';
-import ClickSpark from '@/components/ClickSpark';
 import MetaPixel from '@/components/MetaPixel';
+import { SkinProvider, skinBootScript } from '@/components/SkinProvider';
+import SkinSwitcher from '@/components/SkinSwitcher';
+import { skinsToCSS } from '@/data/skins';
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  variable: '--font-body',
-  display: 'swap',
-});
+/* ── Typefaces ─────────────────────────────────────────────────────────
+   Eight families sounds heavy, and would be if they all loaded. Only the
+   three used by the default skin are preloaded; the rest are declared but
+   not fetched until a skin actually renders glyphs in them — i.e. only if
+   a visitor uses the switcher. Most sessions download three fonts.       */
 
-const spaceMono = Space_Mono({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-mono',
-  display: 'swap',
-});
+const archivo = Archivo({ subsets: ['latin'], variable: '--f-archivo', display: 'swap' });
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--f-dm', display: 'swap' });
+const spaceMono = Space_Mono({ subsets: ['latin'], weight: ['400', '700'], variable: '--f-mono', display: 'swap' });
+
+const instrument = Instrument_Serif({ subsets: ['latin'], weight: ['400'], variable: '--f-instrument', display: 'swap', preload: false });
+const anton = Anton({ subsets: ['latin'], weight: ['400'], variable: '--f-anton', display: 'swap', preload: false });
+const grotesk = Space_Grotesk({ subsets: ['latin'], variable: '--f-grotesk', display: 'swap', preload: false });
+const syne = Syne({ subsets: ['latin'], variable: '--f-syne', display: 'swap', preload: false });
+const fraunces = Fraunces({ subsets: ['latin'], variable: '--f-fraunces', display: 'swap', preload: false });
+
+const fontVars = [archivo, dmSans, spaceMono, instrument, anton, grotesk, syne, fraunces]
+  .map(f => f.variable)
+  .join(' ');
 
 export const metadata = {
   metadataBase: new URL('https://www.thebrandfriend.com'),
   title: {
-    default: 'TheBrandFriend — Digital Agency | Strategy, Design, Development, Marketing',
+    default: 'TheBrandFriend — Brand systems, built to be lived in',
     template: '%s | TheBrandFriend',
   },
-  description: 'TheBrandFriend is a brutally effective digital agency. Strategy, Design, Development, Marketing — we ship brands that dominate the digital space.',
-  keywords: ['digital agency', 'web development', 'brand identity', 'social media management', 'performance marketing', 'TheBrandFriend'],
+  description:
+    'An independent design and engineering studio. We build brand systems — identity, websites, and the campaigns that carry them — for companies that intend to be around in ten years.',
+  keywords: [
+    'design studio',
+    'brand identity',
+    'web development',
+    'design system',
+    'Next.js development',
+    'performance marketing',
+    'TheBrandFriend',
+  ],
   authors: [{ name: 'TheBrandFriend' }],
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     locale: 'en_US',
     siteName: 'TheBrandFriend',
-    title: 'TheBrandFriend — Digital Agency | Strategy, Design, Development, Marketing',
-    description: 'We ship brands that dominate the digital space. Strategy, Design, Development, Marketing.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'TheBrandFriend Digital Agency' }],
+    title: 'TheBrandFriend — Brand systems, built to be lived in',
+    description:
+      'One studio, eight design languages. Change the way this site looks and see how we work.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'TheBrandFriend' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TheBrandFriend — Digital Agency',
-    description: 'We ship brands that dominate the digital space.',
+    title: 'TheBrandFriend — Brand systems, built to be lived in',
+    description: 'One studio, eight design languages. Change the way this site looks.',
     images: ['/og-image.png'],
   },
   robots: { index: true, follow: true },
 };
 
+export const viewport = {
+  // Matches the default skin's --bg so the browser chrome never flashes white.
+  themeColor: '#F3F1EC',
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': ['Organization', 'ProfessionalService'],
+      '@id': 'https://www.thebrandfriend.com/#organization',
+      name: 'TheBrandFriend',
+      url: 'https://www.thebrandfriend.com',
+      logo: { '@type': 'ImageObject', url: 'https://www.thebrandfriend.com/logo-full.png' },
+      image: 'https://www.thebrandfriend.com/og-image.png',
+      description:
+        'Independent design and engineering studio building brand systems: identity, websites, and the campaigns that carry them.',
+      slogan: 'Brand systems, built to be lived in.',
+      areaServed: { '@type': 'Country', name: 'India' },
+      sameAs: [
+        'https://www.instagram.com/thebrandfriend.com_/',
+        'https://www.linkedin.com/company/the-brand-friend',
+        'https://www.facebook.com/thebrandfriends',
+      ],
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'sales',
+          email: 'care@thebrandfriend.com',
+          availableLanguage: ['English', 'Hindi'],
+        },
+      ],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Studio Services',
+        itemListElement: [
+          'Website Development',
+          'Software Solutions',
+          'Social Media Management',
+          'Performance Marketing',
+          'Product Reels & Video Content',
+          'Brand Identity Design',
+        ].map(name => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name } })),
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://www.thebrandfriend.com/#website',
+      url: 'https://www.thebrandfriend.com',
+      name: 'TheBrandFriend',
+      publisher: { '@id': 'https://www.thebrandfriend.com/#organization' },
+      inLanguage: 'en',
+    },
+  ],
+};
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${jakarta.variable} ${spaceMono.variable}`}>
+    <html lang="en" className={fontVars} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Ranchers&display=swap"
-          rel="stylesheet"
-        />
+        {/* Skin tokens, rendered from the single source of truth in data/skins.js */}
+        <style id="skins" dangerouslySetInnerHTML={{ __html: skinsToCSS() }} />
+        {/* Must run before first paint so the stored skin is never seen changing. */}
+        <script dangerouslySetInnerHTML={{ __html: skinBootScript }} />
         <link rel="icon" href="/favicon.png" type="image/png" sizes="128x128" />
         <link rel="apple-touch-icon" href="/favicon.png" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@graph': [
-                {
-                  '@type': ['Organization', 'ProfessionalService'],
-                  '@id': 'https://www.thebrandfriend.com/#organization',
-                  name: 'TheBrandFriend',
-                  url: 'https://www.thebrandfriend.com',
-                  logo: {
-                    '@type': 'ImageObject',
-                    url: 'https://www.thebrandfriend.com/logo-full.png',
-                  },
-                  image: 'https://www.thebrandfriend.com/og-image.png',
-                  description:
-                    'Brutally effective digital agency — Strategy, Design, Development, Marketing.',
-                  slogan: 'We ship brands that dominate.',
-                  areaServed: { '@type': 'Country', name: 'India' },
-                  sameAs: [
-                    'https://www.instagram.com/thebrandfriend.com_/',
-                    'https://www.linkedin.com/company/the-brand-friend',
-                    'https://www.facebook.com/thebrandfriends',
-                  ],
-                  contactPoint: [
-                    {
-                      '@type': 'ContactPoint',
-                      contactType: 'sales',
-                      email: 'care@thebrandfriend.com',
-                      availableLanguage: ['English', 'Hindi'],
-                    },
-                  ],
-                  hasOfferCatalog: {
-                    '@type': 'OfferCatalog',
-                    name: 'Digital Agency Services',
-                    itemListElement: [
-                      'Website Development',
-                      'Software Solutions',
-                      'Social Media Management',
-                      'Performance Marketing',
-                      'Product Reels & Video Content',
-                      'Brand Identity Design',
-                    ].map(name => ({
-                      '@type': 'Offer',
-                      itemOffered: { '@type': 'Service', name },
-                    })),
-                  },
-                },
-                {
-                  '@type': 'WebSite',
-                  '@id': 'https://www.thebrandfriend.com/#website',
-                  url: 'https://www.thebrandfriend.com',
-                  name: 'TheBrandFriend',
-                  publisher: { '@id': 'https://www.thebrandfriend.com/#organization' },
-                  inLanguage: 'en',
-                },
-              ],
-            }),
-          }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body>
         <MetaPixel />
-        <ClickSpark
-          sparkColor='#fff'
-          sparkSize={10}
-          sparkRadius={15}
-          sparkCount={8}
-          duration={400}
-        >
+        <a className="skip" href="#main">Skip to content</a>
+        <SkinProvider>
           <RecaptchaProvider>
-            <Sidebar />
-            <main className="main-content">
-              <Navbar />
-              {children}
-              <Footer />
-            </main>
-            <Animations />
-            <VoiceAgent />
+            <Nav />
+            <main id="main">{children}</main>
+            <Footer />
+            <SkinSwitcher />
           </RecaptchaProvider>
-        </ClickSpark>
+        </SkinProvider>
+        <Reveal />
+        <VoiceAgent />
       </body>
     </html>
   );

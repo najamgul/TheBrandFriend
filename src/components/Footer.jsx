@@ -2,66 +2,68 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { services } from '@/data/services';
 
+const social = [
+  { href: 'https://www.instagram.com/thebrandfriend.com_/', label: 'Instagram' },
+  { href: 'https://www.linkedin.com/company/the-brand-friend', label: 'LinkedIn' },
+  { href: 'https://www.facebook.com/thebrandfriends', label: 'Facebook' },
+];
+
+const pages = [
+  { href: '/portfolio/', label: 'Work' },
+  { href: '/designs/', label: 'Design systems' },
+  { href: '/process/', label: 'Process' },
+  { href: '/about/', label: 'Studio' },
+  { href: '/blog/', label: 'Journal' },
+  { href: '/contact/', label: 'Contact' },
+];
+
 export default function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer-inner">
-        <div className="footer-left">
-          <div className="footer-logo">
-            <Image
-              src="/logo-full.png"
-              alt="TheBrandFriend"
-              width={180}
-              height={40}
-              className="footer-logo-img"
-            />
-          </div>
-          <p className="mono footer-copy">
-            © {new Date().getFullYear()} THEBRANDFRIEND. ALL RIGHTS RESERVED.<br />
-            BUILT WITH OBSESSION.
-          </p>
-          <div className="footer-legal">
-            <Link href="/privacy/" className="mono footer-legal-link">PRIVACY POLICY</Link>
-            <Link href="/terms/" className="mono footer-legal-link">TERMS OF SERVICE</Link>
-          </div>
-        </div>
-
-        <div className="footer-cols">
-          {/* Page links */}
-          <div className="footer-col">
-            <h4 className="mono footer-col-title">NAVIGATE</h4>
-            <Link href="/" className="mono">HOME</Link>
-            <Link href="/services/" className="mono">SERVICES</Link>
-            <Link href="/portfolio/" className="mono">PORTFOLIO</Link>
-            <Link href="/blog/" className="mono">INSIGHTS</Link>
-            <Link href="/about/" className="mono">ABOUT US</Link>
-            <Link href="/process/" className="mono">OUR PROCESS</Link>
-            <Link href="/contact/" className="mono">CONTACT</Link>
+    <footer className="foot">
+      <div className="wrap">
+        <div className="foot__top">
+          <div>
+            <div className="foot__logo">
+              <Image src="/logo-full.png" alt="TheBrandFriend" width={180} height={40} />
+            </div>
+            <p className="foot__blurb">
+              An independent design and engineering studio. We build brand systems and
+              the products that carry them.
+            </p>
           </div>
 
-          {/* Service deep links — critical for SEO */}
-          <div className="footer-col">
-            <h4 className="mono footer-col-title">SERVICES</h4>
-            {services.map(s => (
-              <Link key={s.slug} href={`/services/${s.slug}/`} className="mono">
-                {s.name.toUpperCase()}
-              </Link>
+          <div className="foot__col">
+            <h2 className="label foot__coltitle">Studio</h2>
+            {pages.map(p => (
+              <Link key={p.href} href={p.href} className="ulink">{p.label}</Link>
             ))}
           </div>
 
-          {/* Social / Contact */}
-          <div className="footer-col">
-            <h4 className="mono footer-col-title">CONNECT</h4>
-            <a href="https://www.instagram.com/thebrandfriend.com_/" target="_blank" rel="noopener noreferrer" className="mono">INSTAGRAM</a>
-            <a href="https://www.linkedin.com/company/the-brand-friend" target="_blank" rel="noopener noreferrer" className="mono">LINKEDIN</a>
-            <a href="https://www.facebook.com/thebrandfriends" target="_blank" rel="noopener noreferrer" className="mono">FACEBOOK</a>
-            <a href="mailto:care@thebrandfriend.com" className="mono">EMAIL US</a>
+          <div className="foot__col">
+            <h2 className="label foot__coltitle">Services</h2>
+            {services.map(s => (
+              <Link key={s.slug} href={`/services/${s.slug}/`} className="ulink">{s.name}</Link>
+            ))}
+          </div>
+
+          <div className="foot__col">
+            <h2 className="label foot__coltitle">Elsewhere</h2>
+            {social.map(s => (
+              <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer" className="ulink">
+                {s.label}
+              </a>
+            ))}
+            <a href="mailto:care@thebrandfriend.com" className="ulink">care@thebrandfriend.com</a>
           </div>
         </div>
-      </div>
 
-      <div className="footer-bottom">
-        <p className="mono">STRATEGY. DESIGN. DEVELOPMENT. MARKETING.</p>
+        <div className="foot__bottom">
+          <p>© {new Date().getFullYear()} TheBrandFriend</p>
+          <div className="foot__legal">
+            <Link href="/privacy/" className="ulink">Privacy</Link>
+            <Link href="/terms/" className="ulink">Terms</Link>
+          </div>
+        </div>
       </div>
     </footer>
   );

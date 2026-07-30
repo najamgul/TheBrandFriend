@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { services, getServiceBySlug, getRelatedServices } from '@/data/services';
 import CTABanner from '@/components/CTABanner';
-import CreattieEmbed from '@/components/CreattieEmbed';
 import { SITE_URL as SITE } from '../../../../lib/site';
 
 export function generateStaticParams() {
@@ -86,63 +85,65 @@ export default async function ServiceDetailPage({ params }) {
         }}
       />
 
-      {/* Service Hero */}
-      <section className="service-hero">
-        <div className="hero-layout">
-          <div className="service-hero-inner">
-            <div className="sticker sticker-hero" style={{ '--rot': '-2deg' }}>
-              <span className="mono">SERVICE {service.num}</span>
+      <section className="pagehead">
+        <div className="wrap">
+          <span className="label pagehead__label" data-reveal>
+            Service {service.num} — <Link href="/services/" className="ulink">all services</Link>
+          </span>
+          <h1 className="display pagehead__title" data-reveal style={{ '--reveal-delay': '60ms' }}>
+            {service.name}
+          </h1>
+          <p className="lede pagehead__lede" data-reveal style={{ '--reveal-delay': '120ms' }}>
+            {service.longDesc}
+          </p>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="wrap">
+          <div className="phase">
+            <div>
+              <span className="label phase__num" data-reveal>What you get</span>
+              <h2 className="h1 phase__name" data-reveal style={{ '--reveal-delay': '60ms' }}>
+                Deliverables
+              </h2>
+              <p className="prose muted" data-reveal style={{ '--reveal-delay': '120ms' }}>
+                Every line below is scoped and priced up front. If something here is not
+                relevant to you, we take it out rather than charge for it.
+              </p>
             </div>
-            <h1 className="service-hero-title">{service.name.toUpperCase()}</h1>
-            <p className="service-hero-desc">{service.longDesc}</p>
-          </div>
-          <div className="hero-anim">
-            <CreattieEmbed src="https://ik.imagekit.io/creattie/main/saved_colors/145118/fOmq6VjhbpevoY1i.json" />
-          </div>
-        </div>
-      </section>
-
-      {/* Deliverables */}
-      <section className="deliverables-section">
-        <div className="deliverables-grid">
-          <span className="mono tag tag-volt">WHAT YOU GET</span>
-          <h2 className="ranchers" style={{ fontSize: 'clamp(32px, 5vw, 64px)', marginBottom: '32px', color: '#000' }}>
-            DELIVERABLES
-          </h2>
-          {service.deliverables.map((item, i) => (
-            <div key={i} className="deliverable-item">
-              <span className="deliverable-check">✓</span>
-              <span>{item}</span>
+            <div className="checklist" data-reveal style={{ '--reveal-delay': '180ms' }}>
+              {service.deliverables.map(item => (
+                <div className="checkitem" key={item}>{item}</div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
-      {/* Related Services */}
-      <section className="related-services">
-        <span className="mono tag tag-white">EXPLORE MORE</span>
-        <h2 className="ranchers" style={{ fontSize: 'clamp(32px, 5vw, 64px)', margin: '12px 0 32px' }}>
-          RELATED SERVICES
-        </h2>
-        <div className="related-grid">
-          {related.map(r => (
-            <Link key={r.slug} href={`/services/${r.slug}/`} className="related-card">
-              <h3>{r.name.toUpperCase()}</h3>
-              <p>{r.shortDesc}</p>
-              <span className="service-arrow" style={{ color: '#CCFF00', marginTop: '12px' }}>VIEW SERVICE →</span>
-            </Link>
-          ))}
-        </div>
-        <div style={{ marginTop: '32px' }}>
-          <Link href="/services/" className="mono" style={{ color: '#CCFF00', fontSize: '11px' }}>← BACK TO ALL SERVICES</Link>
+      <section className="section section--alt">
+        <div className="wrap">
+          <header className="sec-head" data-reveal>
+            <h2 className="h2">Often paired with</h2>
+            <span className="label sec-head__index">Related</span>
+          </header>
+
+          <div className="cardgrid cardgrid--3">
+            {related.map((r, i) => (
+              <Link key={r.slug} href={`/services/${r.slug}/`} className="card" data-reveal
+                    style={{ '--reveal-delay': `${i * 80}ms` }}>
+                <span className="label card__num">{r.num}</span>
+                <h3 className="h3">{r.name}</h3>
+                <p>{r.shortDesc}</p>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* CTA */}
       <CTABanner
-        headline={<>NEED<br />{service.name.split(' ')[0].toUpperCase()}<br /><span className="volt">HELP?</span></>}
-        sub={`Let's talk about your ${service.name.toLowerCase()} needs. Free consultation.`}
-        buttonText="GET A FREE CONSULTATION →"
+        title={<>Need help with<br />{service.name.toLowerCase()}?</>}
+        sub={`Tell us what you're trying to achieve. We'll come back with a shape, a timeline and a number.`}
       />
     </>
   );
