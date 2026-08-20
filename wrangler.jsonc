@@ -21,6 +21,12 @@
     "enabled": true
   },
 
+  // Declaring "routes" disables the workers.dev URL unless this is explicit.
+  // Keep it on: it is the only way in before the domain is attached, and the
+  // fallback if the domain is ever detached.
+  "workers_dev": true,
+  "preview_urls": true,
+
   // Raises the per-invocation CPU ceiling from the 30s default. The blog
   // generate route is almost entirely spent waiting on Replicate — that is I/O
   // and does not count — but a JSON repair retry on a large draft does burn CPU.
@@ -77,13 +83,21 @@
       "tag": "v1",
       "new_sqlite_classes": ["DOQueueHandler", "DOShardedTagCache", "BucketCachePurge"]
     }
-  ]
+  ],
 
-  // Cutover: until this is uncommented the Worker only answers on
-  // the-brand-friend.<your-subdomain>.workers.dev, which is what you want while
-  // Vercel still serves the domain. Add the zone to Cloudflare first.
+  // Both hosts are attached so neither dead-ends. www stays canonical —
+  // lib/site.js, the IndexNow key file and the Search Console property all
+  // assume it — so add a Redirect Rule sending the apex to www once the zone
+  // is live, rather than letting both serve the site indefinitely.
+  //
+  // Requires thebrandfriend.com to be an active zone in this Cloudflare
+  // account; the deploy fails outright if it is not.
+  // Uncomment once thebrandfriend.com is an active zone in this Cloudflare
+  // account — until the registrar's nameservers point at Cloudflare, a deploy
+  // carrying these fails with "Can't infer zone from route" [code: 10082].
   //
   // "routes": [
+  //   { "pattern": "thebrandfriend.com", "custom_domain": true },
   //   { "pattern": "www.thebrandfriend.com", "custom_domain": true }
   // ]
 }
