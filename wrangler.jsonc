@@ -92,12 +92,12 @@
   //
   // Requires thebrandfriend.com to be an active zone in this Cloudflare
   // account; the deploy fails outright if it is not.
-  // Uncomment once thebrandfriend.com is an active zone in this Cloudflare
-  // account — until the registrar's nameservers point at Cloudflare, a deploy
-  // carrying these fails with "Can't infer zone from route" [code: 10082].
-  //
-  // "routes": [
-  //   { "pattern": "thebrandfriend.com", "custom_domain": true },
-  //   { "pattern": "www.thebrandfriend.com", "custom_domain": true }
-  // ]
+  // Both hosts are attached so neither dead-ends. www stays canonical —
+  // lib/site.js, the IndexNow key file and the Search Console property all
+  // assume it — so the apex wants a Redirect Rule to www rather than serving
+  // the site in parallel indefinitely.
+  "routes": [
+    { "pattern": "thebrandfriend.com", "custom_domain": true },
+    { "pattern": "www.thebrandfriend.com", "custom_domain": true }
+  ]
 }
