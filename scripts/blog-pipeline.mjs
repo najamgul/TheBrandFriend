@@ -2,13 +2,13 @@
 /**
  * CLI entry point for the blog pipeline.
  *
- * Generation runs here rather than in a Vercel function because a measured
- * end-to-end run takes ~4-5 minutes (draft ~60-120s, polish ~160s). That does
- * not fit Vercel's 60s Hobby limit and sits uncomfortably against Pro's 300s
- * ceiling. GitHub Actions has no such constraint.
+ * This is the manual fallback for generation. The scheduled run happens in the
+ * Worker (see worker.ts and the crons in wrangler.jsonc); this path exists for
+ * when you want a run with no time budget at all, or Cloudflare is not the
+ * place you want to spend the wall-clock.
  *
- * Publishing stays on Vercel — it is a database update plus two HTTP pings,
- * and it needs Next's revalidatePath to rebuild the cached pages.
+ * Publishing has no CLI equivalent — it needs Next's revalidatePath to rebuild
+ * the cached pages, so it only runs inside the app.
  *
  * Usage:
  *   node scripts/blog-pipeline.mjs generate [--force]
@@ -60,7 +60,7 @@ const { runGenerate } = await importLocal('lib/blog/pipeline.js');
 const { logRun } = await importLocal('lib/blog/store.js');
 
 if (command !== 'generate') {
-  console.error(`Unknown command "${command}". Only "generate" runs here; publishing runs on Vercel.`);
+  console.error(`Unknown command "${command}". Only "generate" runs here; publishing runs in the app.`);
   process.exit(1);
 }
 

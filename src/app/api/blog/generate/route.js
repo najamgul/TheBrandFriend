@@ -6,13 +6,17 @@ import { isAuthorized, unauthorized } from '../../../../../lib/blog/auth';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-// Vercel Pro's ceiling. A typical run is ~186s; the slowest observed was 285s
-// when a malformed draft triggered a JSON repair retry.
-export const maxDuration = 300;
+// A self-imposed budget, not a platform one. Cloudflare stops a cron
+// invocation at 15 minutes; this leaves generous headroom over the slowest run
+// observed (285s, a malformed draft that triggered a JSON repair retry) while
+// still bounding a run that has gone wrong.
+//
+// Next ignores this export on Cloudflare — the pipeline reads it directly.
+export const maxDuration = 600;
 
-// Stop work 40s before Vercel kills the function. The pipeline uses this to
-// abort cleanly and hand its topic back, rather than being killed mid-write
-// and leaving the topic stranded in 'generating'.
+// Stop work 40s before the budget expires. The pipeline uses this to abort
+// cleanly and hand its topic back, rather than being cut off mid-write and
+// leaving the topic stranded in 'generating'.
 const SAFETY_MARGIN_MS = 40_000;
 
 /**
@@ -20,8 +24,7 @@ const SAFETY_MARGIN_MS = 40_000;
  * Runs daily and no-ops once the bank is full, so a slow or failed generation
  * never disturbs the publishing cadence.
  *
- * Requires Vercel Pro — a run does not fit the 60s Hobby function limit.
- * For a manual run outside Vercel, `node scripts/blog-pipeline.mjs generate`
+ * For a manual run outside the Worker, `node scripts/blog-pipeline.mjs generate`
  * does the same work with no time limit.
  *
  * Manual run:  curl -H "Authorization: Bearer $CRON_SECRET" \

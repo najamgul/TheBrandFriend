@@ -59,7 +59,7 @@ function Invoke-Endpoint {
   } catch {
     $code = $_.Exception.Response.StatusCode.value__
     if ($code -eq 401) {
-      Write-Host "401 Unauthorized. The CRON_SECRET in .env.local does not match the value set on Vercel." -ForegroundColor Red
+      Write-Host "401 Unauthorized. The CRON_SECRET in .env.local does not match the CRON_SECRET set on the Worker." -ForegroundColor Red
     } else {
       Write-Host "HTTP $code" -ForegroundColor Red
       if ($_.ErrorDetails.Message) { Write-Host $_.ErrorDetails.Message }

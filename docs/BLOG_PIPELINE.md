@@ -5,7 +5,7 @@ Two posts a week, written and published without you touching anything.
 ## Architecture
 
 ```
-Vercel Cron (daily 02:00 UTC)            Vercel Cron (daily 04:00 UTC)
+Cron Trigger (daily 02:00 UTC)           Cron Trigger (daily 04:00 UTC)
   /api/blog/generate                       /api/blog/publish
         │                                         │
    draft   google/gemini-2.5-flash          claim oldest approved
@@ -19,12 +19,16 @@ Vercel Cron (daily 02:00 UTC)            Vercel Cron (daily 04:00 UTC)
    blog_posts (status = approved)  ← the content bank
 ```
 
-**Requires Vercel Pro.** A typical end-to-end run is ~186s (draft 59s, polish
-124s, judge 3s); the slowest observed was 285s when a malformed draft triggered
-a JSON repair retry. That does not fit the 60s Hobby function limit.
+**Both crons run in the Worker.** `wrangler.jsonc` declares the schedules and
+`worker.ts` maps each one to its route, dispatching straight into the Next
+handler with the `CRON_SECRET` bearer token. A daily schedule gets Cloudflare's
+15-minute ceiling, which is far above what this needs: a typical end-to-end run
+is ~186s (draft 59s, polish 124s, judge 3s), and the slowest observed was 285s
+when a malformed draft triggered a JSON repair retry.
 
-**The run is deadline-aware.** `maxDuration` is 300s and the route stops
-committing new work 40s before that. If the remaining budget cannot cover the
+**The run is deadline-aware.** `maxDuration` is a self-imposed 600s budget —
+Next ignores the export on Cloudflare, the pipeline reads it directly — and the
+route stops committing new work 40s before that. If the remaining budget cannot cover the
 polish stage, the pipeline aborts, hands its topic back to the queue, and logs
 `action: aborted`. A run killed anyway is recovered on the next invocation:
 `recoverStaleClaims()` releases any topic left in `generating` for over 20
@@ -32,14 +36,13 @@ minutes, so nothing is stranded.
 
 **Manual fallback.** `.github/workflows/blog-pipeline.yml` runs the identical
 job in GitHub Actions with no time limit. It is manual-dispatch only (a second
-schedule would race Vercel's). Use it if a Vercel run keeps aborting.
+schedule would race the Worker's). Use it if a scheduled run keeps aborting.
 
 **Cron paths must end in a slash.** `next.config.mjs` sets
 `trailingSlash: true`, so `/api/blog/generate` returns a 308 redirect to
-`/api/blog/generate/`. Vercel Cron does not follow redirects — it records the
-308 and moves on. A cron entry missing its trailing slash fires on schedule,
-succeeds as far as Vercel is concerned, and does nothing. Keep the slashes in
-`vercel.json`.
+`/api/blog/generate/`. `worker.ts` does not follow redirects — it would log the
+308 and move on. A path missing its trailing slash in `CRON_ROUTES` fires on
+schedule, looks like it succeeded, and does nothing.
 
 **Why publishing is a separate cron.** It is a database update plus two HTTP
 pings (~3-5s), and it needs Next's `revalidatePath` to rebuild cached pages.
@@ -63,11 +66,14 @@ Settings → Secrets and variables → Actions:
 | Secret | Required | Notes |
 |---|---|---|
 | `REPLICATE_API_TOKEN` | yes | https://replicate.com/account/api-tokens |
-| `SUPABASE_URL` | yes | same value as Vercel |
+| `SUPABASE_URL` | yes | same value as the Worker |
 | `SUPABASE_SERVICE_KEY` | yes | service role key |
 | `PEXELS_API_KEY` | no | omit and posts render a branded placeholder card |
 
-### 3. Vercel environment variables
+### 3. Worker secrets
+
+Set these on the Worker, not in a committed file — see
+[`CLOUDFLARE.md`](./CLOUDFLARE.md) for how.
 
 | Variable | Notes |
 |---|---|
@@ -76,7 +82,7 @@ Settings → Secrets and variables → Actions:
 | `GOOGLE_INDEXING_CLIENT_EMAIL` | falls back to `GOOGLE_SA_CLIENT_EMAIL` |
 | `GOOGLE_INDEXING_PRIVATE_KEY` | falls back to `GOOGLE_SA_PRIVATE_KEY` |
 
-`REPLICATE_API_TOKEN` **is** required on Vercel — generation runs there.
+`REPLICATE_API_TOKEN` **is** required on the Worker — generation runs there.
 Optionally add `REPLICATE_DRAFT_MODEL` / `_POLISH_MODEL` / `_JUDGE_MODEL` to
 override the defaults, and `PEXELS_API_KEY` for cover images.
 
@@ -114,7 +120,7 @@ curl -H "Authorization: Bearer $CRON_SECRET" \
   https://www.thebrandfriend.com/api/blog/publish/?force=1
 ```
 
-Or trigger the Vercel cron endpoint directly:
+Or trigger the generate endpoint directly:
 
 ```bash
 curl -H "Authorization: Bearer $CRON_SECRET"   https://www.thebrandfriend.com/api/blog/generate/?force=1

@@ -1,13 +1,15 @@
 name: Blog pipeline — generate (manual fallback)
 
-# The scheduled generator runs on Vercel Cron (see vercel.json). This workflow
-# is deliberately manual-only — a second schedule would race the Vercel one.
+# The scheduled generator runs as a Cloudflare Cron Trigger (see the crons in
+# wrangler.jsonc, dispatched by worker.ts). This workflow is deliberately
+# manual-only — a second schedule would race the Worker's.
 #
-# Use it when a Vercel run aborts on its time budget. A typical run is ~186s
-# against Vercel Pro's 300s ceiling, so a slow Replicate response or a JSON
-# repair retry can exhaust it. Here there is no meaningful limit.
+# Use it when a Worker run aborts on its time budget. Cloudflare stops a cron
+# invocation at 15 minutes and the route budgets itself to 600s, so a very slow
+# Replicate response or a JSON repair retry can still exhaust it. Here there is
+# no meaningful limit.
 #
-# It writes straight to Supabase, exactly as the Vercel route does, so an
+# It writes straight to Supabase, exactly as the Worker route does, so an
 # article generated here is picked up by the normal publish cron.
 
 on:

@@ -1,34 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TheBrandFriend
 
-## Getting Started
+The agency site — Next.js App Router, deployed as a Cloudflare Worker, with an
+automated blog pipeline behind it.
 
-First, run the development server:
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Environment variables come
+from `.env.local`; `.env.example` lists what is needed.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+To exercise the real Worker runtime rather than the Next dev server:
 
-## Learn More
+```bash
+npm run preview
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Layout
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Path | What is there |
+|---|---|
+| `src/app` | routes — pages and API handlers |
+| `src/components`, `src/data` | UI and static content |
+| `lib` | Supabase, Gmail, Google auth, and the blog pipeline |
+| `scripts` | CLI helpers — blog runs, design builds, schema inspection |
+| `supabase` | schema and migrations |
+| `worker.ts`, `wrangler.jsonc`, `open-next.config.ts` | Cloudflare deployment |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Docs
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Deploying on Cloudflare](docs/CLOUDFLARE.md) — bindings, secrets, crons, cutover
+- [Automated blog pipeline](docs/BLOG_PIPELINE.md) — how two posts a week get written and published

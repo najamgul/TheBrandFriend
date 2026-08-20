@@ -67,7 +67,7 @@ export default function PrivacyPage() {
               We do not sell, rent, or trade your personal information. To keep our operations fast and reliable, we share relevant data with trusted infrastructure providers:
             </p>
             <ul>
-              <li><strong>Hosting & Backend:</strong> Vercel (for frontend hosting) and Supabase (for secure CRM database storage).</li>
+              <li><strong>Hosting & Backend:</strong> Cloudflare (for website hosting and delivery) and Supabase (for secure CRM database storage).</li>
               <li><strong>Security & Forms:</strong> Google reCAPTCHA (to secure our submission forms).</li>
               <li><strong>Legal Disclosures:</strong> We may disclose data if required by law, regulatory bodies, or to protect the safety and rights of our agency, users, or clients.</li>
             </ul>

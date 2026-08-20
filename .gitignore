@@ -46,3 +46,9 @@ designs-src/*/dist
 designs-src/*/.vite
 
 .vercel
+
+# cloudflare / opennext
+/.open-next/
+/.wrangler/
+cloudflare-env.d.ts
+.dev.vars

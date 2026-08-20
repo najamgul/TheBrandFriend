@@ -9,7 +9,8 @@ import { SITE_URL as BASE_URL } from '../../lib/site';
  * Two cache-based approaches were tried in production and both failed:
  * revalidatePath('/sitemap.xml') from the publish route never purged this
  * metadata route, and revalidate = 300 still served a cached copy with
- * X-Vercel-Cache: HIT and Age over 600s well after a publish.
+ * a cache HIT and an Age over 600s well after a publish (observed on Vercel;
+ * the same reasoning applies to Cloudflare's cache).
  *
  * A sitemap is fetched by crawlers a handful of times a day, so the one
  * Supabase query per request is irrelevant, while a stale sitemap actively
